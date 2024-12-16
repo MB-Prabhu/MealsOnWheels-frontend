@@ -10,3 +10,7 @@
       @apply font-sans; 
     }
   }
+
+  .custom-menu::-webkit-scrollbar{
+    display: none;
+  }
