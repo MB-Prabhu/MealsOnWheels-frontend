@@ -9,9 +9,9 @@ const ExploreMenu = ({category, setCategory}) => {
         <h1 className='sm:text-2xl font-medium sm:font-semibold lg:font-bold my-2'>Explore our menu</h1>
         <p className='sm:text-lg'>Choose from a diverse meby featureing a delicious dishes.</p>
         <div className='flex justify-between py-2 mt-1 items-center gap-[30px] text-center border border-black overflow-x-scroll custom-menu'>
-        {menu_list.map(ele=>{
+        {menu_list.map((ele,idx)=>{
             return(
-                <div
+                <div key={idx}
                 onClick={()=> setCategory((prev)=> prev==ele.menu_name? "all": ele.menu_name)} 
                  className='flex flex-col items-center gap-1 border border-black min-w-[200px]'>
                 <img src={ele.menu_image} alt="" className={`${category===ele.menu_name?"p-1 border-[#e86613]":""} border-2 rounded-full mt-2`} />
