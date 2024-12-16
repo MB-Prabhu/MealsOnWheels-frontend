@@ -7,7 +7,7 @@ const SingleFoodItem = ({_id, name, category, image, price, description}) => {
 
 // console.log(_id)
   return (
-    <div className='w-60 bg-[#ffffff] border-2 border-black flex flex-col gap-2'>
+    <div className='w-60 shadow-sm bg-[#ffffff]  flex flex-col gap-2'>
         <div className='relative w-[100%] '>
         <img src={image} alt="" className='w-[100%]'/>
         <div className='absolute right-2 bottom-2 flex'>
