@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
 import { Button } from '@mui/material';
 import { StoreContext } from '../../context/StoreContext';
+import { useNavigate } from 'react-router-dom';
 
 const CardTotal = () => {
+  let navigate = useNavigate()
     const {getTotalAmount} = useContext(StoreContext)
   return (
     <div className='w-[50%] lg:w-[30%]'>

@@ -12,7 +12,7 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className='border-2 border-black w-full h-20 flex items-center justify-center shadow-lg '>
+    <div className='border-2 border-black w-full h-20 flex items-center justify-center shadow-lg'>
         <div className='border-2 border-black w-[97%] flex items-center justify-between'>
         <div className='hidden md:block'>
         <Link to="/">
@@ -41,12 +41,12 @@ const Navbar = () => {
 
        <div className={`flex items-center justify-between w-44 lg:gap-4 lg:w-48 sm:gap-2 border-2 border-[#000]`}>
         
-            <img src={assets.search_icon} alt="" className='size-6 lg:size-6 cursor-pointer' />
+            <img src={assets.search_icon} alt="" className='size-6 lg:size-8 cursor-pointer' />
             <div className='relative'>
             <Link to="/cart">
-            <img src={assets.basket_icon} alt="" className='size-6 lg:size-6 cursor-pointer' />
+            <img src={assets.basket_icon} alt="" className='size-6 lg:size-8 cursor-pointer' />
             </Link>
-                {Object.keys(cartItem).length>0 && <div className='size-3 rounded-lg bg-[#eb6a32] absolute top-0 right-[-5px]'>
+                {Object.keys(cartItem).length>0 && <div className='size-5 cursor-pointer rounded-lg bg-[#eb6a32] absolute top-0 right-[-5px] text-white text-[18px] flex justify-center items-center'>
                   {Object.keys(cartItem).length}
                   </div>}
             </div>

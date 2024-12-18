@@ -27,12 +27,42 @@ const StoreContextProvider = ({children})=>{
               return {...p, [itemid]:p[itemid]-1}
             })
         }
+        
+        if(cartItem[itemid]===1){
+            setCartItem(p=>{
+                let modifyObject = {}
+                for(let key in p){
+                    if(p[key]!==0){
+                        modifyObject[key] = p[key]
+                    }
+                }
+                return modifyObject
+            })
+        }
+    }
+
+    let removeQuantityFromCart =(itemid)=>{
+        if(cartItem[itemid]>1){
+         setCartItem(p=> {
+           return {...p, [itemid]:p[itemid]-1}
+         })
+     }
+    }
+
+    const removeTotalQuantity = (itemid)=>{
+        setCartItem(p=>{
+                let modifyObject = {}
+                for(let key in p){
+                    if(key !== itemid){
+                        modifyObject[key] = p[key]
+                    }
+                }
+                return modifyObject
+            })
     }
 
     let getItemTotalAmount = (itemid)=>{
-        console.log(itemid)
         let findItem = food_list.find(ele=> ele._id == itemid)
-        console.log(findItem) //todo
         if(!findItem){
             return "Item Not Added in Cart"
         }
@@ -64,6 +94,10 @@ const StoreContextProvider = ({children})=>{
     //     return totalAmount;
     // }
 
+    useEffect(()=>{
+        console.log(cartItem)
+    }, [cartItem])
+
     let value = {
         food_list,
         cartItem,
@@ -72,7 +106,8 @@ const StoreContextProvider = ({children})=>{
         isLogin, setIsLogin,
         showLogin, setShowLogin,
         getItemTotalAmount,
-        getTotalAmount
+        getTotalAmount,
+        removeTotalQuantity, removeQuantityFromCart
     }
     return(
         <StoreContext.Provider value={value}>

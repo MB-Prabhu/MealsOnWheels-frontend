@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
-import { food_list } from '../../assets/assets/frontend_assets/assets'
+import { assets, food_list } from '../../assets/assets/frontend_assets/assets'
 import CardTotal from './CardTotal'
 
 const Cart = () => {
 
-  let {cartItem, getItemTotalAmount} = useContext(StoreContext)
+  let {cartItem, getItemTotalAmount, removeTotalQuantity,removeCartItem, addCartItem, removeQuantityFromCart} = useContext(StoreContext)
 
   return (
     <div className='p-2 w-full'>
@@ -31,9 +31,17 @@ const Cart = () => {
                       </td>
                     <td className=''>{ele.name}</td>
                     <td className=''>{ele.price}</td>
-                    <td className=''>{cartItem[ele._id]}</td>
+                    <td className=''>
+                      <img src={assets.remove_icon_red} alt=""
+                                     onClick={()=> removeQuantityFromCart(ele._id)} 
+                                     className='cursor-pointer' />
+                      {cartItem[ele._id]}
+                      <img src={assets.add_icon_green} alt=""
+                                     onClick={()=> addCartItem(ele._id)} 
+                                     className='cursor-pointer' />
+                      </td>
                     <td className=''>{getItemTotalAmount(ele._id)}</td>
-                    <td className=''><button >remove</button></td>
+                    <td className=''><button onClick={()=> removeTotalQuantity(ele._id)}>remove</button></td>
                   </tr>
                 )
               }
