@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import { assets, food_list } from '../../assets/assets/frontend_assets/assets'
 import CardTotal from './CardTotal'
+import { IconButton } from '@mui/material';
+import  DeleteIcon from '@mui/icons-material/Delete';
 
 const Cart = () => {
 
@@ -31,7 +33,8 @@ const Cart = () => {
                       </td>
                     <td className=''>{ele.name}</td>
                     <td className=''>{ele.price}</td>
-                    <td className=''>
+                    <td>
+                      <div className='flex justify-center items-center gap-2'>
                       <img src={assets.remove_icon_red} alt=""
                                      onClick={()=> removeQuantityFromCart(ele._id)} 
                                      className='cursor-pointer' />
@@ -39,9 +42,23 @@ const Cart = () => {
                       <img src={assets.add_icon_green} alt=""
                                      onClick={()=> addCartItem(ele._id)} 
                                      className='cursor-pointer' />
+                      </div>
                       </td>
                     <td className=''>{getItemTotalAmount(ele._id)}</td>
-                    <td className=''><button onClick={()=> removeTotalQuantity(ele._id)}>remove</button></td>
+                    <td className=''><button >
+                      
+                    {/* <Button variant="contained" 
+               color='error'
+               onClick={()=> deleteUser(role, _id)} 
+               sx={{width: "70%", margin: "10px auto"}}
+               startIcon={<DeleteIcon />}>
+  Delete
+</Button> */}
+                      
+                      <IconButton variant="contained" color="error" sx={{backgroundColor:"#e2a6a6"}} onClick={()=> removeTotalQuantity(ele._id)} aria-label='delete'>
+                        <DeleteIcon />
+                      </IconButton>
+                      </button></td>
                   </tr>
                 )
               }

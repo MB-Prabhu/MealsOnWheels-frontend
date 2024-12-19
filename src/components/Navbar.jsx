@@ -46,7 +46,7 @@ const Navbar = () => {
             <Link to="/cart">
             <img src={assets.basket_icon} alt="" className='size-6 lg:size-8 cursor-pointer' />
             </Link>
-                {Object.keys(cartItem).length>0 && <div className='size-5 cursor-pointer rounded-lg bg-[#eb6a32] absolute top-0 right-[-5px] text-white text-[18px] flex justify-center items-center'>
+                {Object.keys(cartItem).length>0 && <div className='size-5 cursor-pointer rounded-lg bg-[#eb6a32] absolute top-[-10px] right-[-10px] text-white text-[18px] flex justify-center items-center'>
                   {Object.keys(cartItem).length}
                   </div>}
             </div>
