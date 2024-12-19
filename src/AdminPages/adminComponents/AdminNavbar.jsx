@@ -6,9 +6,10 @@ const AdminNavbar = () => {
   return (
     <div className=' w-full h-20 flex items-center justify-center shadow-lg'>
         <div className='w-[95%] flex items-center justify-between'>
-        <div className='hidden md:block'>
-        <Link to="/admin">
-        <img src={assets.logo} alt="" className='w-36 md:block hidden lg:w-80 sm:w-56'/>
+        <div className=' md:block'>
+        <Link to="/adminhome">
+        <img src={assets.logo} alt="" className='w-36 lg:w-80 block sm:w-56'/>
+        Admin pannel
           </Link>
         </div>
 
