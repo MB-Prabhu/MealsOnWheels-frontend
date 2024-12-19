@@ -9,6 +9,9 @@ import Login from './components/Login'
 import { StoreContext } from './context/StoreContext'
 import AdminHome from './AdminPages/AdminHome'
 import AdminNavbar from './AdminPages/adminComponents/AdminNavbar'
+import AdminAdd from './AdminPages/AdminAdd'
+import AdminList from './AdminPages/AdminList'
+import AdminOrders from './AdminPages/AdminOrders'
 
 const App = () => {
       const {showLogin, setShowLogin} = useContext(StoreContext) 
@@ -22,7 +25,13 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/placeorder' element={<PlaceOrder />} />
-        <Route path='/adminhome' element={<AdminHome />} />
+       
+        <Route path='/adminhome' element={<AdminHome />} >
+        <Route path='addadmin' element={<AdminAdd />} />
+        <Route path='listadmin' element={<AdminList />} />
+        <Route path='ordersadmin' element={<AdminOrders />} />
+        </Route>
+
       </Routes>
       <Footer />
     </div>
