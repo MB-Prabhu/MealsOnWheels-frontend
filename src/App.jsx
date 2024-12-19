@@ -1,24 +1,28 @@
 import React, { useContext } from 'react'
 import Navbar from './components/Navbar'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './Pages/Home/Home'
 import Cart from './Pages/Cart/Cart'
 import PlaceOrder from './PlaceOrder/PlaceOrder'
 import Footer from './components/Footer'
 import Login from './components/Login'
 import { StoreContext } from './context/StoreContext'
+import AdminHome from './AdminPages/AdminHome'
+import AdminNavbar from './AdminPages/adminComponents/AdminNavbar'
 
 const App = () => {
       const {showLogin, setShowLogin} = useContext(StoreContext) 
-  
+
+      const location = useLocation()
   return (
     <div className='bg-[#fdfdfa]'>
       {showLogin && <Login />}
-      <Navbar />
+      {location.pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/placeorder' element={<PlaceOrder />} />
+        <Route path='/adminhome' element={<AdminHome />} />
       </Routes>
       <Footer />
     </div>

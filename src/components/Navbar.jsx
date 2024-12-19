@@ -7,13 +7,13 @@ import { StoreContext } from '../context/StoreContext'
 const Navbar = () => {
 
     const {showLogin, setShowLogin, cartItem} = useContext(StoreContext) 
-       const [menuActive, setmenuActive] = useState("")
+      //  const [menuActive, setmenuActive] = useState("")
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className='border-2 border-black w-full h-20 flex items-center justify-center shadow-lg'>
-        <div className='border-2 border-black w-[97%] flex items-center justify-between'>
+    <div className='w-full h-20 flex items-center justify-center shadow-lg'>
+        <div className='w-[95%] flex items-center justify-between'>
         <div className='hidden md:block'>
         <Link to="/">
         <img src={assets.logo} alt="" className='w-36 md:block hidden lg:w-80 sm:w-56'/>
@@ -39,7 +39,7 @@ const Navbar = () => {
 
       <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
-       <div className={`flex items-center justify-between w-44 lg:gap-4 lg:w-48 sm:gap-2 border-2 border-[#000]`}>
+       <div className={`flex items-center justify-between w-44 lg:gap-4 lg:w-48 sm:gap-2`}>
         
             <img src={assets.search_icon} alt="" className='size-6 lg:size-8 cursor-pointer' />
             <div className='relative'>
