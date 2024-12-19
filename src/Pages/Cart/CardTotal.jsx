@@ -18,7 +18,9 @@ const CardTotal = () => {
             <p className='flex justify-between'>Total <span>0</span></p>
         </div>
 
-        <Button variant='contained' className='px-4 py-1 text-white' sx={{backgroundColor: "orangered", margin: "10px 0"}}>
+        <Button variant='contained'
+        onClick={()=> navigate('/placeorder')}
+         className='px-4 py-1 text-white' sx={{backgroundColor: "orangered", margin: "10px 0"}}>
             Proceed to Checkout
         </Button>
 
