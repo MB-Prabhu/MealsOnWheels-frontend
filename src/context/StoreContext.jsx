@@ -1,5 +1,6 @@
+import axios from 'axios'
 import React, { createContext, useEffect, useState } from 'react'
-import { food_list } from '../assets/assets/frontend_assets/assets'
+// import { food_list } from '../assets/assets/frontend_assets/assets'
 
 export const StoreContext = createContext("")
 
@@ -9,6 +10,7 @@ const StoreContextProvider = ({children})=>{
     const [isLogin, setIsLogin] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     const [token, setToken] = useState("")
+    const [food_list, setFood_list] = useState([])
 
     const apiUrl = import.meta.env.VITE_API_URL
 
@@ -97,9 +99,21 @@ const StoreContextProvider = ({children})=>{
     //     return totalAmount;
     // }
 
+    const getFoodItems = async ()=>{
+      try{
+        let {data} = await axios.get(apiUrl+"/api/listfood")
+        setFood_list(data.data)
+      }
+      catch(err){
+        console.log(err)
+      }
+    }
+
     useEffect(()=>{
         let isTokenAvailable = localStorage.key("usertoken")
         setToken(isTokenAvailable ? localStorage.getItem("usertoken") : "")
+
+        getFoodItems()
     },[])
 
     

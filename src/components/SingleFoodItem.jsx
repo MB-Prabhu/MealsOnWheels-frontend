@@ -3,13 +3,12 @@ import { assets } from '../assets/assets/frontend_assets/assets'
 import { StoreContext } from '../context/StoreContext'
 
 const SingleFoodItem = ({_id, name, category, image, price, description}) => {
-  const {removeCartItem, addCartItem, cartItem, setCartItem} = useContext(StoreContext)
+  const {removeCartItem, addCartItem, cartItem, setCartItem, apiUrl} = useContext(StoreContext)
 
-// console.log(_id)
   return (
     <div className='w-60 shadow-sm bg-[#ffffff]  flex flex-col gap-2'>
         <div className='relative w-[100%] '>
-        <img src={image} alt="" className='w-[100%]'/>
+        <img src={`${apiUrl}/images/${image}`} alt="" className='w-[100%]'/>
         <div className='absolute right-2 bottom-2 flex'>
         {
            !cartItem[_id] ? 

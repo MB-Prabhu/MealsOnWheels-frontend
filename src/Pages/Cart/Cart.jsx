@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
-import { assets, food_list } from '../../assets/assets/frontend_assets/assets'
+import { assets } from '../../assets/assets/frontend_assets/assets'
 import CardTotal from './CardTotal'
 import { IconButton } from '@mui/material';
 import  DeleteIcon from '@mui/icons-material/Delete';
 
 const Cart = () => {
 
-  let {cartItem, getItemTotalAmount, removeTotalQuantity,removeCartItem, addCartItem, removeQuantityFromCart} = useContext(StoreContext)
+  let {cartItem, food_list, apiUrl, getItemTotalAmount, removeTotalQuantity,removeCartItem, addCartItem, removeQuantityFromCart} = useContext(StoreContext)
 
   return (
     <div className='p-2 w-full'>
@@ -29,7 +29,7 @@ const Cart = () => {
                 return (
                   <tr key={ele._id} className="text-center md:text-xl border-2 border-y-[#676767] border-x-0">
                     <td className="py-2 place-items-center  ">
-                      <img src={ele.image} alt="" className='rounded-full h-[100px] w-[100px]' />
+                      <img src={`${apiUrl}/images/${ele.image}`} alt="" className='rounded-full h-[100px] w-[100px]' />
                       </td>
                     <td className=''>{ele.name}</td>
                     <td className=''>{ele.price}</td>
