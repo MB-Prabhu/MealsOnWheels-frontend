@@ -13,12 +13,17 @@ import AdminAdd from './AdminPages/AdminAdd'
 import AdminList from './AdminPages/AdminList'
 import AdminOrders from './AdminPages/AdminOrders'
 
+
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
+
 const App = () => {
       const {showLogin, setShowLogin} = useContext(StoreContext) 
 
       const location = useLocation()
   return (
     <div className='bg-[#fdfdfa]'>
+      <ToastContainer />
       {showLogin && <Login />}
       {location.pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
       <Routes>

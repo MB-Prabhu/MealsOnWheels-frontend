@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { assets } from '../assets/assets/admin_assets/assets'
 import { TextField, Button, MenuItem, Select, InputLabel } from '@mui/material';
+import { toast } from 'react-toastify';
+import axios  from 'axios';
 
 const AdminAdd = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const[imageUpload, setImageUpload] = useState(null)
   const[productData, setProductData] = useState({
-    Name:"",
+    name:"",
     description:"",
     price:"",
     category:"Salad"
@@ -16,10 +19,47 @@ const AdminAdd = () => {
     setProductData((p)=>({...p, [name]: value}))
   }
 
-  let handleSubmit=(e)=>{
+  let handleSubmit= async (e)=>{
       e.preventDefault()
       const formData = new FormData()
-      formData.append("Name", productData.Name)
+      formData.append("name", productData.name)
+      formData.append("description", productData.description)
+      formData.append("price", Number(productData.price))
+      formData.append("category", productData.category)
+      formData.append("image", imageUpload)
+
+      try{
+        let {data} = await axios.post(`${apiUrl}/api/createfood`,formData)
+        console.log(data)
+        if(data.ok){
+          setProductData({
+            name:"",
+            description:"",
+            price:"",
+            category:"Salad"
+          })
+          setImageUpload(null)
+          // toast.success('Added Successfully', {
+          //   position: "top-right",
+          //   autoClose: 3000,
+          //   hideProgressBar: false,
+          //   closeOnClick: false,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "dark",
+          //   });
+          toast.success(data.msg, {
+            autoClose: 2000
+          })
+        }
+
+      }
+      catch(err){
+        toast.warning(err.response.data?.msg,  {
+          autoClose: 2000
+        })
+      }
   }
 
   return (
@@ -35,7 +75,7 @@ const AdminAdd = () => {
 
         <div className=''>
           <p className='text-lg sm:text-2xl font-bold'>Product Name</p>
-          <TextField variant='outlined' onChange={handleChange} name="Name"  value={productData.Name} sx={{height: "40px", fontSize:"44px", margin:"5px 0"}}/>
+          <TextField variant='outlined' onChange={handleChange} name="name"  value={productData.name} sx={{height: "40px", fontSize:"44px", margin:"5px 0"}}/>
         </div>
 
         <div className=''>
