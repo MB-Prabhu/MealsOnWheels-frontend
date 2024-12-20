@@ -8,6 +8,10 @@ const StoreContextProvider = ({children})=>{
     const [cartItem, setCartItem] = useState({})
     const [isLogin, setIsLogin] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
+    const [token, setToken] = useState("")
+
+    const apiUrl = import.meta.env.VITE_API_URL
+    console.log(apiUrl)
 
     let addCartItem = (itemid)=>{
         if(!cartItem[itemid]){
@@ -107,7 +111,8 @@ const StoreContextProvider = ({children})=>{
         showLogin, setShowLogin,
         getItemTotalAmount,
         getTotalAmount,
-        removeTotalQuantity, removeQuantityFromCart
+        removeTotalQuantity, removeQuantityFromCart,
+        apiUrl, token, setToken
     }
     return(
         <StoreContext.Provider value={value}>
