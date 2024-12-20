@@ -29,7 +29,7 @@ const Login = () => {
 
 
 
-      let endPoint = isLogin ? '/user/loginuser' : '/user/userregister'      
+      let endPoint = isLogin ? '/user/userlogin' : '/user/userregister'      
       let finalData = {}
       if(isLogin){
         let {Name, address, confirmPassword, mobile, ...payload} = userData
@@ -47,8 +47,8 @@ const Login = () => {
         console.log(data)
 
         if(data.ok){
-          setToken(data?.token)
           localStorage.setItem("usertoken", data?.token)
+          setToken(localStorage.getItem("usertoken"))
           toast.success(data?.msg, {
             autoClose: 2000
           })

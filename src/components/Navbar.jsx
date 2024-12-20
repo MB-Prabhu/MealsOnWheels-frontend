@@ -3,10 +3,11 @@ import { assets } from '../assets/assets/frontend_assets/assets'
 import { Link } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import { StoreContext } from '../context/StoreContext'
+import ProfileIcon from './ProfileIcon'
 
 const Navbar = () => {
 
-    const {showLogin, setShowLogin, cartItem} = useContext(StoreContext) 
+    const {showLogin, setShowLogin, cartItem, token, setToken} = useContext(StoreContext) 
       //  const [menuActive, setmenuActive] = useState("")
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,7 +51,9 @@ const Navbar = () => {
                   {Object.keys(cartItem).length}
                   </div>}
             </div>
+            {token ? <ProfileIcon />: 
             <button className='p-2 rounded-lg sm:text-sm lg:text-lg bg-[#eb6a32] active:bg-[#eba689]' onClick={()=> setShowLogin(true)}>sign in</button>
+            }
        </div>
        
         </div>
