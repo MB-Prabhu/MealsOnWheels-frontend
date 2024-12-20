@@ -1,18 +1,30 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 const AdminList = () => {
-  let api_url = import.meta.nv.VITE_API_URL
 
+  const apiUrl = import.meta.env.VITE_API_URL
   const [listData, setListData] = useState([])
 
   const fetchFoodData = async ()=>{
     try{
-      let {data} = await axios.get(`${api_url}/`)
+      let {data} = await axios.get(`${apiUrl}/api/listfood`)
+
+      if(data.ok){
+        setListData(data?.data)
+      }
     }
     catch(err){
-      console.log(err.response.data.msg)
+      toast.error(err.response.data.msg)
+      console.log(err.response.data)
     }
   }
+
+  useEffect(()=>{
+    fetchFoodData()
+  }, [])
+  // console.log(listData)
   return (
     <div>AdminList</div>
   )
