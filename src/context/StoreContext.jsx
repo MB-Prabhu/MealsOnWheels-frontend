@@ -11,7 +11,6 @@ const StoreContextProvider = ({children})=>{
     const [token, setToken] = useState("")
 
     const apiUrl = import.meta.env.VITE_API_URL
-    console.log(apiUrl)
 
     let addCartItem = (itemid)=>{
         if(!cartItem[itemid]){
@@ -97,6 +96,13 @@ const StoreContextProvider = ({children})=>{
     //     }
     //     return totalAmount;
     // }
+
+    useEffect(()=>{
+        let isTokenAvailable = localStorage.key("usertoken")
+        setToken(isTokenAvailable ? localStorage.getItem("usertoken") : "")
+    },[])
+
+    
 
     useEffect(()=>{
         console.log(cartItem)
