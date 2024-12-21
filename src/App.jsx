@@ -16,6 +16,8 @@ import AdminOrders from './AdminPages/AdminOrders'
 
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
+import PaymentVerify from './Pages/PaymentVerify/PaymentVerify'
+import MyOrders from './Pages/Myorders/MyOrders'
 
 const App = () => {
       const {showLogin, setShowLogin} = useContext(StoreContext) 
@@ -30,6 +32,8 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/placeorder' element={<PlaceOrder />} />
+        <Route path='/verify' element={<PaymentVerify />} />
+        <Route path='/myorders' element={<MyOrders />} />
        
         <Route path='/adminhome' element={<AdminHome />} >
         <Route path='addadmin' element={<AdminAdd />} />

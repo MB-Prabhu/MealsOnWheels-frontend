@@ -31,10 +31,10 @@ const Navbar = () => {
         <ul
         className={`flex gap-1`}
       >
-        <li className="lg:px-4 py-2 hover:underline text-center">Home</li>
-        <li className="lg:px-4 py-2 hover:underline text-center">Menu</li>
-        <li className="lg:px-4 py-2 hover:underline text-center">Contact Us</li>
-        <li className="lg:px-4 py-2 hover:underline text-center">About Us</li>
+        <Link to="/" className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Home</Link>
+        <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Menu</Link>
+        <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Contact Us</Link>
+        <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">About Us</Link>
       </ul>
         </div>
 

@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { assets } from '../assets/assets/frontend_assets/assets'
 import { StoreContext } from '../context/StoreContext'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const ProfileIcon = () => {
 
@@ -22,10 +23,13 @@ let handlelogout = ()=>{
         <div className='hidden px-10 absolute bottom-[-99px] right-0 bg-slate-50 z-50 group-hover:block'>
             <ul>
                 <li className='flex hover:text-orange-500 gap-2 py-2 items-center justify-center'>
+                        <Link to="/myorders">
                     <div className='flex gap-2 items-center justify-center'>
-                    <img src={assets.bag_icon} alt="" /> 
+                        <img src={assets.bag_icon} alt="" /> 
                     <p>orders</p>
                     </div>
+                        </Link>
+                    
                 </li>
                 <span className='block absolute left-3 right-3 border border-[#a4a2a2]'></span>
                 <li className='flex hover:text-orange-500 gap-2  py-2 items-center justify-center'>

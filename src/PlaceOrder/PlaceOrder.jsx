@@ -49,10 +49,12 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
 
                   let iteminfo = item
                   console.log(iteminfo)
-                  iteminfo["quantity"] = cartItem[item?._id]
+                  iteminfo["quantity"] = cartItem[item._id]
                   ordersToPlaced.push(iteminfo)
             }
           })
+
+          console.log(ordersToPlaced)
 
           let orderDetails = {
             address:deliveryData,
