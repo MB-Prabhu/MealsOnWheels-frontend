@@ -15,7 +15,7 @@ const CardTotal = () => {
             <hr className='bg-[#676767]' />
             <p className='flex justify-between'>Delivery Fee <span>2</span></p>
             <hr className='bg-[#676767]' />
-            <p className='flex justify-between'>Total <span>0</span></p>
+            <p className='flex justify-between'>Total <span>{getTotalAmount()+2 || 0}</span></p>
         </div>
 
         <Button variant='contained'

@@ -12,6 +12,7 @@ const StoreContextProvider = ({children})=>{
     const [token, setToken] = useState("")
     const [food_list, setFood_list] = useState([])
 
+
     const apiUrl = import.meta.env.VITE_API_URL
 
     let addCartItem = async (itemid)=>{
@@ -165,7 +166,7 @@ const StoreContextProvider = ({children})=>{
         getItemTotalAmount,
         getTotalAmount,
         removeTotalQuantity, removeQuantityFromCart,
-        apiUrl, token, setToken
+        apiUrl, token, setToken, 
     }
     return(
         <StoreContext.Provider value={value}>

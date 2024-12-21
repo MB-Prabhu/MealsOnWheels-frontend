@@ -1,8 +1,12 @@
 import { Button, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { StoreContext } from '../context/StoreContext'
+import CardTotal from '../Pages/Cart/CardTotal'
+import axios from 'axios'
 
 const PlaceOrder = () => {
 
+const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreContext)
   const [deliveryData, setdeliveryData] = useState({
         Name: "",
         mobile: "",
@@ -21,19 +25,59 @@ const PlaceOrder = () => {
                 onChange={(e)=> handleChange(e)}
                 name="email" variant="outlined" 
                 sx={{height: "40px"}} /> */}
-      let handleSignupSubmit=(e)=>{
-        e.preventDefault()
-        console.log(deliveryData)
-        setdeliveryData({
-          Name: "",
-          mobile: "",
-          email: "",
-          address: "",
-          pincode: "",
-          landmark: ""
-        })
-      }
+      // let handleSignupSubmit=(e)=>{
+      //   e.preventDefault()
+      //   console.log(deliveryData)
+      //   setdeliveryData({
+      //     Name: "",
+      //     mobile: "",
+      //     email: "",
+      //     address: "",
+      //     pincode: "",
+      //     landmark: ""
+      //   })
+      // }
   
+      let placeOrder = async (e)=>{
+        e.preventDefault()
+        let ordersToPlaced = []
+        try{
+          food_list.map(item=>{
+            // console.log(item)
+            if(cartItem[item._id]>0){  
+              console.log(cartItem)
+
+                  let iteminfo = item
+                  console.log(iteminfo)
+                  iteminfo["quantity"] = cartItem[item?._id]
+                  ordersToPlaced.push(iteminfo)
+            }
+          })
+
+          let orderDetails = {
+            address:deliveryData,
+            items: ordersToPlaced,
+            amount: getTotalAmount()+2
+          }
+
+          let {data} = await axios.post(`${apiUrl}/user/order/placeorder`,{orderDetails}, {headers: {token}})
+          console.log(data)
+          if(data.ok){
+            let session_url = data.data
+            console.log(session_url)
+            window.location.replace(session_url)
+          }
+          else{
+            alert("error")
+          }
+
+        }
+        catch(err){
+          console.log(err)
+        }
+       
+      }
+
   return (
     <div className="p-20 flex md:flex-row justify-between items-center flex-col">
        {/* <div 
@@ -91,7 +135,7 @@ const PlaceOrder = () => {
             sx={{width: "40%", margin: "10px auto"}}>Submit</Button>
         </form>
       </div> */}
- <div className='md:w-[50%] sm:w-[100%] py-4 px-6 shadow-lg flex flex-col rounded-lg gap-4 font-extrabold'
+ <form onSubmit={placeOrder} className='md:w-[50%] sm:w-[100%] py-4 px-6 shadow-lg flex flex-col rounded-lg gap-4 font-extrabold'
       // style={{
       //   width: "50%",
       //   margin: "0 auto",
@@ -110,7 +154,7 @@ const PlaceOrder = () => {
 
       <TextField
         label="Name"
-        name="name"
+        name="Name"
         value={deliveryData.name}
         onChange={handleChange}
         fullWidth
@@ -126,6 +170,16 @@ const PlaceOrder = () => {
         required
         type="tel"
         inputProps={{ maxLength: 10 }}
+      />
+
+<TextField
+        label="Email"
+        name="email"
+        value={deliveryData.email}
+        onChange={handleChange}
+        fullWidth
+        required
+        type="email"
       />
 
       <TextField
@@ -155,6 +209,7 @@ const PlaceOrder = () => {
         value={deliveryData.landmark}
         onChange={handleChange}
         fullWidth
+        required
       />
 
       <Button
@@ -165,10 +220,10 @@ const PlaceOrder = () => {
       >
         Submit
       </Button>
-    </div>
+    </form>
     
     <div>
-      ldfnllsdk
+      <CardTotal />
     </div>
     </div>
   )
