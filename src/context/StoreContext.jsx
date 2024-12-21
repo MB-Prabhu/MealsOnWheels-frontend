@@ -17,6 +17,7 @@ const StoreContextProvider = ({children})=>{
     let addCartItem = async (itemid)=>{
         if(!cartItem[itemid]){
             setCartItem(p=> {
+                console.log(p)
                 return {...p, [itemid]:1}
             }
             )
@@ -32,23 +33,40 @@ const StoreContextProvider = ({children})=>{
     let removeCartItem= async (itemid)=>{
            if(cartItem[itemid]>0){
             setCartItem(p=> {
-              return {...p, [itemid]:p[itemid]-1}
+               let removedItem = {...p}
+               removedItem[itemid] -= 1
+               if(!removedItem[itemid]){
+                    delete removedItem[itemid]
+               }
+              return removedItem
             })
+            if(token){
+                 await axios.patch(apiUrl+'/user/cart'+"/removecartitem", {itemid}, {headers: {token}})
+               
+             }
         }
+    
         
-        if(cartItem[itemid]===1){
-            setCartItem(p=>{
-                let modifyObject = {}
-                for(let key in p){
-                    if(p[key]!==0){
-                        modifyObject[key] = p[key]
-                    }
-                }
-                return modifyObject
-            })
-        }
+        // if(cartItem[itemid]===1){
+        //     setCartItem(p=>{
+        //         let modifyObject = {}
+        //         for(let key in p){
+        //             if(p[key]!==0){
+        //                 modifyObject[key] = p[key]
+        //             }
+        //         }
+        //         return modifyObject
+        //     })
+        // }
     }
 
+
+    let getCartItems = async (token)=>{
+        let {data} = await axios.post(apiUrl+'/user/cart'+'/getcartitems', {}, {headers:{token}})
+        setCartItem(data.data)
+    }
+
+    //this  function for removing the qunatity from cart not from home 
     let removeQuantityFromCart = async (itemid)=>{
         if(cartItem[itemid]>1){
          setCartItem(p=> {
@@ -60,6 +78,7 @@ const StoreContextProvider = ({children})=>{
      }
     }
 
+    //this  function for removing the entire item from the cart 
     const removeTotalQuantity = (itemid)=>{
         setCartItem(p=>{
                 let modifyObject = {}
@@ -72,11 +91,7 @@ const StoreContextProvider = ({children})=>{
             })
     }
 
-    const getCartItems = async (token)=>{
-        let {data} = await axios.get(apiUrl+'/user/cart'+'/getcartitems', {}, {headers:{token}})
-        setCartItem(data.data)
-    }
-
+    
     let getItemTotalAmount = (itemid)=>{
         let findItem = food_list.find(ele=> ele._id == itemid)
         if(!findItem){
@@ -87,15 +102,17 @@ const StoreContextProvider = ({children})=>{
 
     let getTotalAmount = ()=>{
         if(Object.keys(cartItem).length>0){
+            let totalAmount = 0
             let getCartAddedItems = food_list.filter(ele=> Object.keys(cartItem).includes(ele._id) )
             let separateItemTotal=getCartAddedItems.map((ele)=> {
                   if(Object.keys(cartItem).includes(ele._id)){
                     return ele.price * cartItem[ele._id]
                   }
               })
-      
-              let totalAmount= separateItemTotal.reduce((a,b)=> a+b)
-              return totalAmount
+              if(separateItemTotal.length>0){
+                   totalAmount= separateItemTotal.reduce((a,b)=> a+b)
+                }
+                return totalAmount
         }
     }
 
@@ -116,6 +133,7 @@ const StoreContextProvider = ({children})=>{
     const getFoodItems = async ()=>{
       try{
         let {data} = await axios.get(apiUrl+"/api/listfood")
+        // console.log(data)
         setFood_list(data.data)
       }
       catch(err){
@@ -126,8 +144,9 @@ const StoreContextProvider = ({children})=>{
     useEffect(()=>{
         let isTokenAvailable = localStorage.key("usertoken")
         setToken(isTokenAvailable ? localStorage.getItem("usertoken") : "")
-        {isTokenAvailable && getCartItems()}
-        getFoodItems(localStorage.getItem("usertoken"))
+        // getCartItems(localStorage.getItem("usertoken"))
+        getCartItems(localStorage.getItem("usertoken"))
+        getFoodItems()
     },[])
 
     

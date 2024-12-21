@@ -35,13 +35,13 @@ const Cart = () => {
                     <td className=''>{ele.price}</td>
                     <td>
                       <div className='flex justify-center items-center gap-2'>
-                      <img src={assets.remove_icon_red} alt=""
+                      {/* <img src={assets.remove_icon_red} alt=""
                                      onClick={()=> removeQuantityFromCart(ele._id)} 
-                                     className='cursor-pointer' />
+                                     className='cursor-pointer' /> */}
                       {cartItem[ele._id]}
-                      <img src={assets.add_icon_green} alt=""
+                      {/* <img src={assets.add_icon_green} alt=""
                                      onClick={()=> addCartItem(ele._id)} 
-                                     className='cursor-pointer' />
+                                     className='cursor-pointer' /> */}
                       </div>
                       </td>
                     <td className=''>{getItemTotalAmount(ele._id)}</td>
@@ -55,7 +55,7 @@ const Cart = () => {
   Delete
 </Button> */}
                       
-                      <IconButton variant="contained" color="error" sx={{backgroundColor:"#e2a6a6"}} onClick={()=> removeTotalQuantity(ele._id)} aria-label='delete'>
+                      <IconButton variant="contained" color="error" sx={{backgroundColor:"#e2a6a6"}} onClick={()=> removeCartItem(ele._id)} aria-label='delete'>
                         <DeleteIcon />
                       </IconButton>
                       </td>
