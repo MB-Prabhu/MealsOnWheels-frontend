@@ -14,7 +14,7 @@ const StoreContextProvider = ({children})=>{
 
     const apiUrl = import.meta.env.VITE_API_URL
 
-    let addCartItem = (itemid)=>{
+    let addCartItem = async (itemid)=>{
         if(!cartItem[itemid]){
             setCartItem(p=> {
                 return {...p, [itemid]:1}
@@ -24,9 +24,12 @@ const StoreContextProvider = ({children})=>{
         else{
             setCartItem(p=> ({...p, [itemid]: p[itemid]+1}))
         }
+        if(token){
+            await axios.patch(apiUrl+"/user/cart"+"/addtocart", {itemid}, {headers: {token}})
+        }
     }
 
-    let removeCartItem=(itemid)=>{
+    let removeCartItem= async (itemid)=>{
            if(cartItem[itemid]>0){
             setCartItem(p=> {
               return {...p, [itemid]:p[itemid]-1}
@@ -46,11 +49,14 @@ const StoreContextProvider = ({children})=>{
         }
     }
 
-    let removeQuantityFromCart =(itemid)=>{
+    let removeQuantityFromCart = async (itemid)=>{
         if(cartItem[itemid]>1){
          setCartItem(p=> {
            return {...p, [itemid]:p[itemid]-1}
          })
+         if(token){
+            await axios.patch(apiUrl+'/user/cart'+"/removecartitem", {itemid}, {headers: {token}})
+         }
      }
     }
 
@@ -64,6 +70,11 @@ const StoreContextProvider = ({children})=>{
                 }
                 return modifyObject
             })
+    }
+
+    const getCartItems = async (token)=>{
+        let {data} = await axios.get(apiUrl+'/user/cart'+'/getcartitems', {}, {headers:{token}})
+        setCartItem(data.data)
     }
 
     let getItemTotalAmount = (itemid)=>{
@@ -99,6 +110,9 @@ const StoreContextProvider = ({children})=>{
     //     return totalAmount;
     // }
 
+
+    
+
     const getFoodItems = async ()=>{
       try{
         let {data} = await axios.get(apiUrl+"/api/listfood")
@@ -112,8 +126,8 @@ const StoreContextProvider = ({children})=>{
     useEffect(()=>{
         let isTokenAvailable = localStorage.key("usertoken")
         setToken(isTokenAvailable ? localStorage.getItem("usertoken") : "")
-
-        getFoodItems()
+        {isTokenAvailable && getCartItems()}
+        getFoodItems(localStorage.getItem("usertoken"))
     },[])
 
     
@@ -126,7 +140,7 @@ const StoreContextProvider = ({children})=>{
         food_list,
         cartItem,
         setCartItem,
-        addCartItem, removeCartItem,
+        addCartItem, removeCartItem, getCartItems,
         isLogin, setIsLogin,
         showLogin, setShowLogin,
         getItemTotalAmount,

@@ -45,7 +45,7 @@ const Cart = () => {
                       </div>
                       </td>
                     <td className=''>{getItemTotalAmount(ele._id)}</td>
-                    <td className=''><button >
+                    <td className=''>
                       
                     {/* <Button variant="contained" 
                color='error'
@@ -58,7 +58,7 @@ const Cart = () => {
                       <IconButton variant="contained" color="error" sx={{backgroundColor:"#e2a6a6"}} onClick={()=> removeTotalQuantity(ele._id)} aria-label='delete'>
                         <DeleteIcon />
                       </IconButton>
-                      </button></td>
+                      </td>
                   </tr>
                 )
               }
