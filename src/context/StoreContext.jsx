@@ -13,55 +13,132 @@ const StoreContextProvider = ({children})=>{
     const [food_list, setFood_list] = useState([])
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
+    
 
     const apiUrl = import.meta.env.VITE_API_URL
 
-    let addCartItem = async (itemid)=>{
-        if(!cartItem[itemid]){
-            setCartItem(p=> {
-                console.log(p)
-                return {...p, [itemid]:1}
-            }
-            )
-        }
-        else{
-            setCartItem(p=> ({...p, [itemid]: p[itemid]+1}))
-        }
-        if(token){
-            let {data} = await axios.patch(apiUrl+"/user/cart"+"/addtocart", {itemid}, {headers: {token}})
-            console.log(data)
-        }
+    const [isAdding, setIsAdding] = useState(false); // Single state to track the adding process
+
+let addCartItem = async (itemid) => {
+    if (isAdding) {
+        return; // Prevent adding if an API call is already in progress
     }
 
-    let removeCartItem= async (itemid)=>{
-           if(cartItem[itemid]>0){
-            setCartItem(p=> {
-               let removedItem = {...p}
-               removedItem[itemid] -= 1
-               if(!removedItem[itemid]){
-                    delete removedItem[itemid]
-               }
-              return removedItem
-            })
-            if(token){
-                 await axios.patch(apiUrl+'/user/cart'+"/removecartitem", {itemid}, {headers: {token}})
-               
-             }
+    // Optimistically update the cart state
+    setCartItem((prev) => ({
+        ...prev,
+        [itemid]: (prev[itemid] || 0) + 1,
+    }));
+
+    // Set the isAdding state to true to indicate an API call is in progress
+    setIsAdding(true);
+
+    if (token) {
+        try {
+            // Make the API call to sync with the server
+            await axios.patch(apiUrl + "/user/cart/addtocart", { itemid }, { headers: { token } });
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            // Revert the state if the API call fails
+            setCartItem((prev) => {
+                const updatedCart = { ...prev };
+                updatedCart[itemid] -= 1;
+                if (updatedCart[itemid] <= 0) {
+                    delete updatedCart[itemid];
+                }
+                return updatedCart;
+            });
+        } finally {
+            // Reset the isAdding state after the API call is complete
+            setIsAdding(false);
         }
+    }
+};
+
+let removeCartItem = async (itemid) => {
+    if (isAdding) {
+        return; // Prevent removing if an API call is already in progress
+    }
+
+    // Optimistically update the cart state
+    setCartItem((prev) => {
+        const updatedCart = { ...prev };
+        if (updatedCart[itemid] > 0) {
+            updatedCart[itemid] -= 1;
+            if (updatedCart[itemid] === 0) {
+                delete updatedCart[itemid];
+            }
+        }
+        return updatedCart;
+    });
+
+    // Set the isAdding state to true to indicate an API call is in progress
+    setIsAdding(true);
+
+    if (token) {
+        try {
+            // Make the API call to sync with the server
+            await axios.patch(apiUrl + "/user/cart/removecartitem", { itemid }, { headers: { token } });
+        } catch (error) {
+            console.error("Error removing from cart:", error);
+            // Revert the state if the API call fails
+            setCartItem((prev) => ({
+                ...prev,
+                [itemid]: (prev[itemid] || 0) + 1, // Re-add the item if the API fails
+            }));
+        } finally {
+            // Reset the isAdding state after the API call is complete
+            setIsAdding(false);
+        }
+    }
+};
+
+    // let addCartItem = async (itemid)=>{
+    //     if(!cartItem[itemid]){
+    //         setCartItem(p=> {
+    //             console.log(p)
+    //             return {...p, [itemid]:1}
+    //         }
+    //         )
+    //     }
+    //     else{
+    //         setCartItem(p=> ({...p, [itemid]: p[itemid]+1}))
+    //     }
+    //     if(token){
+    //         let {data} = await axios.patch(apiUrl+"/user/cart"+"/addtocart", {itemid}, {headers: {token}})
+    //         console.log(data)
+    //     }
+    // }
+
+    // let removeCartItem= async (itemid)=>{
+    //        if(cartItem[itemid]>0){
+    //         setCartItem(p=> {
+    //            let removedItem = {...p}
+    //            removedItem[itemid] -= 1
+    //            if(!removedItem[itemid]){
+    //                 delete removedItem[itemid]
+    //            }
+    //           return removedItem
+    //         })
+    //         if(token){
+    //              await axios.patch(apiUrl+'/user/cart'+"/removecartitem", {itemid}, {headers: {token}})
+               
+    //          }
+    //     }
     
         
-        // if(cartItem[itemid]===1){
-        //     setCartItem(p=>{
-        //         let modifyObject = {}
-        //         for(let key in p){
-        //             if(p[key]!==0){
-        //                 modifyObject[key] = p[key]
-        //             }
-        //         }
-        //         return modifyObject
-        //     })
-        // }
-    }
+    //     // if(cartItem[itemid]===1){
+    //     //     setCartItem(p=>{
+    //     //         let modifyObject = {}
+    //     //         for(let key in p){
+    //     //             if(p[key]!==0){
+    //     //                 modifyObject[key] = p[key]
+    //     //             }
+    //     //         }
+    //     //         return modifyObject
+    //     //     })
+    //     // }
+    // }
 
 
     let getCartItems = async (token)=>{
@@ -161,15 +238,16 @@ const StoreContextProvider = ({children})=>{
 
     
 
-    // useEffect(()=>{
-    //     console.log(cartItem)
-    // }, [cartItem])
+    useEffect(()=>{
+        console.log(cartItem)
+    }, [cartItem])
 
     let value = {
         food_list,
         cartItem,
         setCartItem,
         addCartItem, removeCartItem, getCartItems,
+        selectedCategory, setSelectedCategory,
         isLogin, setIsLogin,
         errorMsg, setErrorMsg,loading, setLoading,
         showLogin, setShowLogin,
