@@ -20,7 +20,7 @@ let handlelogout = ()=>{
     <div className='border relative border-black rounded-full flex items-center justify-center cursor-pointer size-[45px] group'>
         <img src={assets.profile_icon} alt="" className='bg-contain' /> 
 
-        <div className='hidden px-10 absolute bottom-[-99px] right-0 bg-slate-50 z-50 group-hover:block'>
+        <div className='hidden px-10 absolute bottom-[-93px] right-0 bg-slate-50 z-50 group-hover:block'>
             <ul>
                 <li className='flex hover:text-orange-500 gap-2 py-2 items-center justify-center'>
                         <Link to="/myorders">

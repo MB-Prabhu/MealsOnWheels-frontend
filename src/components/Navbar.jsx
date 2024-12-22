@@ -33,7 +33,7 @@ const Navbar = () => {
       >
         <Link to="/" className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Home</Link>
         <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Menu</Link>
-        <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Contact Us</Link>
+        <a href="#contact" className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Contact Us</a>
         <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">About Us</Link>
       </ul>
         </div>

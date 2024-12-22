@@ -12,6 +12,7 @@ const StoreContextProvider = ({children})=>{
     const [token, setToken] = useState("")
     const [food_list, setFood_list] = useState([])
 
+    const [errorMsg, setErrorMsg] = useState("")
 
     const apiUrl = import.meta.env.VITE_API_URL
 
@@ -27,7 +28,8 @@ const StoreContextProvider = ({children})=>{
             setCartItem(p=> ({...p, [itemid]: p[itemid]+1}))
         }
         if(token){
-            await axios.patch(apiUrl+"/user/cart"+"/addtocart", {itemid}, {headers: {token}})
+            let {data} = await axios.patch(apiUrl+"/user/cart"+"/addtocart", {itemid}, {headers: {token}})
+            console.log(data)
         }
     }
 
@@ -63,7 +65,9 @@ const StoreContextProvider = ({children})=>{
 
 
     let getCartItems = async (token)=>{
-        let {data} = await axios.post(apiUrl+'/user/cart'+'/getcartitems', {}, {headers:{token}})
+        console.log(token)
+        let {data} = await axios.get(apiUrl+'/user/cart'+'/getcartitems', {headers: {token}})
+        console.log(data.data)
         setCartItem(data.data)
     }
 
@@ -128,33 +132,34 @@ const StoreContextProvider = ({children})=>{
     //     return totalAmount;
     // }
 
-
-    
-
     const getFoodItems = async ()=>{
       try{
         let {data} = await axios.get(apiUrl+"/api/listfood")
         // console.log(data)
-        setFood_list(data.data)
+        setErrorMsg("")
+        if(data.ok){
+            setFood_list(data.data)
+        }
       }
       catch(err){
         console.log(err)
+        setErrorMsg(data.data.msg)
       }
     }
 
     useEffect(()=>{
         let isTokenAvailable = localStorage.key("usertoken")
         setToken(isTokenAvailable ? localStorage.getItem("usertoken") : "")
-        // getCartItems(localStorage.getItem("usertoken"))
-        getCartItems(localStorage.getItem("usertoken"))
+        setToken(localStorage.getItem("usertoken"))
+        // {token && getCartItems(localStorage.getItem("usertoken"))}
         getFoodItems()
     },[])
 
     
 
-    useEffect(()=>{
-        console.log(cartItem)
-    }, [cartItem])
+    // useEffect(()=>{
+    //     console.log(cartItem)
+    // }, [cartItem])
 
     let value = {
         food_list,
@@ -162,6 +167,7 @@ const StoreContextProvider = ({children})=>{
         setCartItem,
         addCartItem, removeCartItem, getCartItems,
         isLogin, setIsLogin,
+        errorMsg, setErrorMsg,
         showLogin, setShowLogin,
         getItemTotalAmount,
         getTotalAmount,

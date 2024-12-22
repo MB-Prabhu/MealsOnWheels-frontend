@@ -6,7 +6,7 @@ const SingleFoodItem = ({_id, name, category, image, price, description}) => {
   const {removeCartItem, addCartItem, cartItem, setCartItem, apiUrl} = useContext(StoreContext)
 
   return (
-    <div className='w-60 shadow-sm bg-[#ffffff]  flex flex-col gap-2'>
+    <div className='w-60 shadow-md bg-[#ffffff]  flex flex-col gap-2'>
         <div className='relative w-[100%] '>
         <img src={`${apiUrl}/images/${image}`} alt="" className='w-[100%]'/>
         <div className='absolute right-2 bottom-2 flex'>

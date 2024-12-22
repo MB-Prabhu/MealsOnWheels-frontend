@@ -40,7 +40,7 @@ const Login = () => {
         finalData = userData
       }
 
-      // try{
+      try{
         console.log(finalData)
         console.log(apiUrl+endPoint)
         let {data} = await axios.post(`${apiUrl}${endPoint}`, finalData)
@@ -52,47 +52,26 @@ const Login = () => {
           toast.success(data?.msg, {
             autoClose: 2000
           })
-          // setuserData({
-          //   Name: "",
-          //   mobile: "",
-          //   address: "",
-          //   email: "",
-          //   password: "",
-          //   confirmPassword: ""
-          // })
+          setuserData({
+            Name: "",
+            mobile: "",
+            address: "",
+            email: "",
+            password: "",
+            confirmPassword: ""
+          })
+          setShowLogin(false)
         }
         else{
           toast.error(data.msg)
         }
-      // }
-      // catch(err){
-      //   toast.warning(err.response.data?.msg,  {
-      //     autoClose: 2000
-      //   })
-      // }
-      // setuserData({
-      //   Name: "",
-      // mobile: "",
-      // address: "",
-      // email: "",
-      // password: "",
-      // confirmPassword: ""
-      // })
+      }
+      catch(err){
+        toast.warning(err.response.data?.msg,  {
+          autoClose: 2000
+        })
+      }
     }
-
-    let handleLoginSubmit=(e)=>{
-      e.preventDefault()
-
-      
-      let {Name, address, confirmPassword, mobile, ...payload} = userData
-      console.log(payload)
-      setuserData({
-      email: "",
-      password: "",
-      })
-    }
-
-
   return (
     <div className='fixed w-full h-full bg-opacity-50 bg-[#676767] z-30 place-content-center place-items-center' >
       <div 

@@ -15,6 +15,11 @@
     display: none;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+  
+
   /* .underlineAnimation {
     text-decoration: none;
     transition: underline;

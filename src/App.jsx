@@ -28,6 +28,7 @@ const App = () => {
       <ToastContainer />
       {showLogin && <Login />}
       {location.pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
+     <div className='content'>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/cart' element={<Cart />} />
@@ -42,6 +43,7 @@ const App = () => {
         </Route>
 
       </Routes>
+     </div>
       <Footer />
     </div>
   )

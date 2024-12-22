@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import { assets } from '../../assets/assets/frontend_assets/assets'
 import CardTotal from './CardTotal'
@@ -7,12 +7,19 @@ import  DeleteIcon from '@mui/icons-material/Delete';
 
 const Cart = () => {
 
-  let {cartItem, food_list, apiUrl, getItemTotalAmount, removeTotalQuantity,removeCartItem, addCartItem, removeQuantityFromCart} = useContext(StoreContext)
+  let {cartItem, food_list, apiUrl, getItemTotalAmount, removeTotalQuantity,removeCartItem, addCartItem, removeQuantityFromCart, getCartItems} = useContext(StoreContext)
 
+  useEffect(()=>{
+    // {token && getCartItems(localStorage.getItem("usertoken"))}
+    getCartItems(localStorage.getItem("usertoken"))
+  }, [])
+  console.log(cartItem)
   return (
     <div className='p-2 w-full'>
       <div className="p-4 w-[95%]">
-        <table className='p-2 w-full'>
+
+
+       {Object.keys(cartItem).length>0 ? <table className='p-2 w-full'>
           <thead>
           <tr className="text-lg md:text-xl">
             <th>Item</th>
@@ -64,7 +71,11 @@ const Cart = () => {
               }
             })}
           </tbody>
-        </table>
+        </table> : 
+            // {errorMsg && <div className='w-full mx-auto text-2xl sm:text-3xl sm:font-semibold'>{errorMsg}</div>}        
+            <div className='w-full text-[#676767] mx-auto min-h-[45vh] text-center place-content-center text-2xl sm:text-3xl font-semibold'>
+              No Carts added yet...
+              </div>}
       </div>
 
 
