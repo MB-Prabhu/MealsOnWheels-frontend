@@ -36,8 +36,8 @@ const App = () => {
         <Route path='/verify' element={<PaymentVerify />} />
         <Route path='/myorders' element={<MyOrders />} />
        
-        <Route path='/adminhome' element={<AdminHome />} >
-        <Route path='addadmin' element={<AdminAdd />} />
+        <Route path='/adminhome'  element={<AdminHome />} >
+        <Route index element={<AdminAdd />} />
         <Route path='listadmin' element={<AdminList />} />
         <Route path='ordersadmin' element={<AdminOrders />} />
         </Route>

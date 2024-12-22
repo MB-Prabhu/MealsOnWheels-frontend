@@ -9,7 +9,7 @@ const AdminNavbar = () => {
         <div className=' md:block'>
         <Link to="/adminhome">
         <img src={assets.logo} alt="" className='w-36 lg:w-80 block sm:w-56'/>
-        Admin pannel
+       <p className='text-lg sm:text-2xl lg:text-2xl ml-1 font-semibold'>Admin Panel</p>
           </Link>
         </div>
 

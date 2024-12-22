@@ -39,16 +39,6 @@ const AdminAdd = () => {
             category:"Salad"
           })
           setImageUpload(null)
-          // toast.success('Added Successfully', {
-          //   position: "top-right",
-          //   autoClose: 3000,
-          //   hideProgressBar: false,
-          //   closeOnClick: false,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "dark",
-          //   });
           toast.success(data.msg, {
             autoClose: 2000
           })

@@ -3,13 +3,16 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import  DeleteIcon from '@mui/icons-material/Delete';
+import LoadingSpinner from '../components/LoadingSpinner';
 const AdminList = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL
   const [listData, setListData] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const fetchFoodData = async ()=>{
     try{
+      setLoading(true)
       let {data} = await axios.get(`${apiUrl}/api/listfood`)
       if(data.ok){
         setListData(data?.data)
@@ -18,6 +21,9 @@ const AdminList = () => {
     catch(err){
       toast.error(err.response.data.msg)
       console.log(err.response.data)
+    }
+    finally{
+      setLoading(false)
     }
   }
 
@@ -48,28 +54,31 @@ const AdminList = () => {
 
   return (
     <div className='px-2 border border-black w-[100%] sm:w-[70%] lg:w-[75%] xl:w-[80%] overflow-scroll custom-menu'>
-        <p className='font-bold text-lg sm:text-2xl py-4 px-4'>Food List</p>
+        <p className='font-bold text-xl sm:text-2xl lg:text-3xl py-4 px-4 text-orange-500'>Food List</p>
 
-        <table className='border border-black w-full'>
-          <thead className='text-center py-7'>
-            <tr className='text-center'>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Remove</th>
+        {loading && <div className='flex justify-center items-center min-h-[80vh]'><LoadingSpinner />  </div>}
+
+
+        {!loading && <table className=' w-full border-[#162d52] border-2'>
+          <thead  className=''>
+            <tr  className='text-center md:text-xl bg-[#162d52]'>
+              <th className='py-4 text-[#ff7722]'>Image</th>
+              <th className='py-4 text-[#ff7722]'>Name</th>
+              <th className='py-4 text-[#ff7722] text-[15px]'>Category</th>
+              <th className='py-4 text-[#ff7722] text-[15px]'>Price</th>
+              <th className='py-4 text-[#ff7722] text-[15px]'>Remove</th>
             </tr>
               </thead>
-              <tbody>
+              <tbody className=''>
                 {listData.length>0 && listData.map(({_id, image, name, category, price})=>{
                   return(
                     <tr key={_id} className='text-center w-[20%]'>
-                      <td className='border border-black'>
+                      <td className='border-x-2 border-[#162d52]'>
                         <img src={`${apiUrl}/images/${image}`} alt="" className='block mx-auto size-36 rounded-full py-4 px-4' />
                       </td>
-                      <td >{name}</td>
-                      <td>{category}</td>
-                      <td>{price}</td>
+                      <td className='text-lg sm:text-xl border-x-2 border-[#162d52] sm:font-medium' >{name}</td>
+                      <td className='text-lg sm:text-xl border-x-2 border-[#162d52] sm:font-medium'>{category}</td>
+                      <td className='text-lg sm:text-xl border-x-2 border-[#162d52] sm:font-medium'>{price}</td>
                       <td>
                       <IconButton variant="contained" color="error" sx={{backgroundColor:"#e2a6a6"}} onClick={()=> removeFoodItem(_id)} aria-label='delete'>
                         <DeleteIcon />
@@ -82,7 +91,7 @@ const AdminList = () => {
                 }
               </tbody>
           
-        </table>
+        </table>}
 
     </div>
   )

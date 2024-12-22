@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import { StoreContext } from '../context/StoreContext'
 import ProfileIcon from './ProfileIcon'
+import { Button } from '@mui/material';
 
 const Navbar = () => {
 
@@ -54,6 +55,12 @@ const Navbar = () => {
             {token ? <ProfileIcon />: 
             <button className='p-2 rounded-lg sm:text-sm lg:text-lg bg-[#eb6a32] active:bg-[#eba689]' onClick={()=> setShowLogin(true)}>sign in</button>
             }
+
+            <div>
+                <Link to="/adminhome" className='px-2 rounded-lg py-2'>
+                  Admin Page
+                </Link>
+            </div>
        </div>
        
         </div>

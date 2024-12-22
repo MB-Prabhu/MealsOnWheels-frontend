@@ -51,11 +51,26 @@ const MyOrders = () => {
                         <img src={assets.basket_icon} alt="basketicon" className='size-28' />
 
                         <div className='flex gap-2 w-[40%]'>
-                            {order.items.map(({name, quantity})=>(
-                                <div>
+                            {order.items.map(({name, quantity},index)=>{
+                                return(
+                                    <div key={index}>
                                     <p>{name}X{quantity} ,</p>
                                 </div>
-                            ))}
+                                )
+
+                                 // if(index===items.length.-1){
+                                //   return(  <div key={index}>
+                                //     <p>{name}X{quantity} ,</p>
+                                //     </div> )
+                                // }
+                                // else{
+                                //    return ( <div key={index}>
+                                //     <p>{name}X{quantity} ,</p>
+                                //     </div> )
+                                // }
+
+                            })
+                        }
                         </div>
 
                         <p>Amount: ${order.amount}</p>

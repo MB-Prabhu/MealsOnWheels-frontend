@@ -11,7 +11,7 @@ const StoreContextProvider = ({children})=>{
     const [showLogin, setShowLogin] = useState(false)
     const [token, setToken] = useState("")
     const [food_list, setFood_list] = useState([])
-
+    const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
 
     const apiUrl = import.meta.env.VITE_API_URL
@@ -134,6 +134,7 @@ const StoreContextProvider = ({children})=>{
 
     const getFoodItems = async ()=>{
       try{
+        setLoading(true)
         let {data} = await axios.get(apiUrl+"/api/listfood")
         // console.log(data)
         setErrorMsg("")
@@ -144,6 +145,9 @@ const StoreContextProvider = ({children})=>{
       catch(err){
         console.log(err)
         setErrorMsg(data.data.msg)
+      }
+      finally{
+        setLoading(false)
       }
     }
 
@@ -167,7 +171,7 @@ const StoreContextProvider = ({children})=>{
         setCartItem,
         addCartItem, removeCartItem, getCartItems,
         isLogin, setIsLogin,
-        errorMsg, setErrorMsg,
+        errorMsg, setErrorMsg,loading, setLoading,
         showLogin, setShowLogin,
         getItemTotalAmount,
         getTotalAmount,
