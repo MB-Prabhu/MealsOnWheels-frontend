@@ -4,10 +4,12 @@ import { TextField, Button } from '@mui/material';
 import CloseIcon  from '@mui/icons-material/Close';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import LoadingSpinner from './LoadingSpinner';
 
 const Login = () => {
 
   const {isLogin, setIsLogin, setShowLogin, apiUrl, token , setToken} = useContext(StoreContext)
+  const [loading, setLoading] = useState(false)
 
     const [userData, setuserData] = useState({
       Name: "",
@@ -41,8 +43,7 @@ const Login = () => {
       }
 
       try{
-        console.log(finalData)
-        console.log(apiUrl+endPoint)
+        setLoading(true)
         let {data} = await axios.post(`${apiUrl}${endPoint}`, finalData)
         console.log(data)
 
@@ -67,17 +68,35 @@ const Login = () => {
         }
       }
       catch(err){
-        toast.warning(err.response.data?.msg,  {
+        if(err.response.data?.msg.startsWith("connect ETIMEDOUT")){
+          toast.warning("please try again, server is busy",  {
+            autoClose: 2000
+          })
+        }
+        else{
+           toast.warning(err.response.data?.msg,  {
           autoClose: 2000
         })
+        }
+       
       }
+      finally{
+        setLoading(false)
+      }
+
     }
+
+    {loading && (
+      <div className='flex w-full h-full z-10 justify-center items-center bg-opacity-50 bg-[#000]'>
+        <LoadingSpinner />
+      </div>
+    )}
   return (
     <div className='fixed w-full h-full bg-opacity-50 bg-[#676767] z-30 place-content-center place-items-center' >
+
+
+      
       <div 
-      // tabIndex={-1} 
-      // onBlur={() => setShowLogin(false)}
-      // onClick={(e)=> e.stopPropagation()}
       className={`rounded-lg p-6 w-[60%] sm:w-[50%] lg:w-[40%] xl:w-[30%] bg-[#f7f7f7] relative`} >
         <form action="" onSubmit={handleSignupSubmit} className="flex flex-col gap-3">
           <div className='flex justify-between items-center'>
@@ -130,9 +149,7 @@ const Login = () => {
               </>
             )}
             </div>
-            
                 
-
             <Button variant="contained" type="submit" color="success"
             sx={{width: "40%", margin: "20px auto"}}>Submit</Button>
         </form>

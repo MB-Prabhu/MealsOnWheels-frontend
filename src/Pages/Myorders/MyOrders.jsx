@@ -10,12 +10,14 @@ const MyOrders = () => {
 
     let getOrders = async()=>{
        try{
-        console.log("loading bro")
+        // console.log("loading bro")
         let {data} = await axios.get(`${apiUrl}/user/order/userorders`, {headers: {token}}) 
         console.log(data)
-        if(data.ok){
+        // if(data.ok){
+            console.log(data.data)
             setOrderData(data.data)
-        }
+        // }
+        console.log(orderData)
        }
        catch(err){
         console.log(err)
@@ -23,8 +25,8 @@ const MyOrders = () => {
     }
 
     
-
     useEffect(()=>{
+        // console.log(localStorage.getItem("usertoken"))
          token ? token : setToken(localStorage.getItem("usertoken"))
         console.log(token)
         if(token){
@@ -33,8 +35,8 @@ const MyOrders = () => {
         console.log(orderData)
     }, [])
   return (
-    <div className='w-full'>
-        <div className='w-[95%] flex justify-center items-center'>
+    <div className='w-full flex justify-center items-center'>
+        <div className='w-[95%] flex flex-col justify-center items-center border border-black'>
             
            {orderData.length===0 && <div className='w-full text-[#676767] mx-auto sm:min-h-[50vh] min-h-[40vh] text-center place-content-center text-2xl sm:text-3xl font-semibold'>
               Not Ordered Anything yet...
@@ -43,18 +45,20 @@ const MyOrders = () => {
           {orderData.length>0 && 
             ( 
             <>
-             <p className='text-xl font-bold sm:text-2xl '>My Orders</p>
-            <div className='flex flex-col gap-4 w-full my-3'>
+            <div className='w-full'>
+             <p className='text-xl font-bold sm:text-2xl lg:text-3xl text-[#261f75]'>My Orders</p>
+            </div>
+            <div className='flex flex-col items-center gap-4 w-full my-3 min-h-[42vh]'>
                  {orderData.length>0 && orderData.map((order=>{
                 return(
-                    <div className='sm:w-[90%] flex gap-3'>
-                        <img src={assets.basket_icon} alt="basketicon" className='size-28' />
+                    <div className='sm:w-[90%] rounded-lg sm:px-0 lg:px-0 grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 items-center gap-4 border-2 border-black'>
+                        <img src={assets.bag_icon} alt="basketicon" className='sm:size-16' />
 
-                        <div className='flex gap-2 w-[40%]'>
+                        <div className='flex flex-wrap gap-0 lg:w-[100%] overflow-scroll custom-menu'>
                             {order.items.map(({name, quantity},index)=>{
                                 return(
-                                    <div key={index}>
-                                    <p>{name}X{quantity} ,</p>
+                                <div key={index} className='flex gap-0 text-lg' >
+                                    <p>{name}x{quantity},</p>
                                 </div>
                                 )
 
@@ -73,9 +77,9 @@ const MyOrders = () => {
                         }
                         </div>
 
-                        <p>Amount: ${order.amount}</p>
-                        <p>Quantity: {order.quantity}</p>
-                        <p>Status: {order.status}</p>
+                        <p><span className='font-bold lg:text-xl'>Amount:</span> ${order.amount}</p>
+                        <p><span className='font-bold lg:text-xl'>Quantity:</span> {order.quantity}</p>
+                        <p><span className='font-bold lg:text-xl'>Status:</span> {order.status}</p>
                     </div>
                 )
             }))}

@@ -142,10 +142,15 @@ let removeCartItem = async (itemid) => {
 
 
     let getCartItems = async (token)=>{
+       try{
         console.log(token)
         let {data} = await axios.get(apiUrl+'/user/cart'+'/getcartitems', {headers: {token}})
         console.log(data.data)
         setCartItem(data.data)
+       }
+       catch(err){
+        console.log(err.response.data)
+       }
     }
 
     //this  function for removing the qunatity from cart not from home 
@@ -221,7 +226,11 @@ let removeCartItem = async (itemid) => {
       }
       catch(err){
         console.log(err)
-        setErrorMsg(data.data.msg)
+        if(err.response.data.msg.startsWith("connect ETIMEDOUT")){
+            setErrorMsg("please refresh the page to get the available food menu's")
+        }else{
+            setErrorMsg(err.response.data.msg)
+        }
       }
       finally{
         setLoading(false)

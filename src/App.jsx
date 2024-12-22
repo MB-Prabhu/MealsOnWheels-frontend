@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
 import PaymentVerify from './Pages/PaymentVerify/PaymentVerify'
 import MyOrders from './Pages/Myorders/MyOrders'
+import LoadingSpinner from './components/LoadingSpinner'
 
 const App = () => {
       const {showLogin, setShowLogin} = useContext(StoreContext) 
@@ -26,8 +27,11 @@ const App = () => {
   return (
     <div className='bg-[#fdfdfa]'>
       <ToastContainer />
-      {showLogin && <Login />}
+      {showLogin && <Login  />}
       {location.pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
+
+     
+      
      <div className='content'>
       <Routes>
         <Route path='/' element={<Home />} />
