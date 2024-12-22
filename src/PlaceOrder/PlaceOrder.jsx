@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { StoreContext } from '../context/StoreContext'
 import CardTotal from '../Pages/Cart/CardTotal'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const PlaceOrder = () => {
 
@@ -15,35 +16,20 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
         pincode: "",
         landmark: ""
       })
-  
-  
+    
+      const [errorMsg, setErrorMsg] = useState("")
+
       let handleChange = ({target: {name, value}})=>{
           setdeliveryData((p)=> ({...p, [name]: value}))
       }
-   {/* <TextField label="Email"
-                value={deliveryData.email}
-                onChange={(e)=> handleChange(e)}
-                name="email" variant="outlined" 
-                sx={{height: "40px"}} /> */}
-      // let handleSignupSubmit=(e)=>{
-      //   e.preventDefault()
-      //   console.log(deliveryData)
-      //   setdeliveryData({
-      //     Name: "",
-      //     mobile: "",
-      //     email: "",
-      //     address: "",
-      //     pincode: "",
-      //     landmark: ""
-      //   })
-      // }
+ 
   
       let placeOrder = async (e)=>{
         e.preventDefault()
         let ordersToPlaced = []
+        setErrorMsg("")
         try{
           food_list.map(item=>{
-            // console.log(item)
             if(cartItem[item._id]>0){  
               console.log(cartItem)
 
@@ -69,87 +55,19 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
             console.log(session_url)
             window.location.replace(session_url)
           }
-          else{
-            alert("error")
-          }
-
         }
         catch(err){
           console.log(err)
+          setErrorMsg(err.response.data.msg)
+          toast.error(err.response.data.msg)
         }
        
       }
 
   return (
-    <div className="p-20 flex md:flex-row justify-between items-center flex-col">
-       {/* <div 
-      className={`rounded-lg border border-black w-[100%] sm:w-[50%] lg:w-[60%] xl:w-[30%] bg-[#f7f7f7] `} >
-        <form action="" onSubmit={handleSignupSubmit} className="flex flex-col gap-6 px-6">
-          <div className='text-center py-4 text-2xl font-bold'>
-            Delivery details
-          </div>
-
-            <div className='flex flex-col'>
-           
-           <div className='flex gap-4 my-7'>
-           <TextField label="Name" 
-              value={deliveryData.Name}
-              onChange={(e)=> handleChange(e)}
-              name="Name" variant="outlined" 
-              sx={{height: "40px",  flex: 1}} />
-
-              <TextField label="Mobile"
-              value={deliveryData.mobile}
-              onChange={(e)=> handleChange(e)}
-              name="mobile" variant="outlined" 
-              sx={{height: "40px", flex: 1}} />
-           </div>
-              
-
-               
-
-              <TextField label="Address"
-              value={deliveryData.address}
-              onChange={(e)=> handleChange(e)}
-              name="address" variant="outlined" 
-              multiline
-              rows={2}
-              maxRows={4}
-              sx={{height: "40px", margin: "5px 0"}} />
-
-            <TextField label="Pincode"
-              value={deliveryData.password}
-            onChange={(e)=> handleChange(e)}
-            name="pincode" variant="outlined" 
-            sx={{height: "40px", margin: "5px 0"}} />
-
-              <TextField label="Landmark"
-              onChange={(e)=> handleChange(e)}
-              value={deliveryData.confirmPassword}
-              name="landmark" variant="outlined" 
-              sx={{height: "40px"}} />
-       
-              
-         
-            </div>
-
-            <Button variant="contained" type="submit" color="success"
-            sx={{width: "40%", margin: "10px auto"}}>Submit</Button>
-        </form>
-      </div> */}
- <form onSubmit={placeOrder} className='md:w-[50%] sm:w-[100%] py-4 px-6 shadow-lg flex flex-col rounded-lg gap-4 font-extrabold'
-      // style={{
-      //   width: "50%",
-      //   margin: "0 auto",
-      //   display: "flex",
-      //   flexDirection: "column",
-      //   gap: "16px",
-      //   marginTop: "32px",
-      //   padding: "24px",
-      //   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-      //   borderRadius: "8px",
-      // }}
-    >
+    <div className="p-20 flex md:flex-row justify-around sm:justify-between gap-10 sm:gap-4 items-center flex-col">
+     
+ <form onSubmit={placeOrder} className='md:w-[50%] border border-black sm:w-[100%] py-4 px-6 shadow-lg flex flex-col rounded-lg gap-4 font-extrabold'>
       <Typography variant="h5" style={{ textAlign: "center", margin: "16px 0", color:"orangered", fontWeight:"600", letterSpacing: "5px", textTransform: "uppercase"}}>
        Delivery Details
       </Typography>
@@ -224,8 +142,25 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
       </Button>
     </form>
     
-    <div>
-      <CardTotal />
+    <div className=' w-[100%] lg:w-[37%] md:w-[50%] sm:w-[70%] '>
+       <div className='w-[80%] lg:w-[100%] md:w-[90%] sm:w-[100%] sm:h-[70%]'>
+              <h2 className='md:text-3xl text-2xl text-[#ff7722] font-bold my-4'>Card Total</h2>
+              
+              <div className='flex flex-col gap-4 px-4'>
+                  <p className='flex justify-between sm:justify-between text-xl font-semibold'>SubTotal <span className='font-normal'>${getTotalAmount() || 0}</span></p>
+                  <hr className='bg-[#676767]' />
+                  <p className='flex justify-between text-xl font-semibold'>Delivery Fee <span className='font-normal'>$2</span></p>
+                  <hr className='bg-[#676767]' />
+                  <p className='flex justify-between text-xl font-semibold'>Total <span className='font-bold'>${getTotalAmount()+2 || 0}</span></p>
+              </div>
+      
+              {/* <Button variant='contained'
+              onClick={()=> navigate('/placeorder')}
+               className='px-4 py-1 text-white' sx={{backgroundColor: "orangered", margin: "10px 0"}}>
+                  Proceed to Checkout
+              </Button> */}
+      
+          </div>
     </div>
     </div>
   )

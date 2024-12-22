@@ -11,9 +11,11 @@ const ProfileIcon = () => {
 let {token, setToken} = useContext(StoreContext)
 
 let handlelogout = ()=>{
+
     localStorage.removeItem("usertoken")
     setToken("")
     navigate('/')
+    window.location.reload(); 
 }
 
   return (

@@ -22,12 +22,12 @@ const Cart = () => {
        {Object.keys(cartItem).length>0 ? <table className='p-2 w-full'>
           <thead>
           <tr className="text-lg md:text-xl">
-            <th>Item</th>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Remove</th>
+            <th className='text-[#ff7722]'>Item</th>
+            <th className='text-[#ff7722]'>Title</th>
+            <th className='text-[#ff7722]'>Price</th>
+            <th className='text-[#ff7722] text-[15px]'>Quantity</th>
+            <th className='text-[#ff7722] text-[15px]'>Total</th>
+            <th className='text-[#ff7722] text-[15px]'>Remove</th>
           </tr>
           </thead>
           <tbody>
@@ -38,8 +38,8 @@ const Cart = () => {
                     <td className="py-2 place-items-center  ">
                       <img src={`${apiUrl}/images/${ele.image}`} alt="" className='rounded-full h-[100px] w-[100px]' />
                       </td>
-                    <td className=''>{ele.name}</td>
-                    <td className=''>{ele.price}</td>
+                    <td className='sm:font-semibold'>{ele.name}</td>
+                    <td className='sm:font-semibold'>${ele.price}</td>
                     <td>
                       <div className='flex justify-center items-center gap-2'>
                       {/* <img src={assets.remove_icon_red} alt=""
@@ -51,8 +51,8 @@ const Cart = () => {
                                      className='cursor-pointer' /> */}
                       </div>
                       </td>
-                    <td className=''>{getItemTotalAmount(ele._id)}</td>
-                    <td className=''>
+                    <td className='sm:font-semibold'>${getItemTotalAmount(ele._id)}</td>
+                    <td className='sm:font-semibold'>
                       
                     {/* <Button variant="contained" 
                color='error'

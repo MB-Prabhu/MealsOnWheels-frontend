@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useContext, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { StoreContext } from '../../context/StoreContext'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 const PaymentVerify = () => {
 
@@ -31,11 +32,7 @@ const PaymentVerify = () => {
   return (
     <div className='w-full'>
         <div className='w-[95%] flex justify-center items-center'>
-            <div className="outerwidth">
-                <div className="innerspinner">
-                    <p className='text-4xl font-bold'>Loading...</p>
-                </div>
-            </div>
+           <div className='flex justify-center items-center min-h-[80vh]'><LoadingSpinner /></div>
         </div>
         
     </div>

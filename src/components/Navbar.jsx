@@ -32,18 +32,18 @@ const Navbar = () => {
         <ul
         className={`flex gap-1`}
       >
-        <Link to="/" className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Home</Link>
-        <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Menu</Link>
-        <a href="#contact" className="lg:px-4 py-2 hover:underline cursor-pointer text-center">Contact Us</a>
-        <Link className="lg:px-4 py-2 hover:underline cursor-pointer text-center">About Us</Link>
+        <Link to="/" className="lg:px-4 py-2 hover:underline lg:text-xl md:text-xl   cursor-pointer text-center">Home</Link>
+        <Link className="lg:px-4 py-2 hover:underline lg:text-xl md:text-xl   cursor-pointer text-center">Menu</Link>
+        <a href="#contact" className="lg:px-4 py-2 hover:underline lg:text-xl md:text-xl   cursor-pointer text-center">Contact Us</a>
+        <Link className="lg:px-4 py-2 hover:underline  lg:text-xl  md:text-xl cursor-pointer text-center">About Us</Link>
       </ul>
         </div>
-
+ 
       <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
        <div className={`flex items-center justify-between w-44 lg:gap-4 lg:w-48 sm:gap-2`}>
         
-            <img src={assets.search_icon} alt="" className='size-6 lg:size-8 cursor-pointer' />
+            {/* <img src={assets.search_icon} alt="" className='size-6 lg:size-8 cursor-pointer' /> */}
             <div className='relative'>
             <Link to="/cart">
             <img src={assets.basket_icon} alt="" className='size-6 lg:size-8 cursor-pointer' />
@@ -57,8 +57,9 @@ const Navbar = () => {
             }
 
             <div>
-                <Link to="/adminhome" className='px-2 rounded-lg py-2'>
-                  Admin Page
+                <Link to="/adminhome" className='px-2 rounded-full py-2'>
+                  {/* <img src={assets.admin_panel} alt="" className='bg-contain rounded-full h-14 w-16 ' /> */}
+                  <img src={assets.settings} alt="" className='bg-contain rounded-full h-12 w-12 border border-black p-1' />
                 </Link>
             </div>
        </div>
