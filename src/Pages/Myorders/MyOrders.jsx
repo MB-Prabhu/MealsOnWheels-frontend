@@ -7,10 +7,15 @@ const MyOrders = () => {
     const {token,setToken, apiUrl} = useContext(StoreContext)
 
     const [orderData, setOrderData] = useState([])
-
     let getOrders = async()=>{
        try{
-        // console.log("loading bro")
+        const token = localStorage.getItem("usertoken");
+    if (!token) {
+      throw new Error("No token found, please login.");
+    }
+
+    console.log("hi well")
+    console.log(token)
         let {data} = await axios.get(`${apiUrl}/user/order/userorders`, {headers: {token}}) 
         console.log(data)
         // if(data.ok){
@@ -27,11 +32,11 @@ const MyOrders = () => {
     
     useEffect(()=>{
         // console.log(localStorage.getItem("usertoken"))
-         token ? token : setToken(localStorage.getItem("usertoken"))
-        console.log(token)
-        if(token){
+        //  token ? token : setToken(localStorage.getItem("usertoken"))
+        // console.log(token)
+        // if(token){
             getOrders()
-        }
+        // }
         console.log(orderData)
     }, [])
   return (
@@ -51,28 +56,16 @@ const MyOrders = () => {
             <div className='flex flex-col items-center gap-4 w-full my-3 min-h-[42vh]'>
                  {orderData.length>0 && orderData.map((order=>{
                 return(
-                    <div className='sm:w-[90%] rounded-lg sm:px-0 lg:px-0 grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 items-center gap-4 border-2 border-black'>
+                    <div key={order._id} className='sm:w-[90%] rounded-lg sm:px-0 lg:px-0 grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 items-center gap-4 border-2 border-black'>
                         <img src={assets.bag_icon} alt="basketicon" className='sm:size-16' />
 
                         <div className='flex flex-wrap gap-0 lg:w-[100%] overflow-scroll custom-menu'>
                             {order.items.map(({name, quantity},index)=>{
                                 return(
-                                <div key={index} className='flex gap-0 text-lg' >
+                                <div key={index} className='flex gap-0 text-lg w-[80%] border border-black flex-wrap' >
                                     <p>{name}x{quantity},</p>
-                                </div>
+                               </div>
                                 )
-
-                                 // if(index===items.length.-1){
-                                //   return(  <div key={index}>
-                                //     <p>{name}X{quantity} ,</p>
-                                //     </div> )
-                                // }
-                                // else{
-                                //    return ( <div key={index}>
-                                //     <p>{name}X{quantity} ,</p>
-                                //     </div> )
-                                // }
-
                             })
                         }
                         </div>
