@@ -4,10 +4,6 @@ import { StoreContext } from '../context/StoreContext'
 
 const ExploreMenu = ({category, setCategory}) => {
 
-
-
-
-
   return (
     <div className='w-full mt-4 flex justify-center items-center'>
         <div className="w-[90%] ">
@@ -17,7 +13,7 @@ const ExploreMenu = ({category, setCategory}) => {
         {menu_list.map((ele,idx)=>{
             return(
                 <div key={idx}
-                onClick={()=> setCategorytegory((prev)=> prev==ele.menu_name? "all": ele.menu_name)} 
+                onClick={()=> setCategory((prev)=> prev==ele.menu_name? "all": ele.menu_name)} 
                  className='flex flex-col items-center gap-1  min-w-[200px]'>
                 <img src={ele.menu_image} alt="" className={`${category===ele.menu_name?"p-1 border-[#e86613]":""} border-2 rounded-full mt-2 sm:size-[150px] size-[100px]`} />
                 <p>{ele.menu_name}</p>

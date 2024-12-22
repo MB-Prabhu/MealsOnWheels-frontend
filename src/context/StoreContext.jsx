@@ -236,8 +236,6 @@ let removeCartItem = async (itemid) => {
         getFoodItems()
     },[])
 
-    
-
     useEffect(()=>{
         console.log(cartItem)
     }, [cartItem])
@@ -247,7 +245,6 @@ let removeCartItem = async (itemid) => {
         cartItem,
         setCartItem,
         addCartItem, removeCartItem, getCartItems,
-        selectedCategory, setSelectedCategory,
         isLogin, setIsLogin,
         errorMsg, setErrorMsg,loading, setLoading,
         showLogin, setShowLogin,
