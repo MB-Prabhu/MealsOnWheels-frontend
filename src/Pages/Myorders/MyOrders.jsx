@@ -51,7 +51,7 @@ const MyOrders = () => {
             ( 
             <>
             <div className='w-full'>
-             <p className='text-xl font-bold sm:text-2xl lg:text-3xl text-[#261f75]'>My Orders</p>
+             <p className='text-2xl font-bold sm:text-2xl lg:text-3xl text-[#261f75]'>My Orders</p>
             </div>
             <div className='flex flex-col items-center gap-4 w-full my-3 min-h-[42vh]'>
                  {orderData.length>0 && orderData.map((order=>{
