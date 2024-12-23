@@ -1,21 +1,23 @@
-import { Button, IconButton } from '@mui/material'
+import { IconButton } from '@mui/material'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import  DeleteIcon from '@mui/icons-material/Delete';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 import ArrowForwardIosIcon  from '@mui/icons-material/ArrowForwardIos';
 import  ArrowBackIosIcon  from '@mui/icons-material/ArrowBackIos';
+import { StoreContext } from '../context/StoreContext';
 const AdminList = () => {
 
-  const apiUrl = import.meta.env.VITE_API_URL
+    const {apiUrl} = useContext(StoreContext)
+  
   const [listData, setListData] = useState([])
   const [loading, setLoading] = useState(false)
-      const [limit, setLimit] = useState(10)
     const [hasNext, setHasNext] = useState(false);
       const [page, setPage] = useState(1)
   
+      const limit = 10
 
       let handlePageNo = (action)=>{
         if(action === "prev"){
@@ -39,7 +41,7 @@ const AdminList = () => {
       }
     }
     catch(err){
-      if(err.response.data?.msg.startsWith("Operation")){
+      if(err.response.data?.msg.startsWith("Operation") || err.response.data?.msg.startsWith("connect") || err.response.data?.msg.startsWith("read")){
         toast.warning("please try again")
       }
       else{
@@ -47,7 +49,6 @@ const AdminList = () => {
           autoClose: 1000
         })
       }
-      console.log(err.response.data)
     }
     finally{
       setLoading(false)
@@ -57,7 +58,6 @@ const AdminList = () => {
   const removeFoodItem = async (id)=>{
     try{
       let {data} = await axios.delete(`${apiUrl}/api/removefood/${id}`)
-        console.log(data)
       if(data.ok){
         setListData(p=>{
          let remainingItems = p.filter(({_id})=> _id !== data.data._id)
@@ -67,7 +67,7 @@ const AdminList = () => {
       }
     }
     catch(err){
-       if(err.response.data?.msg.startsWith("Operation")){
+      if(err.response.data?.msg.startsWith("Operation") || err.response.data?.msg.startsWith("Connect") || err.response.data?.msg.startsWith("read")){
                 toast.warning("please try again")
               }
               else{
@@ -77,13 +77,10 @@ const AdminList = () => {
               }
     }
   }
+
   useEffect(()=>{
     fetchFoodData()
   }, [page])
-
-  // console.log(listData)
-
-
 
   return (
     <div className='px-2 rounded-lg border border-black w-[100%] sm:w-[70%] lg:w-[75%] xl:w-[80%] overflow-scroll custom-menu'>

@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios  from 'axios';
 import { StoreContext } from '../context/StoreContext';
 import { useEffect } from 'react';
-import { assets } from '../assets/assets/frontend_assets/assets';
-import { Button, MenuItem, Select } from '@mui/material';
+
 import LoadingSpinner from '../components/LoadingSpinner';
 import { toast } from 'react-toastify';
 import OrderIndiCompo from './adminComponents/OrderIndiCompo';
@@ -16,12 +15,10 @@ const AdminOrders = () => {
   const [orderList, setOrderList] = useState([])
   const [loading, setLoading] = useState(false)
   
-    const [limit, setLimit] = useState(10)
       const [hasNext, setHasNext] = useState(false);
         const [page, setPage] = useState(1)
 
-  // const [foodStatus, setFoodStatus] = useState("")
-
+const limit = 10
 
   let handlePageNo = (action)=>{
     if(action === "prev"){
@@ -38,7 +35,6 @@ const AdminOrders = () => {
    try{
     setLoading(true)
     let {data} = await axios.get(`${apiUrl}/api/listorders?page=${page}&limit=${limit}`)
-    console.log(data)
     if(data.ok){
       setOrderList(data.data)
       setHasNext(data?.data.length < limit ? true: false)
@@ -46,8 +42,7 @@ const AdminOrders = () => {
     }
    }
    catch(err){
-    console.log(err.response.data)
-     if(err.response.data?.msg.startsWith("Operation" || "read ECONNRESET" || "read ECONNRESET")){
+    if(err.response.data?.msg.startsWith("Operation") || err.response.data?.msg.startsWith("connect") || err.response.data?.msg.startsWith("read")){
                     toast.warning("please try again")
                   }
                   else{
@@ -67,7 +62,6 @@ const AdminOrders = () => {
     getOrdersList()
   }, [page])
 
-  // console.log(orderList)
 
   return (
     <div className='p-4 rounded-lg w-full overflow-scroll custom-menu'>
@@ -105,7 +99,6 @@ const AdminOrders = () => {
                
         </div>}
 
-      {/* <LoadingSpinner /> */}
     </div>
   )
 }

@@ -7,8 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { StoreContext } from '../context/StoreContext';
 
 const AdminAdd = () => {
-  const apiUrl = import.meta.env.VITE_API_URL;
-
+  const {apiUrl} = useContext(StoreContext)
   const {token} = useContext(StoreContext)
 
   const[imageUpload, setImageUpload] = useState(null)
@@ -35,9 +34,7 @@ const AdminAdd = () => {
 
       try{
         setLoading(true)
-        console.log(token)
         let {data} = await axios.post(`${apiUrl}/api/createfood`,formData, {headers: {token}})
-        console.log(data)
         if(data.ok){
           setProductData({
             name:"",
@@ -53,7 +50,6 @@ const AdminAdd = () => {
 
       }
       catch(err){
-        console.log(err.response.data.msg)
         if(err.response.data?.msg.startsWith("Operation")){
           toast.warning("please try again")
         }
@@ -104,8 +100,6 @@ const AdminAdd = () => {
 
         <Select
           value={productData.category}
-          //  label="Age"
-          // displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
           sx={{width:"100%", color:"black"}}
           onChange={handleChange} name="category"

@@ -8,7 +8,7 @@ import  axios  from 'axios';
 
 const AdminLogin = () => {
 
-     const {showAdminLogin, setshowAdminLogin, apiUrl, token , setToken} = useContext(StoreContext)
+     const {showAdminLogin, setshowAdminLogin, apiUrl, setToken} = useContext(StoreContext)
       const [loading, setLoading] = useState(false)
     
         const [adminData, setAdminData] = useState({
@@ -19,10 +19,8 @@ const AdminLogin = () => {
 
         let navigate = useNavigate()
     
-    
         let handleChange = ({target: {name, value}})=>{
             setAdminData((p)=> ({...p, [name]: value}))
-            console.log(adminData)
         }
 
         let handleAdminLogin=async (e)=>{
@@ -30,7 +28,6 @@ const AdminLogin = () => {
             try{
               setLoading(true)
               let {data} = await axios.post(`${apiUrl}/api/adminlogin`, adminData)
-              console.log(data)
       
               if(data.ok){
                 localStorage.setItem("admintoken", data?.token)
@@ -50,9 +47,7 @@ const AdminLogin = () => {
               }
             }
             catch(err){
-                console.log(err)
                 if(err.message==="Network Error"){
-                    console.log(err.message)
                     toast.warning(err.message+" please try again")
                 }
                 else{
@@ -84,9 +79,7 @@ const AdminLogin = () => {
 
   return (
     <div className='fixed w-full h-full bg-opacity-50 bg-[#676767] z-30 place-content-center place-items-center' >
-
-
-      
+        {loading}
     <div 
     className={`rounded-lg p-6 w-[60%] sm:w-[50%] lg:w-[40%] xl:w-[30%] bg-[#f7f7f7] relative`} >
       <form action="" onSubmit={handleAdminLogin} className="flex flex-col gap-3">
@@ -100,13 +93,15 @@ const AdminLogin = () => {
           value={adminData.email}
           onChange={(e)=> handleChange(e)}
           name="email" variant="outlined" 
-          sx={{height: "40px"}} />
+          sx={{height: "40px"}}
+          type="email" />
 
           <TextField label="Password"
             value={adminData.password}
           onChange={(e)=> handleChange(e)}
           name="password" variant="outlined" 
-          sx={{height: "40px"}} />
+          sx={{height: "40px"}} 
+          type='password'/>
 
    
           </div>

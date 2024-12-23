@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-// import { assets } from '..//assets/assets/frontend_assets/assets';
 import { Button, MenuItem, Select } from '@mui/material';
 import { assets } from '../../assets/assets/frontend_assets/assets';
 import axios  from 'axios';
@@ -15,18 +14,16 @@ const OrderIndiCompo = ({ele,}) => {
     let updateFoodStatus= async(_id)=>{
         try{
         let {data} = await axios.patch(`${apiUrl}/api/updateorderstatus`, {foodStatus, _id})
-        console.log(data)
           if(data.ok){
              setFoodStatus(data.data.status)
              toast.success(data.msg, {
               autoClose: 2000
              })
           }
-          // setFoodStatus("Food Processing")
         }
         catch(err){
           console.log(err)
-          if(err.response.data?.msg.startsWith("Operation")){
+          if(err.response.data?.msg.startsWith("Operation") || err.response.data?.msg.startsWith("connect") || err.response.data?.msg.startsWith("read")){
             toast.warning("please try again")
           }
           else{
@@ -37,21 +34,11 @@ const OrderIndiCompo = ({ele,}) => {
         }
       }
     
-      let handleChange = ({target: {value}}, index)=>{
-        // setFoodStatus(p=> {
-             
-        //       let copyOrder = [...orderList]
-        //       console.log(copyOrder)
-        //       copyOrder[index].status= value
-            
-        // })
-       
-    
-      }
+      
 
   return (
     <>
-        <div key={ele._id} className='w-full gap-4 grid lg:grid-cols-5 border-2 border-[#676767] sm:grid-cols-2 py-2 sm:py-0 items-center place-items-center md:gap-4 sm:gap-2'>
+        <div key={ele._id} className='w-full gap-4 grid lg:grid-cols-5 border-2 px-4 border-[#676767] sm:grid-cols-2 py-2 sm:py-0 items-center place-items-center md:gap-4 sm:gap-2'>
                           <div>
                             <img src={assets.parcel_icon} alt="" className='lg:size-28 sm:size-28  size-32' />
                           </div>
