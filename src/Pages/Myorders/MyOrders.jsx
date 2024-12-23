@@ -40,8 +40,8 @@ const MyOrders = () => {
         console.log(orderData)
     }, [])
   return (
-    <div className='w-full flex justify-center items-center'>
-        <div className='w-[95%] flex flex-col justify-center items-center border border-black'>
+    <div className='w-full flex justify-center items-center my-8'>
+        <div className='w-[95%] flex flex-col justify-center items-center '>
             
            {orderData.length===0 && <div className='w-full text-[#676767] mx-auto sm:min-h-[50vh] min-h-[40vh] text-center place-content-center text-2xl sm:text-3xl font-semibold'>
               Not Ordered Anything yet...
@@ -56,13 +56,16 @@ const MyOrders = () => {
             <div className='flex flex-col items-center gap-4 w-full my-3 min-h-[42vh]'>
                  {orderData.length>0 && orderData.map((order=>{
                 return(
-                    <div key={order._id} className='sm:w-[90%] rounded-lg sm:px-0 lg:px-0 grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 items-center gap-4 border-2 border-black'>
-                        <img src={assets.bag_icon} alt="basketicon" className='sm:size-16' />
+                    <div key={order._id} className='sm:w-[100%] flex flex-col w-[100%] justify-center py-2 rounded-lg sm:px-0 lg:px-0 sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 items-center gap-4 border-2 border-black'>
 
-                        <div className='flex flex-wrap gap-0 lg:w-[100%] overflow-scroll custom-menu'>
-                            {order.items.map(({name, quantity},index)=>{
+                        <div className='flex justify-center items-center'>
+                        <img src={assets.bag_icon} alt="basketicon" className='sm:size-16' />
+                        </div>
+
+                        <div className='flex flex-wrap gap-0 w-[60%] lg:w-[60%]  overflow-scroll custom-menu'>
+                            {order.items.map(({name, _id,quantity},index)=>{
                                 return(
-                                <div key={index} className='flex gap-0 text-lg w-[80%] border border-black flex-wrap' >
+                                <div key={_id} className='flex gap-0 text-lg w-[80%] flex-wrap' >
                                     <p>{name}x{quantity},</p>
                                </div>
                                 )
@@ -70,8 +73,11 @@ const MyOrders = () => {
                         }
                         </div>
 
+                            <div className=' text-center'>
+
                         <p><span className='font-bold lg:text-xl'>Amount:</span> ${order.amount}</p>
-                        <p><span className='font-bold lg:text-xl'>Quantity:</span> {order.quantity}</p>
+                            </div>
+                        {/* <p><span className='font-bold lg:text-xl'>Quantity:</span> {order.quantity}</p> */}
                         <p><span className='font-bold lg:text-xl'>Status:</span> {order.status}</p>
                     </div>
                 )

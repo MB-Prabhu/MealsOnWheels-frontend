@@ -7,7 +7,9 @@ const ExploreMenu = ({category, setCategory}) => {
   return (
     <div className='w-full mt-4 flex justify-center items-center'>
         <div className="w-[90%] ">
-        <h1 className='sm:text-2xl text-xl font-bold sm:font-semibold lg:font-bold my-2'>Explore our menu</h1>
+        <p className='text-2xl text-orange-500 sm:text-3xl sm:font-bold'>Explore our menu</p>
+
+        {/* <h1 className='sm:text-2xl text-xl font-bold sm:font-semibold lg:font-bold my-2'>Explore our menu</h1> */}
         <p className='sm:text-lg'>Choose from a diverse meby featureing a delicious dishes.</p>
         <div className='flex justify-between sm:py-2 mt-1 items-center gap-[30px] text-cente overflow-x-scroll custom-menu'>
         {menu_list.map((ele,idx)=>{

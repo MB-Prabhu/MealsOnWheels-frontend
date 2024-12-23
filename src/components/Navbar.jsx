@@ -48,9 +48,8 @@ const Navbar = () => {
         className={`flex gap-1`}
       >
         <Link to="/" className="lg:px-4 py-2 hover:underline lg:text-xl md:text-xl   cursor-pointer text-center">Home</Link>
-        <Link className="lg:px-4 py-2 hover:underline lg:text-xl md:text-xl   cursor-pointer text-center">Menu</Link>
+        {/* <Link className="lg:px-4 py-2 hover:underline lg:text-xl md:text-xl   cursor-pointer text-center">Menu</Link> */}
         <a href="#contact" className="lg:px-4 py-2 hover:underline lg:text-xl md:text-xl   cursor-pointer text-center">Contact Us</a>
-        <Link className="lg:px-4 py-2 hover:underline  lg:text-xl  md:text-xl cursor-pointer text-center">About Us</Link>
       </ul>
         </div>
  

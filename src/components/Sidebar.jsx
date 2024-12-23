@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Sidebar = ({isMenuOpen, setIsMenuOpen}) => {
   return (
@@ -8,15 +9,26 @@ const Sidebar = ({isMenuOpen, setIsMenuOpen}) => {
          >
         <p onClick={()=> setIsMenuOpen(false)} 
             className='ml-auto cursor-pointer text-[24px]'>X</p>
-        <li className="relative px-4 py-2 text-center cursor-pointer border-[#a6a6a6] border-b-2 group">
+        <li className="relative text-lg px-4 py-2 text-center cursor-pointer group">
           Home
           <span
               className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-[#a6a6a6] transition-all duration-300 group-hover:w-full group-hover:left-0"
             ></span>
           </li>
-        <li className="px-4 py-2 text-center cursor-pointer border-[#a6a6a6] border-b-2">Menu</li>
-        <li className="px-4 py-2 text-center cursor-pointer border-[#a6a6a6] border-b-2">Contact Us</li>
-        <li className="px-4 py-2 text-center cursor-pointer border-[#a6a6a6] border-b-2">About Us</li>
+
+          <Link to="/cart" className="relative text-lg px-4 py-2 text-center cursor-pointer  group">
+          cart
+          <span
+              className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-[#a6a6a6] transition-all duration-300 group-hover:w-full group-hover:left-0"
+            ></span>
+          </Link>
+
+          <a href="#contact"  className="relative text-lg px-4 py-2 text-center cursor-pointer  group">
+          contact us
+          <span
+              className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-[#a6a6a6] transition-all duration-300 group-hover:w-full group-hover:left-0"
+            ></span>
+          </a>
       </ul>
     </div>
   )

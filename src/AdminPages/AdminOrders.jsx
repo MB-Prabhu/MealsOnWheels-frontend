@@ -37,7 +37,7 @@ const AdminOrders = () => {
   const getOrdersList = async ()=>{
    try{
     setLoading(true)
-    let {data} = await axios.get(`${apiUrl}/api/listorders`)
+    let {data} = await axios.get(`${apiUrl}/api/listorders?page=${page}&limit=${limit}`)
     console.log(data)
     if(data.ok){
       setOrderList(data.data)

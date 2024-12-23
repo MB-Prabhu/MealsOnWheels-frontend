@@ -36,6 +36,7 @@ const FoodDisplay = ({selectedCategory}) => {
  
     const searchFood = async()=>{
         try{
+          setErrorMsgSearch("")
           setLoadingsearch(true)
           console.log(limit)
             let {data} = await axios.get(`${apiUrl}/user/cart/searchFood?search=${searchValue}&page=${page}&limit=${limit}`)
@@ -86,16 +87,17 @@ const FoodDisplay = ({selectedCategory}) => {
         <p className='text-2xl sm:text-3xl sm:font-semibold'>your selected Food Items</p>
         </div>
 
-      <div className='border-2 border-blue-500 rounded-lg px-2 my-2'>
+      <div className='border-2 relative w-[60%] border-blue-500 rounded-lg px-2 my-2'>
+        
         <input type="text" 
         value={searchValue}
         placeholder='Search '
         onChange={(e)=> setSearchValue(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') searchFood();
-       }}
-        className='border-none outline-none h-10 text-lg' />
-        <IconButton onClick={searchFood}>
+          if (e.key === 'Enter') searchFood();}}
+        className='border-none outline-none h-10 text-lg w-[95%]' />
+
+        <IconButton onClick={searchFood} sx={{position:"absolute", right:"0", top: "0"}}>
         <SearchIcon />
         </IconButton>
       </div>
@@ -104,8 +106,9 @@ const FoodDisplay = ({selectedCategory}) => {
       {!isSelectedAvailable() && <div className='flex justify-center font-bold text-xl sm:text-2xl lg:text-3xl items-center min-h-[20vh]'>No Foods Available for the selected category  </div>}
 
             {!loading && errorMsg && <div className='w-full text-center py-7 text-2xl sm:text-2xl sm:font-semibold '><p>{errorMsg}</p></div>}        
+            {!loading && !errorMsg && errorMsgSearch && <div className='w-full text-center py-7 text-2xl sm:text-2xl sm:font-semibold '><p>{errorMsgSearch}</p></div>}        
         <div className='mt-2 w-[90%]  py-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'>
-            {isSelectedAvailable && !loading && !errorMsg && food_list.length>0 && food_list.map(({_id, name, image, price, description,category})=>{
+            {isSelectedAvailable && !loading && !errorMsgSearch && !errorMsg && food_list.length>0 && food_list.map(({_id, name, image, price, description,category})=>{
                         if(selectedCategory==="all"){
                           return <SingleFoodItem key={_id} _id={_id} name={name} image={image} price={price} description={description} category={category}  />
                         }
@@ -116,7 +119,7 @@ const FoodDisplay = ({selectedCategory}) => {
         </div>
 
 
-        {!errorMsg && !loading &&  food_list.length>0 && <div className=' my-4 flex justify-center items-center w-[100%]' >
+        {!errorMsg && !errorMsgSearch && !loading &&  food_list.length>0 && <div className=' my-4 flex justify-center items-center w-[100%]' >
           <div className=' flex gap-2 '>
           <button 
           className={`border-none sm:py-2 sm:px-2 py-1 px-1 cursor-pointer  ${page<2? "active:bg-[#e29750]" : "active:bg-[#ea9b51]"} text-lg ${page<2 ? "bg-[#e29750]" : "bg-[#eb7a11]"} rounded-lg`}
