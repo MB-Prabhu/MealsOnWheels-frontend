@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,14 +7,28 @@ const ADminProtectedRoutes = ({children}) => {
 
     let navigate = useNavigate()
 
-    let admintokenvalue = localStorage.getItem("admintoken")
+    // let admintokenvalue = localStorage.getItem("admintoken")
 
-    if(!admintokenvalue){
-        setshowAdminLogin(true)
-        navigate('/')
-        return false;
+    // if(!admintokenvalue){
+    //     setshowAdminLogin(true)
+    //     navigate('/')
+    //     return false;
+    // }
+
+
+    useEffect(() => {
+      const admintokenvalue = localStorage.getItem('admintoken');
+  
+      if (!admintokenvalue) {
+        setshowAdminLogin(true); // Show the admin login modal
+        navigate('/'); // Redirect to the home page
+      }
+    }, [setshowAdminLogin, navigate]);
+  
+    const admintokenvalue = localStorage.getItem('admintoken');
+    if (!admintokenvalue) {
+      return null; // Render nothing until redirection is complete
     }
-
   return (
         children
   )

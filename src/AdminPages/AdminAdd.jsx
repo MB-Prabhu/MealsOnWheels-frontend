@@ -69,7 +69,7 @@ const AdminAdd = () => {
   }
 
   return (
-    <div className='px-2 border relative border-black w-[100%] sm:w-[70%] lg:w-[75%] xl:w-[80%]'>
+    <div className=' rounded-lg px-2 border relative border-black w-[100%] sm:w-[70%] lg:w-[75%] xl:w-[80%]'>
 
       {loading && <div className='flex absolute w-full h-full justify-center bg-[#000000aa] bg-opacity-50 items-center min-h-[80vh]'><LoadingSpinner />  </div>}
 

@@ -86,9 +86,10 @@ const FoodDisplay = ({selectedCategory}) => {
         <p className='text-2xl sm:text-3xl sm:font-semibold'>your selected Food Items</p>
         </div>
 
-      <div className='border border-black rounded-lg px-2 my-2'>
+      <div className='border-2 border-blue-500 rounded-lg px-2 my-2'>
         <input type="text" 
         value={searchValue}
+        placeholder='Search '
         onChange={(e)=> setSearchValue(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') searchFood();
@@ -115,8 +116,10 @@ const FoodDisplay = ({selectedCategory}) => {
         </div>
 
 
-        {!errorMsg && !loading &&  food_list.length>0 && <div  >
-                <button 
+        {!errorMsg && !loading &&  food_list.length>0 && <div className=' my-4 flex justify-center items-center w-[100%]' >
+          <div className=' flex gap-2 '>
+          <button 
+          className={`border-none sm:py-2 sm:px-2 py-1 px-1 cursor-pointer  ${page<2? "active:bg-[#e29750]" : "active:bg-[#ea9b51]"} text-lg ${page<2 ? "bg-[#e29750]" : "bg-[#eb7a11]"} rounded-lg`}
                 onClick={()=> handlePageNo('prev')}
                 disabled={page<2}> 
                   <ArrowBackIosIcon />
@@ -124,13 +127,16 @@ const FoodDisplay = ({selectedCategory}) => {
                 </button>
 
                 <button 
+                   className={`border-none sm:py-2 sm:px-2 py-1 px-1 cursor-pointer  ${hasNext? "active:bg-[#e29750]" : "active:bg-[#ea9b51]"} text-lg ${hasNext ? "bg-[#e29750]" : "bg-[#eb7a11]"} rounded-lg`}
                 onClick={()=> handlePageNo("next")}
                 disabled={hasNext}
                 >
                 Next
                 <ArrowForwardIosIcon />
                 </button>
-                </div>}
+          </div>
+               
+        </div>}
     </div>
     
   )

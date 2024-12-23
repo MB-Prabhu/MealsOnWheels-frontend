@@ -235,7 +235,7 @@ let removeCartItem = async (itemid) => {
             setErrorMsg("please refresh the page to get the available food menu's")
         }
         else if(err.response.data.msg.startsWith("Operation")){
-            setErrorMsg("please try again")
+            setErrorMsg("please refresh and try again")
         }
         else if(err.response.data.msg.startsWith("Operation `foodschemas.find()`")){
             setErrorMsg("please refresh the page to get the available food menu's")
