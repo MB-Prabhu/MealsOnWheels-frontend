@@ -8,7 +8,7 @@ import  axios  from 'axios';
 
 const AdminLogin = () => {
 
-     const {showAdminLogin, setshowAdminLogin, apiUrl, setToken} = useContext(StoreContext)
+     const { setshowAdminLogin, apiUrl, setToken} = useContext(StoreContext)
       const [loading, setLoading] = useState(false)
     
         const [adminData, setAdminData] = useState({

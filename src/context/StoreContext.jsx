@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { createContext, useEffect, useState } from 'react'
-// import { food_list } from '../assets/assets/frontend_assets/assets'
 
 export const StoreContext = createContext("")
 
@@ -17,34 +16,31 @@ const StoreContextProvider = ({children})=>{
     const [showAdminLogin, setshowAdminLogin] = useState(false)
     
 
-    const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(10)
+    const page = 1
+    const limit = 10
 
     const apiUrl = import.meta.env.VITE_API_URL
 
-    const [isAdding, setIsAdding] = useState(false); // Single state to track the adding process
+    const [isAdding, setIsAdding] = useState(false); 
 
 let addCartItem = async (itemid) => {
     if (isAdding) {
-        return; // Prevent adding if an API call is already in progress
+        return; 
     }
 
-    // Optimistically update the cart state
-    setCartItem((prev) => ({
-        ...prev,
-        [itemid]: (prev[itemid] || 0) + 1,
-    }));
-
-    // Set the isAdding state to true to indicate an API call is in progress
-    setIsAdding(true);
-
+    
     if (token) {
+        setCartItem((prev) => ({
+            ...prev,
+            [itemid]: (prev[itemid] || 0) + 1,
+        }));
+    
+        setIsAdding(true);
         try {
-            // Make the API call to sync with the server
+            
             await axios.patch(apiUrl + "/user/cart/addtocart", { itemid }, { headers: { token } });
         } catch (error) {
-            console.error("Error adding to cart:", error);
-            // Revert the state if the API call fails
+            
             setCartItem((prev) => {
                 const updatedCart = { ...prev };
                 updatedCart[itemid] -= 1;
@@ -54,7 +50,7 @@ let addCartItem = async (itemid) => {
                 return updatedCart;
             });
         } finally {
-            // Reset the isAdding state after the API call is complete
+            
             setIsAdding(false);
         }
     }
@@ -62,37 +58,31 @@ let addCartItem = async (itemid) => {
 
 let removeCartItem = async (itemid) => {
     if (isAdding) {
-        return; // Prevent removing if an API call is already in progress
+        return; 
     }
 
-    // Optimistically update the cart state
-    setCartItem((prev) => {
-        const updatedCart = { ...prev };
-        if (updatedCart[itemid] > 0) {
-            updatedCart[itemid] -= 1;
-            if (updatedCart[itemid] === 0) {
-                delete updatedCart[itemid];
-            }
-        }
-        return updatedCart;
-    });
-
-    // Set the isAdding state to true to indicate an API call is in progress
-    setIsAdding(true);
-
+    
     if (token) {
+        setCartItem((prev) => {
+            const updatedCart = { ...prev };
+            if (updatedCart[itemid] > 0) {
+                updatedCart[itemid] -= 1;
+                if (updatedCart[itemid] === 0) {
+                    delete updatedCart[itemid];
+                }
+            }
+            return updatedCart;
+        });
+    
+        setIsAdding(true);
         try {
-            // Make the API call to sync with the server
             await axios.patch(apiUrl + "/user/cart/removecartitem", { itemid }, { headers: { token } });
         } catch (error) {
-            console.error("Error removing from cart:", error);
-            // Revert the state if the API call fails
             setCartItem((prev) => ({
                 ...prev,
                 [itemid]: (prev[itemid] || 0) + 1, // Re-add the item if the API fails
             }));
         } finally {
-            // Reset the isAdding state after the API call is complete
             setIsAdding(false);
         }
     }
@@ -154,7 +144,7 @@ let removeCartItem = async (itemid) => {
         }
        }
        catch(err){
-        console.log(err.response.data)
+        
        }
     }
 
@@ -171,26 +161,26 @@ let removeCartItem = async (itemid) => {
     }
 
     //this  function for removing the entire item from the cart 
-    const removeTotalQuantity = (itemid)=>{
-        setCartItem(p=>{
-                let modifyObject = {}
-                for(let key in p){
-                    if(key !== itemid){
-                        modifyObject[key] = p[key]
-                    }
-                }
-                return modifyObject
-            })
-    }
+    // const removeTotalQuantity = (itemid)=>{
+    //     setCartItem(p=>{
+    //             let modifyObject = {}
+    //             for(let key in p){
+    //                 if(key !== itemid){
+    //                     modifyObject[key] = p[key]
+    //                 }
+    //             }
+    //             return modifyObject
+    //         })
+    // }
 
     
-    let getItemTotalAmount = (itemid)=>{
-        let findItem = food_list.find(ele=> ele._id == itemid)
-        if(!findItem){
-            return "Item Not Added in Cart"
-        }
-        return findItem.price * cartItem[itemid]
-    }
+    // let getItemTotalAmount = (itemid)=>{
+    //     let findItem = food_list.find(ele=> ele._id == itemid)
+    //     if(!findItem){
+    //         return "Item Not Added in Cart"
+    //     }
+    //     return findItem.price * cartItem[itemid]
+    // }
 
     let getTotalAmount = ()=>{
         if(Object.keys(cartItem).length>0){
@@ -223,14 +213,12 @@ let removeCartItem = async (itemid) => {
       try{
         setLoading(true)
         let {data} = await axios.get(apiUrl+`/api/listfood?page=${page}&limit=${limit}`)
-        // console.log(data)
         setErrorMsg("")
         if(data.ok){
             setFood_list(data.data)
         }
       }
       catch(err){
-        console.log(err)
         if(err.response.data.msg.startsWith("connect ETIMEDOUT")){
             setErrorMsg("please refresh the page to get the available food menu's")
         }
@@ -260,10 +248,6 @@ let removeCartItem = async (itemid) => {
         getFoodItems()
     },[])
 
-    useEffect(()=>{
-        console.log(cartItem)
-    }, [cartItem])
-
     let value = {
         food_list,setFood_list,
         cartItem,
@@ -273,9 +257,9 @@ let removeCartItem = async (itemid) => {
         showAdminLogin, setshowAdminLogin,
         errorMsg, setErrorMsg,loading, setLoading,
         showLogin, setShowLogin,
-        getItemTotalAmount,
+        // getItemTotalAmount,
         getTotalAmount,
-        removeTotalQuantity, removeQuantityFromCart,
+         removeQuantityFromCart,
         apiUrl, token, setToken, getFoodItems
     }
     return(

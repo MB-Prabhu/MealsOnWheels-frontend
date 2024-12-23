@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { assets } from '../../assets/assets/admin_assets/assets'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button } from '@mui/material';
 import { LogOut } from 'lucide-react';
 import { StoreContext } from '../../context/StoreContext'
@@ -10,7 +10,6 @@ const AdminNavbar = () => {
 
   const {setToken, setshowAdminLogin}= useContext(StoreContext)
 
-  let navigate = useNavigate()
   
   const handleLogout = ()=>{
     localStorage.removeItem("admintoken")
