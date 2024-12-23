@@ -4,24 +4,22 @@ import { assets } from '../../assets/assets/frontend_assets/assets'
 import axios  from 'axios';
 
 const MyOrders = () => {
-    const {token,setToken, apiUrl} = useContext(StoreContext)
+    const {apiUrl} = useContext(StoreContext)
 
     const [orderData, setOrderData] = useState([])
     let getOrders = async()=>{
        try{
         const token = localStorage.getItem("usertoken");
-    if (!token) {
-      throw new Error("No token found, please login.");
-    }
+        if (!token) {
+        throw new Error("No token found, please login.");
+        }
 
     console.log("hi well")
     console.log(token)
         let {data} = await axios.get(`${apiUrl}/user/order/userorders`, {headers: {token}}) 
-        console.log(data)
-        // if(data.ok){
-            console.log(data.data)
+        if(data.ok){
             setOrderData(data.data)
-        // }
+        }
         console.log(orderData)
        }
        catch(err){

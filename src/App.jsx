@@ -25,13 +25,8 @@ import NotFound from './components/NotFound'
 
 
 const App = () => {
-      const {showLogin, setShowLogin, showAdminLogin} = useContext(StoreContext) 
+      const {showLogin, showAdminLogin} = useContext(StoreContext) 
       const location = useLocation()
-
-
-   
-
-
   return (
     <div className='bg-[#fdfdfa]'>
       <ToastContainer />
@@ -39,8 +34,6 @@ const App = () => {
       {showAdminLogin && <AdminLogin />}
       {location.pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar  />}
 
-
-      
      <div className='content'>
 
       <Routes>

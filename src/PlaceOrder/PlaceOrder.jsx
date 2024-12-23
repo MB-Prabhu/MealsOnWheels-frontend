@@ -1,7 +1,6 @@
 import { Button, TextField, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import { StoreContext } from '../context/StoreContext'
-import CardTotal from '../Pages/Cart/CardTotal'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -40,7 +39,6 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
             }
           })
 
-          console.log(ordersToPlaced)
 
           let orderDetails = {
             address:deliveryData,
