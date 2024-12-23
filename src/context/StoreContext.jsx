@@ -13,7 +13,12 @@ const StoreContextProvider = ({children})=>{
     const [food_list, setFood_list] = useState([])
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
+
+    const [showAdminLogin, setshowAdminLogin] = useState(false)
     
+
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(10)
 
     const apiUrl = import.meta.env.VITE_API_URL
 
@@ -217,7 +222,7 @@ let removeCartItem = async (itemid) => {
     const getFoodItems = async ()=>{
       try{
         setLoading(true)
-        let {data} = await axios.get(apiUrl+"/api/listfood")
+        let {data} = await axios.get(apiUrl+`/api/listfood?page=${page}&limit=${limit}`)
         // console.log(data)
         setErrorMsg("")
         if(data.ok){
@@ -228,7 +233,17 @@ let removeCartItem = async (itemid) => {
         console.log(err)
         if(err.response.data.msg.startsWith("connect ETIMEDOUT")){
             setErrorMsg("please refresh the page to get the available food menu's")
-        }else{
+        }
+        else if(err.response.data.msg.startsWith("Operation")){
+            setErrorMsg("please try again")
+        }
+        else if(err.response.data.msg.startsWith("Operation `foodschemas.find()`")){
+            setErrorMsg("please refresh the page to get the available food menu's")
+        }
+        else if(err.response.data.msg.startsWith("read ECONNRESET")){
+            setErrorMsg("please refresh the page to get the available food menu's")
+        }
+        else{
             setErrorMsg(err.response.data.msg)
         }
       }
@@ -238,9 +253,9 @@ let removeCartItem = async (itemid) => {
     }
 
     useEffect(()=>{
-        let isTokenAvailable = localStorage.key("usertoken")
-        setToken(isTokenAvailable ? localStorage.getItem("usertoken") : "")
-        setToken(localStorage.getItem("usertoken"))
+        let isTokenAvailable = localStorage.key(0)
+        setToken(isTokenAvailable ? localStorage.getItem(isTokenAvailable) : "")
+        // setToken(localStorage.getItem("usertoken"))
         // {token && getCartItems(localStorage.getItem("usertoken"))}
         getFoodItems()
     },[])
@@ -250,17 +265,18 @@ let removeCartItem = async (itemid) => {
     }, [cartItem])
 
     let value = {
-        food_list,
+        food_list,setFood_list,
         cartItem,
         setCartItem,
         addCartItem, removeCartItem, getCartItems,
         isLogin, setIsLogin,
+        showAdminLogin, setshowAdminLogin,
         errorMsg, setErrorMsg,loading, setLoading,
         showLogin, setShowLogin,
         getItemTotalAmount,
         getTotalAmount,
         removeTotalQuantity, removeQuantityFromCart,
-        apiUrl, token, setToken, 
+        apiUrl, token, setToken, getFoodItems
     }
     return(
         <StoreContext.Provider value={value}>

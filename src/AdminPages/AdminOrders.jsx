@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { assets } from '../assets/assets/frontend_assets/assets';
 import { Button, MenuItem, Select } from '@mui/material';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { toast } from 'react-toastify';
 
 const AdminOrders = () => {
 
@@ -18,12 +19,21 @@ const AdminOrders = () => {
    try{
     setLoading(true)
     let {data} = await axios.get(`${apiUrl}/api/listorders`)
+    console.log(data)
     if(data.ok){
       setOrderList(data.data)
     }
    }
    catch(err){
-    console.log(err)
+    console.log(err.response.data)
+     if(err.response.data?.msg.startsWith("Operation" || "read ECONNRESET" || "read ECONNRESET")){
+                    toast.warning("please try again")
+                  }
+                  else{
+                    toast.warning(err.response.data?.msg,  {
+                      autoClose: 1000
+                    })
+                  }
    }
    finally{
     setLoading(false)
@@ -33,6 +43,7 @@ const AdminOrders = () => {
   let updateFoodStatus= async(_id)=>{
     try{
     let {data} = await axios.patch(`${apiUrl}/api/updateorderstatus`, {foodStatus, _id})
+    console.log(data)
       if(data.ok){
          setFoodStatus(data.data.status)
       }
@@ -40,17 +51,26 @@ const AdminOrders = () => {
     }
     catch(err){
       console.log(err)
-
+      if(err.response.data?.msg.startsWith("Operation")){
+        toast.warning("please try again")
+      }
+      else{
+        toast.warning(err.response.data?.msg,  {
+          autoClose: 1000
+        })
+      }
     }
   }
 
-  let handleChange = ({target: {value}})=>{
+  let handleChange = ({target: {value}}, index)=>{
       setFoodStatus(value)
   }
 
   useEffect(()=>{
     getOrdersList()
-  }, [])
+  }, [foodStatus])
+
+  // console.log(orderList)
 
   return (
     <div className='p-4 w-full overflow-scroll custom-menu'>
@@ -70,37 +90,23 @@ const AdminOrders = () => {
                     <p className='text-lg font-semibold'>Ordered Items</p>
                     <div className='lg:w-[100%] lg:h-[80%] sm:w-[100%] sm:h-[70%] overflow-y-scroll flex-wrap flex  py-2 custom-menu'>
                     
-                    {/* {orderList.items?.length>0 && orderList.items.map((ele, idx)=>{
-                      if(idx===orderList.length-1){
-                        return(
-                          <div>
-                              <p>{ele.name}X{ele.quantity} ,</p>
-                          </div>
-                        )
-                      }
-                      else{
-                        return(
-                          <div>
-                              <p>{ele.name}X{ele.quantity} ,</p>
-                          </div>
-                        )
-                      }
-                    })} */}
+                    {ele.items.length>0 && ele.items.map((ele, idx)=>{
 
-                    <p>chicken saladX2,</p>
-                    <p>chicken saladX2,</p>
-                    <p>chicken saladX2,</p>
-                    <p>chicken saladX2,</p>
-                    <p>chicken saladX2,</p>
-                    <p>chicken saladX2,</p>
-                    <p>chicken saladX2,</p>
+                        return (
+                          <div key={ele._id}>
+                            <p>{ele.name}x{ele.quantity},</p>
+                          </div>
+                        )
+                    })}
+
+                    
                   </div>
                   </div>
                   
 
                   <div className='flex flex-col sm:px-0 px-4'>
                   <p className='text-lg'><strong>Name:</strong> {ele?.address?.Name || "Not Mentioned"}</p>
-                  <p className='text-lg'><span className='font-bold mr-[4px] sm:block'>Address: </span><span className='border text-lg custom-menu lg:w-[90%] overflow-y-scroll leading-6'>{ele?.address?.address || "Not Mentioned"}</span></p>
+                  <p className='text-lg'><span className='font-bold mr-[4px] sm:block'>Address: </span><span className=' text-lg custom-menu lg:w-[90%] overflow-y-scroll leading-6'>{ele?.address?.address || "Not Mentioned"}</span></p>
                   <p><strong>Amount:</strong> ${ele.amount || 0}</p>
                   </div>
 
@@ -108,7 +114,7 @@ const AdminOrders = () => {
                       value={foodStatus}
                       inputProps={{ 'aria-label': 'Without label' }}
                       sx={{width:{sm:"90%", md:"100%",}, height:{lg:"30%",md:"40%", sm:"50%"}, color:"black"}}
-                      onChange={handleChange} name="foodStatus"
+                      onChange={(e)=> handleChange(e,index)} name="foodStatus"
                       color='info'
                       variant="outlined"
                     >

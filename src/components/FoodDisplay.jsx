@@ -1,11 +1,63 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StoreContext } from '../context/StoreContext'
 import SingleFoodItem from './SingleFoodItem'
 import LoadingSpinner from './LoadingSpinner'
+import  axios  from 'axios';
+import SearchIcon  from '@mui/icons-material/Search';
+import { TextField, IconButton } from '@mui/material';
+
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const FoodDisplay = ({selectedCategory}) => {
-    const {food_list, errorMsg, loading} = useContext(StoreContext)
+    const {food_list, setFood_list, errorMsg, loading, apiUrl, getFoodItems} = useContext(StoreContext)
+
+
+    const [searchValue, setSearchValue] = useState("")
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(10)
+    const [loadingSearch, setLoadingsearch] = useState(false)
+    const [errorMsgSearch, setErrorMsgSearch] = useState("")
+
+  const [hasNext, setHasNext] = useState(false);
+
+
+  let handlePageNo = (action)=>{
+    if(action === "prev"){
+      if(page>1){
+        setPage((p)=> p-1)
+      }
+    }
+
+    if(action === "next"){
+      setPage((p)=> p+1)
+    }
+}
  
+    const searchFood = async()=>{
+        try{
+          setLoadingsearch(true)
+          console.log(limit)
+            let {data} = await axios.get(`${apiUrl}/user/cart/searchFood?search=${searchValue}&page=${page}&limit=${limit}`)
+            if(data.ok){
+              setFood_list(data.data)
+              setHasNext(data?.data.length < limit ? true: false)
+            }
+        }
+        catch(err){
+            console.log(err.response.data) 
+            if(err.response.data.msg.startsWith("Operation")){
+            setErrorMsgSearch("please try again")
+            }
+            else{
+              setErrorMsgSearch(err.response.data.msg)
+            }
+        }
+        finally{
+            setLoadingsearch(false)
+        }
+    }
+
     const isSelectedAvailable = ()=>{
       let isAvailable = true;
       if(selectedCategory!=="all"){
@@ -16,7 +68,17 @@ const FoodDisplay = ({selectedCategory}) => {
       return isAvailable;
     }
 
-    console.log(isSelectedAvailable())
+    useEffect(()=>{
+      if(selectedCategory==="all"){
+        getFoodItems()
+      }
+    },[selectedCategory])
+
+    useEffect(()=>{
+      searchFood()
+  }, [page])
+
+    // console.log(isSelectedAvailable())
   return (
     <div className='w-full flex flex-col items-center'>
 
@@ -24,13 +86,24 @@ const FoodDisplay = ({selectedCategory}) => {
         <p className='text-2xl sm:text-3xl sm:font-semibold'>your selected Food Items</p>
         </div>
 
+      <div className='border border-black rounded-lg px-2 my-2'>
+        <input type="text" 
+        value={searchValue}
+        onChange={(e)=> setSearchValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') searchFood();
+       }}
+        className='border-none outline-none h-10 text-lg' />
+        <IconButton onClick={searchFood}>
+        <SearchIcon />
+        </IconButton>
+      </div>
 
       {loading && <div className='flex justify-center items-center min-h-[20vh]'><LoadingSpinner />  </div>}
       {!isSelectedAvailable() && <div className='flex justify-center font-bold text-xl sm:text-2xl lg:text-3xl items-center min-h-[20vh]'>No Foods Available for the selected category  </div>}
 
             {!loading && errorMsg && <div className='w-full text-center py-7 text-2xl sm:text-2xl sm:font-semibold '><p>{errorMsg}</p></div>}        
         <div className='mt-2 w-[90%]  py-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'>
-
             {isSelectedAvailable && !loading && !errorMsg && food_list.length>0 && food_list.map(({_id, name, image, price, description,category})=>{
                         if(selectedCategory==="all"){
                           return <SingleFoodItem key={_id} _id={_id} name={name} image={image} price={price} description={description} category={category}  />
@@ -40,6 +113,24 @@ const FoodDisplay = ({selectedCategory}) => {
                           }
                     })}
         </div>
+
+
+        {!errorMsg && !loading &&  food_list.length>0 && <div  >
+                <button 
+                onClick={()=> handlePageNo('prev')}
+                disabled={page<2}> 
+                  <ArrowBackIosIcon />
+                 Prev
+                </button>
+
+                <button 
+                onClick={()=> handlePageNo("next")}
+                disabled={hasNext}
+                >
+                Next
+                <ArrowForwardIosIcon />
+                </button>
+                </div>}
     </div>
     
   )

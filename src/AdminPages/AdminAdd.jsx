@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets/admin_assets/assets'
 import { TextField, Button, MenuItem, Select, InputLabel } from '@mui/material';
 import { toast } from 'react-toastify';
 import axios  from 'axios';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { StoreContext } from '../context/StoreContext';
 
 const AdminAdd = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  const {token} = useContext(StoreContext)
+
   const[imageUpload, setImageUpload] = useState(null)
+  const[loading, setLoading] = useState(false)
   const[productData, setProductData] = useState({
     name:"",
     description:"",
@@ -29,7 +34,9 @@ const AdminAdd = () => {
       formData.append("image", imageUpload)
 
       try{
-        let {data} = await axios.post(`${apiUrl}/api/createfood`,formData)
+        setLoading(true)
+        console.log(token)
+        let {data} = await axios.post(`${apiUrl}/api/createfood`,formData, {headers: {token}})
         console.log(data)
         if(data.ok){
           setProductData({
@@ -46,21 +53,39 @@ const AdminAdd = () => {
 
       }
       catch(err){
-        toast.warning(err.response.data?.msg,  {
-          autoClose: 2000
-        })
+        console.log(err.response.data.msg)
+        if(err.response.data?.msg.startsWith("Operation")){
+          toast.warning("please try again")
+        }
+        else{
+          toast.warning(err.response.data?.msg,  {
+            autoClose: 1000
+          })
+        }
+      }
+      finally{
+        setLoading(false)
       }
   }
 
   return (
-    <div className='px-2 border border-black w-[100%] sm:w-[70%] lg:w-[75%] xl:w-[80%]'>
+    <div className='px-2 border relative border-black w-[100%] sm:w-[70%] lg:w-[75%] xl:w-[80%]'>
+
+      {loading && <div className='flex absolute w-full h-full justify-center bg-[#000000aa] bg-opacity-50 items-center min-h-[80vh]'><LoadingSpinner />  </div>}
+
       <form onSubmit={handleSubmit} className='px-4 w-full py-4 flex flex-col gap-6'>
         <div className=''>
           <p className='text-lg sm:text-2xl font-bold'>upload image</p>
-          <label htmlFor="imgupload">
-          <img src={imageUpload ? URL.createObjectURL(imageUpload) : assets.upload_area} alt="" className='my-2 w-40 h-24 bg-contain border border-black' />
+          <label htmlFor="imgupload" className=''>
+          <img src={imageUpload ? URL.createObjectURL(imageUpload) : assets.upload_area}
+           alt="" 
+           className='my-2 w-40 h-24 bg-contain object-cover border border-black pointer-events-none'
+           onClick={() => fileInputRef.current.click()} 
+           />
           </label>
-          <input type="file" id='imgupload' hidden onChange={(e)=> setImageUpload(e.target.files[0])}/>
+          <input type="file" id='imgupload'
+           hidden 
+           onChange={(e)=> setImageUpload(e.target.files[0])}/>
         </div>
 
         <div className=''>
@@ -76,21 +101,6 @@ const AdminAdd = () => {
         <div className='flex gap-4 w-[100%] items-center '>
         <div className=''>
           <p className='text-lg sm:text-2xl font-bold'>Product Category</p>
-          {/* <InputLabel id="demo-simple-select-helper-label">Select 
-          Category</InputLabel> */}
-        {/* <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          label="Age"
-          sx={{width:"100%", color:"black"}}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select> */}
 
         <Select
           value={productData.category}
@@ -122,7 +132,7 @@ const AdminAdd = () => {
         </div>
         </div>
 
-        <Button type="submit" sx={{width: "40%", padding:"10px 0", backgroundColor:"orangered" , color: "white"}}>Add</Button>
+        <Button type="submit" disabled={loading} sx={{width: "40%", padding:"10px 0", backgroundColor:"orangered" , color: "white"}}>Add</Button>
       </form>
     </div>
   )

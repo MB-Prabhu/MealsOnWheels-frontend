@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../../assets/assets/admin_assets/assets'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { Button } from '@mui/material';
+import { LogOut } from 'lucide-react';
+import { StoreContext } from '../../context/StoreContext'
+
 
 const AdminNavbar = () => {
+
+  const {setToken, setshowAdminLogin}= useContext(StoreContext)
+
+  let navigate = useNavigate()
+  const handleLogout = ()=>{
+    localStorage.removeItem("admintoken")
+    setToken("")
+    navigate("/")
+    setshowAdminLogin(false)
+  }
+
   return (
     <div className=' w-full h-20 flex items-center justify-center shadow-lg'>
         <div className='w-[95%] flex items-center justify-between'>
@@ -14,8 +29,12 @@ const AdminNavbar = () => {
         </div>
 
         <div className='rounded-full'>
-            <Link to="/adminprofile">
-            <img src={assets.profile_image} alt="" className='size-6 lg:size-8 cursor-pointer rounded-full' />
+            <Link to="/adminprofile" >
+            {/* <img src={assets.profile_image} alt="" className='size-6 lg:size-8 cursor-pointer rounded-full' /> */}
+            <Button variant="contained" color="error" onClick={handleLogout}>
+            <LogOut />
+              Logout
+            </Button>
             </Link>
             </div>
         </div>

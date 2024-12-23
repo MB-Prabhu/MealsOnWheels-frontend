@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './Pages/Home/Home'
@@ -19,18 +19,20 @@ import "react-toastify/dist/ReactToastify.css"
 import PaymentVerify from './Pages/PaymentVerify/PaymentVerify'
 import MyOrders from './Pages/Myorders/MyOrders'
 import LoadingSpinner from './components/LoadingSpinner'
+import AdminLogin from './AdminPages/AdminLogin'
+import ADminProtectedRoutes from './AdminPages/adminComponents/ADminProtectedRoutes'
 
 const App = () => {
-      const {showLogin, setShowLogin} = useContext(StoreContext) 
-
+      const {showLogin, setShowLogin, showAdminLogin} = useContext(StoreContext) 
       const location = useLocation()
   return (
     <div className='bg-[#fdfdfa]'>
       <ToastContainer />
       {showLogin && <Login  />}
-      {location.pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
+      {showAdminLogin && <AdminLogin />}
+      {location.pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar  />}
 
-     
+
       
      <div className='content'>
       <Routes>
@@ -40,7 +42,15 @@ const App = () => {
         <Route path='/verify' element={<PaymentVerify />} />
         <Route path='/myorders' element={<MyOrders />} />
        
-        <Route path='/adminhome'  element={<AdminHome />} >
+       
+        <Route path='/adminlogin'  element={<AdminLogin />} />
+
+        
+        <Route path='/adminhome'  element={
+          <ADminProtectedRoutes>
+                 <AdminHome />
+          </ADminProtectedRoutes>
+         } >
         <Route index element={<AdminAdd />} />
         <Route path='listadmin' element={<AdminList />} />
         <Route path='ordersadmin' element={<AdminOrders />} />

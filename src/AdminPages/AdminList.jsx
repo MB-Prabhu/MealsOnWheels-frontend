@@ -19,7 +19,14 @@ const AdminList = () => {
       }
     }
     catch(err){
-      toast.error(err.response.data.msg)
+      if(err.response.data?.msg.startsWith("Operation")){
+        toast.warning("please try again")
+      }
+      else{
+        toast.warning(err.response.data?.msg,  {
+          autoClose: 1000
+        })
+      }
       console.log(err.response.data)
     }
     finally{
@@ -40,8 +47,14 @@ const AdminList = () => {
       }
     }
     catch(err){
-      toast.error(err.response.data.msg)
-      console.log(err.response)
+       if(err.response.data?.msg.startsWith("Operation")){
+                toast.warning("please try again")
+              }
+              else{
+                toast.warning(err.response.data?.msg,  {
+                  autoClose: 1000
+                })
+              }
     }
   }
   useEffect(()=>{
