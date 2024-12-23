@@ -18,7 +18,7 @@ const FoodDisplay = ({selectedCategory}) => {
     const [page, setPage] = useState(1)
     const [loadingSearch, setLoadingsearch] = useState(false)
     const [errorMsgSearch, setErrorMsgSearch] = useState("")
-    const limit = 10
+    const limit = 12
   const [hasNext, setHasNext] = useState(false);
 
 

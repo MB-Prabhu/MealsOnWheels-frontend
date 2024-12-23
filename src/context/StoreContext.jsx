@@ -17,7 +17,7 @@ const StoreContextProvider = ({children})=>{
     
 
     const page = 1
-    const limit = 10
+    const limit = 12
 
     const apiUrl = import.meta.env.VITE_API_URL
 
@@ -139,6 +139,7 @@ let removeCartItem = async (itemid) => {
     let getCartItems = async (token)=>{
        try{
         let {data} = await axios.get(apiUrl+'/user/cart'+'/getcartitems', {headers: {token}})
+        console.log(data)
         if(data.ok){
             setCartItem(data.data)
         }
@@ -174,13 +175,13 @@ let removeCartItem = async (itemid) => {
     // }
 
     
-    // let getItemTotalAmount = (itemid)=>{
-    //     let findItem = food_list.find(ele=> ele._id == itemid)
-    //     if(!findItem){
-    //         return "Item Not Added in Cart"
-    //     }
-    //     return findItem.price * cartItem[itemid]
-    // }
+    let getItemTotalAmount = (itemid)=>{
+        let findItem = food_list.find(ele=> ele._id == itemid)
+        if(!findItem){
+            return "Item Not Added in Cart"
+        }
+        return findItem.price * cartItem[itemid]
+    }
 
     let getTotalAmount = ()=>{
         if(Object.keys(cartItem).length>0){
@@ -257,7 +258,7 @@ let removeCartItem = async (itemid) => {
         showAdminLogin, setshowAdminLogin,
         errorMsg, setErrorMsg,loading, setLoading,
         showLogin, setShowLogin,
-        // getItemTotalAmount,
+        getItemTotalAmount,
         getTotalAmount,
          removeQuantityFromCart,
         apiUrl, token, setToken, getFoodItems
