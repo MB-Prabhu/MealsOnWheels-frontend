@@ -148,10 +148,10 @@ let removeCartItem = async (itemid) => {
 
     let getCartItems = async (token)=>{
        try{
-        console.log(token)
         let {data} = await axios.get(apiUrl+'/user/cart'+'/getcartitems', {headers: {token}})
-        console.log(data.data)
-        setCartItem(data.data)
+        if(data.ok){
+            setCartItem(data.data)
+        }
        }
        catch(err){
         console.log(err.response.data)

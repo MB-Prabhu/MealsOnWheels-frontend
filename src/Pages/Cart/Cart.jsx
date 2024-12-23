@@ -22,9 +22,9 @@ const Cart = () => {
        {Object.keys(cartItem).length>0 ? <table className='p-2 w-full'>
           <thead>
           <tr className="text-lg md:text-xl">
-            <th className='text-[#ff7722]'>Item</th>
-            <th className='text-[#ff7722]'>Title</th>
-            <th className='text-[#ff7722]'>Price</th>
+            <th className='text-[#ff7722] text-[15px]'>Item</th>
+            <th className='text-[#ff7722] text-[15px]'>Title</th>
+            <th className='text-[#ff7722] text-[15px]'>Price</th>
             <th className='text-[#ff7722] text-[15px]'>Quantity</th>
             <th className='text-[#ff7722] text-[15px]'>Total</th>
             <th className='text-[#ff7722] text-[15px]'>Remove</th>
