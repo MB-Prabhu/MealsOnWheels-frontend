@@ -3,7 +3,7 @@ import React from 'react';
 const LoadingSpinner = () => {
   return (
     <div className="flex items-center justify-center">
-      <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-500 border-solid"></div>
+      <div className="animate-spin rounded-full h-16 w-16 border-b-8 border-orange-500 border-solid"></div>
     </div>
   );
 };
