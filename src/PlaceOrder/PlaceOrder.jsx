@@ -30,7 +30,6 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
         try{
           food_list.map(item=>{
             if(cartItem[item._id]>0){  
-              console.log(cartItem)
 
                   let iteminfo = item
                   console.log(iteminfo)
@@ -47,15 +46,12 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
           }
 
           let {data} = await axios.post(`${apiUrl}/user/order/placeorder`,{orderDetails}, {headers: {token}})
-          console.log(data)
           if(data.ok){
             let session_url = data.data
-            console.log(session_url)
             window.location.replace(session_url)
           }
         }
         catch(err){
-          console.log(err)
           setErrorMsg(err.response.data.msg)
           toast.error(err.response.data.msg)
         }
@@ -77,6 +73,7 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
         onChange={handleChange}
         fullWidth
         required
+        type="text"
       />
 
       <TextField
@@ -86,8 +83,12 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
         onChange={handleChange}
         fullWidth
         required
-        type="tel"
-        inputProps={{ maxLength: 10 }}
+        type="number"
+        slotProps={{
+          input: {
+            maxLength: 10,
+          },
+        }}
       />
 
 <TextField
@@ -119,6 +120,7 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
         required
         multiline
         rows={3}
+        type="text"
       />
 
       <TextField
@@ -128,6 +130,7 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
         onChange={handleChange}
         fullWidth
         required
+        type="text"
       />
 
       <Button

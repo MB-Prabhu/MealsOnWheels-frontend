@@ -12,9 +12,9 @@ const Footer = () => {
              <p className='mt-2 leading-5'>our Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam at officia, officiis quibusdam perferendis facere impedit veniam corrupti aut ipsa ex dolore fugit fuga mollitia, cum ducimus natus temporibus pariatur.</p>
 
            <div className='flex gap-2 mt-4'>
-               <img src={assets.facebook_icon} alt="" className='w-10 h-10' />
-               <img src={assets.twitter_icon} alt=""  className='w-10 h-10'/>
-               <img src={assets.linkedin_icon} alt="" className='w-10 h-10' />
+              <a href="https://www.twitter.com" target='_blank' rel="noopener noreferrer"> <img src={assets.facebook_icon} alt="" className='w-10 h-10' /> </a>
+              <a href="https://www.linkedin.com" target='_blank' rel="noopener noreferrer"> <img src={assets.twitter_icon} alt=""  className='w-10 h-10'/> </a>
+              <a href="https://www.facebook.com"  target='_blank' rel="noopener noreferrer"> <img src={assets.linkedin_icon} alt="" className='w-10 h-10' /></a>
            </div>   
            </div>
 

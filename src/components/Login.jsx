@@ -108,19 +108,28 @@ const Login = () => {
               value={userData.Name}
               onChange={(e)=> handleChange(e)}
               name="Name" variant="outlined" 
-              sx={{height: "40px"}} />
+              sx={{height: "40px"}} 
+              required />
 
               <TextField label="Mobile"
               value={userData.mobile}
               onChange={(e)=> handleChange(e)}
               name="mobile" variant="outlined" 
-              sx={{height: "40px"}} />
+              sx={{height: "40px"}} 
+              type="number"
+              slotProps={{
+                input: {
+                  maxLength: 10,
+                },
+              }}
+              required />
 
               <TextField label="Address"
               value={userData.address}
               onChange={(e)=> handleChange(e)}
               name="address" variant="outlined" 
-              sx={{height: "40px"}} />
+              sx={{height: "40px"}} 
+              required />
               </>
             )}
 
@@ -128,13 +137,17 @@ const Login = () => {
             value={userData.email}
             onChange={(e)=> handleChange(e)}
             name="email" variant="outlined" 
-            sx={{height: "40px"}} />
+            sx={{height: "40px"}} 
+            type='email'
+            required />
 
             <TextField label="Password"
               value={userData.password}
             onChange={(e)=> handleChange(e)}
             name="password" variant="outlined" 
-            sx={{height: "40px"}} />
+            type="password"
+            sx={{height: "40px"}} 
+            required />
 
       {!isLogin && (
               <>
@@ -142,7 +155,9 @@ const Login = () => {
               onChange={(e)=> handleChange(e)}
               value={userData.confirmPassword}
               name="confirmPassword" variant="outlined" 
-              sx={{height: "40px"}} />
+              type="password"
+              sx={{height: "40px"}} 
+              required />
               </>
             )}
             </div>
