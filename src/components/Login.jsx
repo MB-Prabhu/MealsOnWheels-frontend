@@ -8,7 +8,7 @@ import LoadingSpinner from './LoadingSpinner';
 
 const Login = () => {
 
-  const {isLogin, setIsLogin, setShowLogin, apiUrl, token , setToken} = useContext(StoreContext)
+  const {isLogin, setIsLogin, setShowLogin, apiUrl , setToken} = useContext(StoreContext)
   const [loading, setLoading] = useState(false)
 
     const [userData, setuserData] = useState({
@@ -27,10 +27,6 @@ const Login = () => {
 
     let handleSignupSubmit=async (e)=>{
       e.preventDefault()
-      // console.log(userData)
-
-
-
       let endPoint = isLogin ? '/user/userlogin' : '/user/userregister'      
       let finalData = {}
       if(isLogin){
@@ -68,7 +64,7 @@ const Login = () => {
         }
       }
       catch(err){
-        if(err.response.data?.msg.startsWith("connect ETIMEDOUT")){
+        if(err.response.data?.msg.startsWith("connect ETIMEDOUT") || err.response.data?.msg.startsWith("Operation")){
           toast.warning("please try again, server is busy",  {
             autoClose: 2000
           })
@@ -85,14 +81,15 @@ const Login = () => {
       }
 
     }
+  return (
+    <>
 
-    {loading && (
-      <div className='flex w-full h-full z-10 justify-center items-center bg-opacity-50 bg-[#000]'>
+{loading && (
+      <div className='flex w-full absolute h-full z-50 justify-center items-center bg-opacity-50 bg-[#000]'>
         <LoadingSpinner />
       </div>
     )}
-  return (
-    <div className='fixed w-full h-full bg-opacity-50 bg-[#676767] z-30 place-content-center place-items-center' >
+     <div className='fixed w-full h-full bg-opacity-50 bg-[#676767] z-30 place-content-center place-items-center' >
 
 
       
@@ -160,6 +157,8 @@ const Login = () => {
             
       </div>
    </div>
+    </>
+   
   )
 }
 

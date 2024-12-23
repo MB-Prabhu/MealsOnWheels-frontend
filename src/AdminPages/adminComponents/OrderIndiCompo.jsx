@@ -4,6 +4,7 @@ import { Button, MenuItem, Select } from '@mui/material';
 import { assets } from '../../assets/assets/frontend_assets/assets';
 import axios  from 'axios';
 import { StoreContext } from '../../context/StoreContext';
+import { toast } from 'react-toastify';
 
 const OrderIndiCompo = ({ele,}) => {
   const {apiUrl} = useContext(StoreContext)
@@ -17,6 +18,9 @@ const OrderIndiCompo = ({ele,}) => {
         console.log(data)
           if(data.ok){
              setFoodStatus(data.data.status)
+             toast.success(data.msg, {
+              autoClose: 2000
+             })
           }
           // setFoodStatus("Food Processing")
         }

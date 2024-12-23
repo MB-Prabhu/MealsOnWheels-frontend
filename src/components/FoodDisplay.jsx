@@ -8,6 +8,7 @@ import { TextField, IconButton } from '@mui/material';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { toast } from 'react-toastify';
 
 const FoodDisplay = ({selectedCategory}) => {
     const {food_list, setFood_list, errorMsg, loading, apiUrl, getFoodItems} = useContext(StoreContext)
@@ -40,19 +41,26 @@ const FoodDisplay = ({selectedCategory}) => {
           setLoadingsearch(true)
           console.log(limit)
             let {data} = await axios.get(`${apiUrl}/user/cart/searchFood?search=${searchValue}&page=${page}&limit=${limit}`)
+            console.log(data)
             if(data.ok){
               setFood_list(data.data)
               setHasNext(data?.data.length < limit ? true: false)
             }
         }
         catch(err){
-            console.log(err.response.data) 
+          console.log(err) 
+          if(err.message.startsWith("Network")){
+            toast.error(err.message)
+          }
+          else{
             if(err.response.data.msg.startsWith("Operation")){
-            setErrorMsgSearch("please try again")
-            }
-            else{
-              setErrorMsgSearch(err.response.data.msg)
-            }
+              setErrorMsgSearch("please try again")
+              }
+              else{
+                setErrorMsgSearch(err.response.data.msg)
+              }
+          }
+           
         }
         finally{
             setLoadingsearch(false)

@@ -15,7 +15,7 @@ const AdminNavbar = () => {
   const handleLogout = ()=>{
     localStorage.removeItem("admintoken")
     setToken("")
-    navigate("/")
+    // navigate("/")
     setshowAdminLogin(false)
   }
 
@@ -30,7 +30,7 @@ const AdminNavbar = () => {
         </div>
 
         <div className='rounded-full'>
-            <Link to="/adminprofile" >
+            <Link to="/" >
             {/* <img src={assets.profile_image} alt="" className='size-6 lg:size-8 cursor-pointer rounded-full' /> */}
             <Button variant="contained" color="error" onClick={handleLogout}>
             <LogOut />
