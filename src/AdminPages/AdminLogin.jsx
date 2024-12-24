@@ -8,7 +8,7 @@ import  axios  from 'axios';
 
 const AdminLogin = () => {
 
-     const { setshowAdminLogin, apiUrl, setToken} = useContext(StoreContext)
+     const { setshowAdminLogin, apiUrl, setToken, setIsAdminLoggedin} = useContext(StoreContext)
       const [loading, setLoading] = useState(false)
     
         const [adminData, setAdminData] = useState({
@@ -39,6 +39,7 @@ const AdminLogin = () => {
                     email: "",
                     password: "",
                   })
+                  setIsAdminLoggedin(true)
                   setshowAdminLogin(false)
                 navigate("/adminhome")
               }

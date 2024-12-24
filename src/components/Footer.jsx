@@ -36,7 +36,7 @@ const Footer = () => {
 
        
         <div className='mx-auto mt-4 w-[90%] text-white'>
-    <p className='text-center'>Copyright @{new Date().getFullYear()} © Meals on Wheels - All Rights Reserved</p>
+    <p className='text-center'>Copyright © {new Date().getFullYear()}  MealsOnWheels. All Rights Reserved</p>
     </div>
        
     </footer>

@@ -15,6 +15,7 @@ const StoreContextProvider = ({children})=>{
     const [errorMsg, setErrorMsg] = useState("")
     const [hasNext, setHasNext] = useState(false);
 
+    const [isAdminLoggedin, setIsAdminLoggedin] = useState(false)
     const [showAdminLogin, setshowAdminLogin] = useState(false)
     const [showUserLogo, setShowUserLogo] = useState(false)
 
@@ -245,6 +246,9 @@ let removeCartItem = async (itemid) => {
         if(isTokenAvailable==="usertoken"){
             setShowUserLogo(true)
         }
+        else if(isTokenAvailable==="admintoken"){
+            setIsAdminLoggedin(true)
+        }
         setToken(isTokenAvailable ? localStorage.getItem(isTokenAvailable) : "")
         // getFoodItems()
     },[])
@@ -256,6 +260,7 @@ let removeCartItem = async (itemid) => {
         cartItem,setCartItem,
         category, setCategory,
         hasNext, setHasNext,
+        isAdminLoggedin, setIsAdminLoggedin,
         addCartItem, removeCartItem, getCartItems,
         isLogin, setIsLogin,
         showAdminLogin, setshowAdminLogin,

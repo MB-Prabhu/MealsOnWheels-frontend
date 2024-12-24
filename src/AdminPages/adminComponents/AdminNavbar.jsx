@@ -8,12 +8,13 @@ import { StoreContext } from '../../context/StoreContext'
 
 const AdminNavbar = () => {
 
-  const {setToken, setshowAdminLogin}= useContext(StoreContext)
+  const {setToken, setshowAdminLogin, setIsAdminLoggedin}= useContext(StoreContext)
 
   const handleLogout = ()=>{
     localStorage.removeItem("admintoken")
     localStorage.removeItem("usertoken")
     setToken("")
+    setIsAdminLoggedin(false)
     setshowAdminLogin(false)
   }
 
