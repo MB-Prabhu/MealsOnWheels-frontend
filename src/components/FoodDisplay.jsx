@@ -10,16 +10,15 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { toast } from 'react-toastify';
 
-const FoodDisplay = ({selectedCategory}) => {
-    const {food_list, setFood_list, errorMsg, loading, apiUrl, getFoodItems, getIndiCartItems} = useContext(StoreContext)
+const FoodDisplay = () => {
+    const {food_list, setFood_list, errorMsg,setErrorMsg, loading, hasNext,setHasNext ,setLoading, apiUrl, getFoodItems, getIndiCartItems, category} = useContext(StoreContext)
 
 
     const [searchValue, setSearchValue] = useState("")
     const [page, setPage] = useState(1)
     const [loadingSearch, setLoadingsearch] = useState(false)
     const [errorMsgSearch, setErrorMsgSearch] = useState("")
-    const limit = 12
-  const [hasNext, setHasNext] = useState(false);
+    const [limit] = useState(12)
 
 
   let handlePageNo = (action)=>{
@@ -32,6 +31,34 @@ const FoodDisplay = ({selectedCategory}) => {
     if(action === "next"){
       setPage((p)=> p+1)
     }
+}
+
+const getCategorizedFood = async ()=>{
+  try{
+   setLoading(true)
+   let {data} = await axios.get(`${apiUrl}/api/categoryfood?category=${category}&page=${page}&limit=${limit}`)
+   if(data.ok){
+       setFood_list(data.data)
+       setHasNext(data?.data.length < limit ? true: false)
+   }
+  }
+  catch(err){
+   console.log(err)
+   if(err.response.data.msg.startsWith("connect ETIMEDOUT") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("Operation")){
+       setErrorMsg("please refresh the page to get the available food items")
+   }
+   else if(err.response.data.msg==="Not enough data available. Total pages: 1"){
+    null
+   }
+   else{
+       toast.warning(err.response.data.msg, {
+           autoClose: 1000
+       })
+   }
+  }
+  finally{
+   setLoading(false)
+  }
 }
  
     const searchFood = async()=>{
@@ -63,25 +90,15 @@ const FoodDisplay = ({selectedCategory}) => {
         }
     }
 
-    const isSelectedAvailable = ()=>{
-      let isAvailable = true;
-      if(selectedCategory!=="all"){
-        isAvailable = food_list.some(ele=>{
-         return ele.category === selectedCategory
-       })
-      }
-      return isAvailable;
-    }
-
     useEffect(()=>{
-      if(selectedCategory==="all"){
-        getFoodItems()
+      if(!category){
+        getFoodItems(page, limit)
       }
-    },[selectedCategory])
+      else{
+        getCategorizedFood()
+      }
+    },[category, page])
 
-    useEffect(()=>{
-      searchFood()
-  }, [page])
 
   useEffect(()=>{
     let isTokenAvailable = localStorage.key(0)
@@ -114,19 +131,14 @@ const FoodDisplay = ({selectedCategory}) => {
       </div>
 
       { (loadingSearch || loading) && <div className='flex justify-center items-center min-h-[20vh]'><LoadingSpinner />  </div>}
-      {!isSelectedAvailable() && <div className='flex justify-center font-bold text-xl sm:text-2xl lg:text-3xl items-center min-h-[20vh]'>
-        No Foods Available for the selected category  </div>}
+      {/* {!isSelectedAvailable() && <div className='flex justify-center font-bold text-xl sm:text-2xl lg:text-3xl items-center min-h-[20vh]'>
+        No Foods Available for the selected category  </div>} */}
 
             {(!loadingSearch || !loading )&& errorMsg && <div className='w-full text-center py-7 text-2xl sm:text-2xl sm:font-semibold '><p>{errorMsg}</p></div>}        
             {(!loadingSearch || !loading) && !errorMsg && errorMsgSearch && <div className='w-full text-center py-7 text-2xl sm:text-2xl sm:font-semibold '><p>{errorMsgSearch}</p></div>}        
         <div className='mt-2 w-[90%]  py-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-10'>
-            {isSelectedAvailable && !loadingSearch && !loading && !errorMsgSearch && !errorMsg && food_list.length>0 && food_list.map(({_id, name, image, price, description,category})=>{
-                        if(selectedCategory==="all"){
-                          return <SingleFoodItem key={_id} _id={_id} name={name} image={image} price={price} description={description} category={category}  />
-                        }
-                        else if(category===selectedCategory){
+            {!loadingSearch && !loading && !errorMsgSearch && !errorMsg && food_list.length>0 && food_list.map(({_id, name, image, price, description,category})=>{
                            return <SingleFoodItem key={_id} _id={_id} name={name} image={image} price={price} description={description} category={category}  />
-                          }
                     })}
         </div>
 

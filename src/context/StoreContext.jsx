@@ -13,11 +13,15 @@ const StoreContextProvider = ({children})=>{
     const [food_list, setFood_list] = useState([])
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
+    const [hasNext, setHasNext] = useState(false);
 
     const [showAdminLogin, setshowAdminLogin] = useState(false)
     const [showUserLogo, setShowUserLogo] = useState(false)
 
-    const page = 1
+  const [category, setCategory] = useState("")
+
+
+    // const page = 1
     const limit = 12
 
     const apiUrl = import.meta.env.VITE_API_URL
@@ -143,7 +147,9 @@ let removeCartItem = async (itemid) => {
         }
        }
        catch(err){
-        
+        toast.warning(err.response.data.message, {
+            autoClose: 1000
+        })
        }
     }
     
@@ -171,13 +177,17 @@ let removeCartItem = async (itemid) => {
         }
     }
 
-    const getFoodItems = async ()=>{
+   
+
+    const getFoodItems = async (page, limit)=>{
+        console.log(page, limit)
       try{
         setLoading(true)
         let {data} = await axios.get(apiUrl+`/api/listfood?page=${page}&limit=${limit}`)
         setErrorMsg("")
         if(data.ok){
             setFood_list(data.data)
+            setHasNext(data?.data.length < limit ? true: false)
         }
       }
       catch(err){
@@ -203,11 +213,14 @@ let removeCartItem = async (itemid) => {
     }
 
 
+
+
     const getIndiCartItems = async ()=>{
        try{
         let isTokenAvailable = localStorage.key(0)
         let token = isTokenAvailable ? localStorage.getItem(isTokenAvailable) : ""
         let {data} = await axios.get(`${apiUrl}/user/cart/getcartindiitems`, {headers:{token}} )
+        console.log(data)
         if(data.ok){
             setCartItem(data.data)
         }
@@ -217,7 +230,16 @@ let removeCartItem = async (itemid) => {
             toast.warning("please refresh the page to get the cart items")
         }
         else{
-            toast.warning(err.response.data.msg)
+            if(err.response.data.msg==="user not available"){
+                toast.warning(err.response.data.msg, {
+                    autoClose: 1000
+                })
+            }
+            else{
+                toast.warning(err.response.data.msg+" and food items", {
+                    autoClose: 1000
+                })
+            }
         }
        }
 
@@ -226,20 +248,23 @@ let removeCartItem = async (itemid) => {
     useEffect(()=>{
         let isTokenAvailable = localStorage.key(0)
         setToken(isTokenAvailable ? localStorage.getItem(isTokenAvailable) : "")
-        getFoodItems()
+        // getFoodItems()
     },[])
+
+    
 
     let value = {
         food_list,setFood_list,
-        cartItem,
-        setCartItem,
+        cartItem,setCartItem,
+        category, setCategory,
+        hasNext, setHasNext,
         addCartItem, removeCartItem, getCartItems,
         isLogin, setIsLogin,
         showAdminLogin, setshowAdminLogin,
         errorMsg, setErrorMsg,loading, setLoading,
         showLogin, setShowLogin,
         getItemTotalAmount,
-        getTotalAmount,
+        getTotalAmount, 
         showUserLogo, setShowUserLogo,
         apiUrl, token, setToken, getFoodItems, getIndiCartItems
     }

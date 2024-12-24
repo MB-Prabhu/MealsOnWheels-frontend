@@ -20,7 +20,7 @@ const AdminNavbar = () => {
     <div className=' w-full h-20 flex items-center justify-center shadow-lg'>
         <div className='w-[95%] flex items-center justify-between'>
         <div className=' md:block'>
-        <Link to="/adminhome">
+        <Link to="/">
         <img src={assets.logo} alt="" className='w-36 lg:w-80 block sm:w-56'/>
        <p className='text-lg sm:text-2xl lg:text-2xl ml-1 font-semibold'>Admin Panel</p>
           </Link>
