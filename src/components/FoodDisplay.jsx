@@ -11,7 +11,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { toast } from 'react-toastify';
 
 const FoodDisplay = ({selectedCategory}) => {
-    const {food_list, setFood_list, errorMsg, loading, apiUrl, getFoodItems} = useContext(StoreContext)
+    const {food_list, setFood_list, errorMsg, loading, apiUrl, getFoodItems, getIndiCartItems} = useContext(StoreContext)
 
 
     const [searchValue, setSearchValue] = useState("")
@@ -85,6 +85,10 @@ const FoodDisplay = ({selectedCategory}) => {
     useEffect(()=>{
       searchFood()
   }, [page])
+
+  useEffect(()=>{
+    getIndiCartItems()
+  }, [])
 
     // console.log(isSelectedAvailable())
   return (

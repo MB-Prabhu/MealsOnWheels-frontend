@@ -68,7 +68,7 @@
 /* In your global CSS or module.css file */
 
 /* Keyframes for infinite scrolling */
-@keyframes scroll {
+/* @keyframes scroll {
   
 
   0% {
@@ -77,13 +77,12 @@
   100% {
     transform: translateX(-50%);
   }
-}
+} */
 
-/* Apply the scrolling animation to the menu container */
-.scroll-menu-container {
+/* .scroll-menu-container {
   display: flex;
   overflow-x: auto;
-  scroll-behavior: smooth; /* Smooth scrolling when user scrolls */
+  scroll-behavior: smooth; 
 }
 
 .animate-scroll {
@@ -91,12 +90,26 @@
   gap: 30px;
   width: max-content; 
   animation: scroll 20s linear infinite;
+} */
+
+/* .scroll-container {
+  margin: auto;
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 2px solid red;
+  position: relative;
 }
 
-/* Optional: Add a slight pause when user scrolls manually */
-.scroll-menu-container:hover .animate-scroll {
-  animation-play-state: paused; /* Pause the animation when the user hovers over the scroll container */
+.scroll-item {
+  display: inline-block;
+  padding: 0 20px; 
+  animation: scroll 10s linear 10s infinite;
 }
+
+.scroll-container:hover .scroll-item {
+  animation-play-state: paused;
+} */
 
 
 

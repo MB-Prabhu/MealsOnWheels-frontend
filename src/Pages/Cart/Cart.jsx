@@ -7,7 +7,7 @@ import  DeleteIcon from '@mui/icons-material/Delete';
 
 const Cart = () => {
 
-  let {cartItem, food_list, apiUrl, getItemTotalAmount, removeTotalQuantity,removeCartItem, addCartItem, removeQuantityFromCart, getCartItems} = useContext(StoreContext)
+  let {cartItem, food_list, apiUrl, getItemTotalAmount,removeCartItem, addCartItem, removeQuantityFromCart, getCartItems} = useContext(StoreContext)
 
   useEffect(()=>{
     // {token && getCartItems(localStorage.getItem("usertoken"))}

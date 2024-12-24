@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets/frontend_assets/assets'
 import { StoreContext } from '../context/StoreContext'
 
-const SingleFoodItem = ({_id, name, category, image, price, description}) => {
-  const {removeCartItem, addCartItem, cartItem, setCartItem, apiUrl} = useContext(StoreContext)
+const SingleFoodItem = ({_id, name, image, price, description}) => {
+  const {removeCartItem, addCartItem, cartItem, apiUrl} = useContext(StoreContext)
 
   return (
-    <div class="food-item opacity-0 translate-y-10 transition duration-700 delay-200">
+    <div className="food-item opacity-0 translate-y-10 transition duration-700 delay-200">
     <div className='w-60 md:w-56 shadow-md bg-[#ffffff]  flex flex-col gap-2'>
         <div className='relative w-[100%] '>
         <img src={`${apiUrl}/images/${image}`} alt="" className='w-[100%]'/>
@@ -15,7 +15,7 @@ const SingleFoodItem = ({_id, name, category, image, price, description}) => {
            !cartItem[_id] ? 
            <img src={assets.add_icon_white} alt='' 
            onClick={()=> addCartItem(_id)} 
-           className='w-[40px] cursor-pointer'/>:
+           className='w-[40px] cursor-pointer'/> :
            <div className='flex items-center justify-center gap-2 bg-[#f4f4f4] rounded-full'> 
                <img src={assets.remove_icon_red} alt=""
                onClick={()=> removeCartItem(_id)} 

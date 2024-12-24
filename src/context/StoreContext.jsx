@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { createContext, useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 
 export const StoreContext = createContext("")
 
@@ -241,6 +242,28 @@ let removeCartItem = async (itemid) => {
       }
     }
 
+
+    const getIndiCartItems = async ()=>{
+       try{
+        let isTokenAvailable = localStorage.key(0)
+        let token = isTokenAvailable ? localStorage.getItem(isTokenAvailable) : ""
+        let {data} = await axios.get(`${apiUrl}/user/cart/getcartindiitems`, {headers:{token}} )
+        if(data.ok){
+            setCartItem(data.data)
+        }
+       }
+       catch(err){
+        console.log(err)
+        if(err.response.data.msg.startsWith("connect") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("Operation") ){
+            toast.warning("please refresh the page to get the cart items")
+        }
+        else{
+            toast.warning(err.response.data.msg)
+        }
+       }
+
+    }
+
     useEffect(()=>{
         let isTokenAvailable = localStorage.key(0)
         setToken(isTokenAvailable ? localStorage.getItem(isTokenAvailable) : "")
@@ -261,7 +284,7 @@ let removeCartItem = async (itemid) => {
         getItemTotalAmount,
         getTotalAmount,
          removeQuantityFromCart,
-        apiUrl, token, setToken, getFoodItems
+        apiUrl, token, setToken, getFoodItems, getIndiCartItems
     }
     return(
         <StoreContext.Provider value={value}>

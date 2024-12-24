@@ -13,17 +13,19 @@ const MyOrders = () => {
         if (!token) {
         throw new Error("No token found, please login.");
         }
-
-    console.log("hi well")
-    console.log(token)
         let {data} = await axios.get(`${apiUrl}/user/order/userorders`, {headers: {token}}) 
         if(data.ok){
             setOrderData(data.data)
         }
-        console.log(orderData)
        }
        catch(err){
         console.log(err)
+          if(err.response.data.msg.startsWith("connect") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("Operation") ){
+                    toast.warning("please refresh the page to get the cart items")
+                }
+            else{
+                toast.warning(err.response.data.msg)
+            }
        }
     }
 
@@ -35,7 +37,6 @@ const MyOrders = () => {
         // if(token){
             getOrders()
         // }
-        console.log(orderData)
     }, [])
   return (
     <div className='w-full flex justify-center items-center my-8'>
