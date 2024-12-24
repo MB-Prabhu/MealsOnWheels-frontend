@@ -34,6 +34,19 @@ const Login = () => {
         finalData = payload
       }
       else{
+
+        if(userData.password !== userData.confirmPassword){
+          return toast.error("apassword and confirm password doesn't match", {
+            autoClose: 2000
+          })
+        }
+
+        if(userData.mobile.length !== 10){
+          return toast.error("amobile number should be 10 digits long", {
+            autoClose: 2000
+          })
+        }
+
         finalData = userData
       }
 
@@ -62,17 +75,16 @@ const Login = () => {
         }
       }
       catch(err){
-        if(err.response.data?.msg.startsWith("connect ETIMEDOUT") || err.response.data?.msg.startsWith("Operation")){
-          toast.warning("please try again, server is busy",  {
+          if(err.response.data?.msg.startsWith("connect ETIMEDOUT") || err.response.data?.msg.startsWith("Operation")){
+            toast.warning("please try again, server is busy",  {
+              autoClose: 2000
+            })
+          }
+          else{
+             toast.warning(err.response.data?.msg,  {
             autoClose: 2000
           })
-        }
-        else{
-           toast.warning(err.response.data?.msg,  {
-          autoClose: 2000
-        })
-        }
-       
+          }
       }
       finally{
         setLoading(false)
