@@ -75,7 +75,7 @@ const AdminAdd = () => {
           <label htmlFor="imgupload" className=''>
           <img src={imageUpload ? URL.createObjectURL(imageUpload) : assets.upload_area}
            alt="" 
-           className='my-2 w-40 h-24 bg-contain object-cover border border-black pointer-events-none'
+           className='my-2 w-40 h-24 bg-contain object-cover pointer-events-none'
            onClick={() => fileInputRef.current.click()} 
            />
           </label>
