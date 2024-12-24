@@ -87,7 +87,11 @@ const FoodDisplay = ({selectedCategory}) => {
   }, [page])
 
   useEffect(()=>{
-    getIndiCartItems()
+    let isTokenAvailable = localStorage.key(0)
+    let token = isTokenAvailable ? localStorage.getItem(isTokenAvailable) : ""
+    if(token){
+      getIndiCartItems()
+    }
   }, [])
 
     // console.log(isSelectedAvailable())

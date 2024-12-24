@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { StoreContext } from '../context/StoreContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const PlaceOrder = () => {
 
@@ -17,6 +18,7 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
       })
     
       const [errorMsg, setErrorMsg] = useState("")
+      const [loading, setLoading] = useState(false)
 
       let handleChange = ({target: {name, value}})=>{
           setdeliveryData((p)=> ({...p, [name]: value}))
@@ -24,6 +26,7 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
  
   
       let placeOrder = async (e)=>{
+        setLoading(true)
         e.preventDefault()
         let ordersToPlaced = []
         setErrorMsg("")
@@ -55,13 +58,23 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
           setErrorMsg(err.response.data.msg)
           toast.error(err.response.data.msg)
         }
+        finally{
+        setLoading(false)
+        }
        
       }
 
   return (
+    <>
+    {loading && (
+      <div className='flex w-full absolute h-full z-50 justify-center items-center bg-opacity-50 bg-[#000]'>
+        <LoadingSpinner />
+      </div>
+    )}
+    
     <div className="p-20 flex md:flex-row justify-around sm:justify-between gap-10 sm:gap-4 items-center flex-col">
      
- <form onSubmit={placeOrder} className='md:w-[50%] border border-black sm:w-[100%] py-4 px-6 shadow-lg flex flex-col rounded-lg gap-4 font-extrabold'>
+    <form onSubmit={placeOrder} className='md:w-[50%] border border-black sm:w-[100%] py-4 px-6 shadow-lg flex flex-col rounded-lg gap-4 font-extrabold'>
       <Typography variant="h5" style={{ textAlign: "center", margin: "16px 0", color:"orangered", fontWeight:"600", letterSpacing: "5px", textTransform: "uppercase"}}>
        Delivery Details
       </Typography>
@@ -164,6 +177,7 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
           </div>
     </div>
     </div>
+    </>
   )
 }
 
