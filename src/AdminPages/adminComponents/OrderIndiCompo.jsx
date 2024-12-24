@@ -12,6 +12,13 @@ const OrderIndiCompo = ({ele}) => {
 
 
     let updateFoodStatus= async(_id)=>{
+
+      if(!foodStatus){
+        return toast.error("select status before updating the status", {
+          autoClose: 1000
+        })
+      }
+
         try{
         let {data} = await axios.patch(`${apiUrl}/api/updateorderstatus`, {foodStatus, _id})
           if(data.ok){
@@ -65,17 +72,16 @@ const OrderIndiCompo = ({ele}) => {
                           <p className='text-lg'><span className='font-bold mr-[4px] sm:block'>Address: </span><span className=' text-lg custom-menu lg:w-[90%] overflow-y-scroll leading-6'>{ele?.address?.address || "Not Mentioned"}</span></p>
                           <p><strong>Amount:</strong> ${ele.amount || 0}</p>
                           </div>
-        
                           <Select
                               value={foodStatus ? foodStatus : ele.status}
                               inputProps={{ 'aria-label': 'Without label' }}
                               sx={{width:{sm:"90%", md:"100%",}, height:{lg:"30%",md:"40%", sm:"50%"}, color:"black"}}
                               onChange={(e)=> setFoodStatus(e.target.value)} name="foodStatus"
                               color='info'
+                              required
                               variant="outlined"
                             >
         
-                              <MenuItem value="">None</MenuItem>
                               <MenuItem value="Food processing">Food processing</MenuItem>
                               <MenuItem value="Out For delivery">Out For delivery</MenuItem>
                               <MenuItem value="Delivered">Delivered</MenuItem>
