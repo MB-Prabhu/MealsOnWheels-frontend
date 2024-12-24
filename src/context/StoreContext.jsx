@@ -91,7 +91,6 @@ let removeCartItem = async (itemid) => {
     // let addCartItem = async (itemid)=>{
     //     if(!cartItem[itemid]){
     //         setCartItem(p=> {
-    //             console.log(p)
     //             return {...p, [itemid]:1}
     //         }
     //         )
@@ -101,7 +100,6 @@ let removeCartItem = async (itemid) => {
     //     }
     //     if(token){
     //         let {data} = await axios.patch(apiUrl+"/user/cart"+"/addtocart", {itemid}, {headers: {token}})
-    //         console.log(data)
     //     }
     // }
 
@@ -139,7 +137,6 @@ let removeCartItem = async (itemid) => {
     let getCartItems = async (token)=>{
        try{
         let {data} = await axios.get(apiUrl+'/user/cart'+'/getcartitems', {headers: {token}})
-        console.log(data)
         if(data.ok){
             setCartItem(data.data)
         }
@@ -215,7 +212,6 @@ let removeCartItem = async (itemid) => {
         }
        }
        catch(err){
-        console.log(err)
         if(err.response.data.msg.startsWith("connect") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("Operation") ){
             toast.warning("please refresh the page to get the cart items")
         }
