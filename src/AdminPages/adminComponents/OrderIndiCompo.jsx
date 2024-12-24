@@ -5,7 +5,7 @@ import axios  from 'axios';
 import { StoreContext } from '../../context/StoreContext';
 import { toast } from 'react-toastify';
 
-const OrderIndiCompo = ({ele,}) => {
+const OrderIndiCompo = ({ele}) => {
   const {apiUrl} = useContext(StoreContext)
 
       const [foodStatus, setFoodStatus] = useState("")

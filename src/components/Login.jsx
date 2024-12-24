@@ -115,11 +115,11 @@ const Login = () => {
               name="mobile" variant="outlined" 
               sx={{height: "40px"}} 
               type="number"
-              slotProps={{
-                input: {
-                  maxLength: 10,
-                },
-              }}
+              // slotProps={{
+              //   input: {
+              //     maxLength: 10,
+              //   },
+              // }}
               required />
 
               <TextField label="Address"

@@ -7,7 +7,7 @@ const SingleFoodItem = ({_id, name, image, price, description}) => {
 
   return (
     <div className="food-item opacity-0 translate-y-10 transition duration-700 delay-200">
-    <div className='w-60 md:w-56 shadow-md bg-[#ffffff]  flex flex-col gap-2'>
+    <div className='w-52 md:w-56 shadow-md bg-[#ffffff]  flex flex-col gap-2'>
         <div className='relative w-[100%] '>
         <img src={`${apiUrl}/images/${image}`} alt="" className='w-[100%]'/>
         <div className='absolute right-2 bottom-2 flex'>
