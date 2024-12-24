@@ -81,17 +81,19 @@ const AdminAdd = () => {
           </label>
           <input type="file" id='imgupload'
            hidden 
+           
            onChange={(e)=> setImageUpload(e.target.files[0])}/>
         </div>
 
         <div className=''>
           <p className='text-lg sm:text-2xl font-bold'>Product Name</p>
-          <TextField variant='outlined' onChange={handleChange} name="name"  value={productData.name} sx={{height: "40px", fontSize:"44px", margin:"5px 0"}}/>
+           
+           <TextField variant='outlined' required onChange={handleChange} name="name"  value={productData.name} sx={{height: "40px", fontSize:"44px", margin:"5px 0"}}/>
         </div>
 
         <div className=''>
           <p className='text-lg sm:text-2xl font-bold'>Product Description</p>
-          <TextField variant='outlined' onChange={handleChange} name="description" value={productData.description} rows={7}  sx={{height: "40px", fontSize:"44px", margin:"5px 0"}} />
+          <TextField variant='outlined' required onChange={handleChange} name="description" value={productData.description} rows={7}  sx={{height: "40px", fontSize:"44px", margin:"5px 0"}} />
         </div>
 
         <div className='flex gap-4 w-[100%] items-center '>
@@ -102,6 +104,7 @@ const AdminAdd = () => {
           value={productData.category}
           inputProps={{ 'aria-label': 'Without label' }}
           sx={{width:"100%", color:"black"}}
+          required
           onChange={handleChange} name="category"
         >
           <MenuItem value="none">
@@ -121,6 +124,7 @@ const AdminAdd = () => {
         <div className=''>
           <p className='text-lg sm:text-2xl font-bold'>Product Price</p>
           <TextField variant='outlined' type='number'
+          required
           onChange={handleChange} name="price" value={productData.price} 
            sx={{fontSize:"24px"}} />
         </div>

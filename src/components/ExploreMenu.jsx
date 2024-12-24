@@ -9,7 +9,8 @@ const ExploreMenu = ({category, setCategory}) => {
         <p className='text-2xl text-orange-500 sm:text-3xl sm:font-bold'>Explore our menu</p>
 
         <p className='sm:text-lg'>Choose from a diverse meby featureing a delicious dishes.</p>
-        <div className='flex justify-between sm:py-2 mt-1 items-center gap-[30px] text-cente overflow-x-scroll custom-menu'>
+        <div className='flex justify-between sm:py-2 mt-1 items-center gap-[30px] text-center overflow-x-scroll custom-menu scroll-menu'>
+        <div className="flex gap-4 animate-scroll">
         {menu_list.map((ele,idx)=>{
             return(
                 <div key={idx}
@@ -20,6 +21,8 @@ const ExploreMenu = ({category, setCategory}) => {
                 </div> 
             )
         })}
+        </div>
+      
         </div>
        
         </div>
