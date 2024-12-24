@@ -15,6 +15,7 @@ const StoreContextProvider = ({children})=>{
     const [errorMsg, setErrorMsg] = useState("")
 
     const [showAdminLogin, setshowAdminLogin] = useState(false)
+    const [showUserLogo, setShowUserLogo] = useState(false)
 
     const page = 1
     const limit = 12
@@ -239,6 +240,7 @@ let removeCartItem = async (itemid) => {
         showLogin, setShowLogin,
         getItemTotalAmount,
         getTotalAmount,
+        showUserLogo, setShowUserLogo,
         apiUrl, token, setToken, getFoodItems, getIndiCartItems
     }
     return(

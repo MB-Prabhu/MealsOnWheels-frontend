@@ -7,13 +7,14 @@ import { Link } from 'react-router-dom';
 const ProfileIcon = () => {
 
     const navigate = useNavigate()
-let {setToken} = useContext(StoreContext)
+let {setToken, setShowUserLogo} = useContext(StoreContext)
 
 let handlelogout = ()=>{
 
     localStorage.removeItem("usertoken")
     setToken("")
     navigate('/')
+    setShowUserLogo(false)
     window.location.reload(); 
 }
 

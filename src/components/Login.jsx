@@ -8,7 +8,7 @@ import LoadingSpinner from './LoadingSpinner';
 
 const Login = () => {
 
-  const {isLogin, setIsLogin, setShowLogin, apiUrl , setToken} = useContext(StoreContext)
+  const {isLogin, setIsLogin, setShowLogin, apiUrl, setShowUserLogo, setToken} = useContext(StoreContext)
   const [loading, setLoading] = useState(false)
 
     const [userData, setuserData] = useState({
@@ -54,6 +54,7 @@ const Login = () => {
             password: "",
             confirmPassword: ""
           })
+          setShowUserLogo(true)
           setShowLogin(false)
         }
         else{
