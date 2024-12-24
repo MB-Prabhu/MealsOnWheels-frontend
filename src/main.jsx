@@ -6,11 +6,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import StoreContextProvider from './context/StoreContext.jsx';
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
+  <StrictMode>
   <Router>
     <StoreContextProvider>
     <App />
     </StoreContextProvider>
   </Router>
-  // </StrictMode>,
+   </StrictMode>,
 )

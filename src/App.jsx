@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './Pages/Home/Home'
@@ -18,7 +18,6 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
 import PaymentVerify from './Pages/PaymentVerify/PaymentVerify'
 import MyOrders from './Pages/Myorders/MyOrders'
-// import LoadingSpinner from './components/LoadingSpinner'
 import AdminLogin from './AdminPages/AdminLogin'
 import ADminProtectedRoutes from './AdminPages/adminComponents/ADminProtectedRoutes'
 import NotFound from './components/NotFound'
