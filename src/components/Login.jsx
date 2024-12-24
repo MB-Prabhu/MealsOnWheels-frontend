@@ -36,13 +36,19 @@ const Login = () => {
       else{
 
         if(userData.password !== userData.confirmPassword){
-          return toast.error("apassword and confirm password doesn't match", {
+          return toast.error("password and confirm password doesn't match", {
             autoClose: 2000
           })
         }
 
         if(userData.mobile.length !== 10){
-          return toast.error("amobile number should be 10 digits long", {
+          return toast.error("mobile number should be 10 digits long", {
+            autoClose: 2000
+          })
+        }
+
+        if(!userData.email.includes("@")){
+          return toast.error("provide a proper email format", {
             autoClose: 2000
           })
         }

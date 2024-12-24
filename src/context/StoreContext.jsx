@@ -21,7 +21,6 @@ const StoreContextProvider = ({children})=>{
   const [category, setCategory] = useState("")
 
 
-    // const page = 1
     const limit = 12
 
     const apiUrl = import.meta.env.VITE_API_URL
@@ -190,16 +189,13 @@ let removeCartItem = async (itemid) => {
         }
       }
       catch(err){
-        if(err.response.data.msg.startsWith("connect ETIMEDOUT")){
+        if(err.response.data.msg.startsWith("connect ETIMEDOUT") || err.response.data.msg.startsWith("timed") || err.response.data.msg.startsWith("read")){
             setErrorMsg("please refresh the page to get the available food menu's")
         }
         else if(err.response.data.msg.startsWith("Operation")){
             setErrorMsg("please refresh and try again")
         }
-        else if(err.response.data.msg.startsWith("Operation `foodschemas.find()`")){
-            setErrorMsg("please refresh the page to get the available food menu's")
-        }
-        else if(err.response.data.msg.startsWith("read ECONNRESET")){
+        else if(err.response.data.msg.startsWith("read")){
             setErrorMsg("please refresh the page to get the available food menu's")
         }
         else{
@@ -246,6 +242,9 @@ let removeCartItem = async (itemid) => {
 
     useEffect(()=>{
         let isTokenAvailable = localStorage.key(0)
+        if(isTokenAvailable==="usertoken"){
+            setShowUserLogo(true)
+        }
         setToken(isTokenAvailable ? localStorage.getItem(isTokenAvailable) : "")
         // getFoodItems()
     },[])

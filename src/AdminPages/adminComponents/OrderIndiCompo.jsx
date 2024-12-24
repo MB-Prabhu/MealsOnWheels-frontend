@@ -75,6 +75,7 @@ const OrderIndiCompo = ({ele}) => {
                               variant="outlined"
                             >
         
+                              <MenuItem value="">None</MenuItem>
                               <MenuItem value="Food processing">Food processing</MenuItem>
                               <MenuItem value="Out For delivery">Out For delivery</MenuItem>
                               <MenuItem value="Delivered">Delivered</MenuItem>

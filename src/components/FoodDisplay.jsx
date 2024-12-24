@@ -43,7 +43,7 @@ const getCategorizedFood = async ()=>{
   }
   catch(err){
    console.log(err)
-   if(err.response.data.msg.startsWith("connect ETIMEDOUT") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("Operation")){
+   if(err.response.data.msg.startsWith("connect ETIMEDOUT") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("Operation") || err.response.data.msg.startsWith("connection") || err.response.data.msg.includes("timed")){
        setErrorMsg("please refresh the page to get the available food items")
    }
    else if(err.response.data.msg==="Not enough data available. Total pages: 1"){
@@ -75,7 +75,7 @@ const getCategorizedFood = async ()=>{
             toast.error(err.message)
           }
           else{
-            if(err.response.data.msg.startsWith("Operation")){
+            if(err.response.data.msg.startsWith("Operation") || err.response.data.msg.startsWith("connect ETIMEDOUT") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("connection") || err.response.data.msg.includes("timed")){
               setErrorMsgSearch("please try again")
               }
               else{
@@ -114,7 +114,7 @@ const getCategorizedFood = async ()=>{
         <p className='text-2xl sm:text-3xl sm:font-semibold'>your selected Food Items</p>
         </div>
 
-      <div className='border-2 relative w-[60%] border-blue-500 rounded-lg px-2 my-2'>
+      <div className='border-2 relative w-[60%] border-blue-500 rounded-lg px-2 my-4'>
         
         <input type="text" 
         value={searchValue}
@@ -133,7 +133,7 @@ const getCategorizedFood = async ()=>{
 
             {(!loadingSearch || !loading )&& errorMsg && <div className='w-full text-center py-7 text-2xl sm:text-2xl sm:font-semibold '><p>{errorMsg}</p></div>}        
             {(!loadingSearch || !loading) && !errorMsg && errorMsgSearch && <div className='w-full text-center py-7 text-2xl sm:text-2xl sm:font-semibold '><p>{errorMsgSearch}</p></div>}        
-        <div className='mt-2 w-[90%]  py-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-10'>
+        <div className='w-[90%]  py-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-10'>
             {!loadingSearch && !loading && !errorMsgSearch && !errorMsg && food_list.length>0 && food_list.map(({_id, name, image, price, description,category})=>{
                            return <SingleFoodItem key={_id} _id={_id} name={name} image={image} price={price} description={description} category={category}  />
                     })}

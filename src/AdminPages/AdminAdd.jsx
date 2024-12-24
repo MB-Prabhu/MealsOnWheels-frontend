@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets/admin_assets/assets'
 import { TextField, Button, MenuItem, Select, InputLabel } from '@mui/material';
 import { toast } from 'react-toastify';
@@ -25,6 +25,20 @@ const AdminAdd = () => {
 
   let handleSubmit= async (e)=>{
       e.preventDefault()
+
+      if(!productData.name || !productData.description || !productData.category ||  !productData.price || !imageUpload){
+        return toast.error("aaMust fill all fields", {
+          autoClose: 2000
+        })
+      }
+
+      if(productData.price<=0){
+                return toast.error("price can't be in negative or zero", {
+                  autoClose: 2000
+                })
+              }
+
+
       const formData = new FormData()
       formData.append("name", productData.name)
       formData.append("description", productData.description)
@@ -81,14 +95,14 @@ const AdminAdd = () => {
           </label>
           <input type="file" id='imgupload'
            hidden 
-           
+           required
            onChange={(e)=> setImageUpload(e.target.files[0])}/>
         </div>
 
         <div className=''>
           <p className='text-lg sm:text-2xl font-bold'>Product Name</p>
            
-           <TextField variant='outlined' required onChange={handleChange} name="name"  value={productData.name} sx={{height: "40px", fontSize:"44px", margin:"5px 0"}}/>
+           <TextField variant='outlined' required  onChange={handleChange} name="name"  value={productData.name} sx={{height: "40px", fontSize:"44px", margin:"5px 0"}}/>
         </div>
 
         <div className=''>
@@ -107,7 +121,7 @@ const AdminAdd = () => {
           required
           onChange={handleChange} name="category"
         >
-          <MenuItem value="none">
+          <MenuItem value="">
             <em>None</em>
           </MenuItem>
           <MenuItem value="Salad">Salad</MenuItem>
