@@ -12,6 +12,7 @@ const AdminNavbar = () => {
 
   const handleLogout = ()=>{
     localStorage.removeItem("admintoken")
+    localStorage.removeItem("usertoken")
     setToken("")
     setshowAdminLogin(false)
   }

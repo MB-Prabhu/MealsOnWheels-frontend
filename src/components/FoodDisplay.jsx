@@ -13,7 +13,6 @@ import { toast } from 'react-toastify';
 const FoodDisplay = () => {
     const {food_list, setFood_list, errorMsg,setErrorMsg, loading, hasNext,setHasNext ,setLoading, apiUrl, getFoodItems, getIndiCartItems, category} = useContext(StoreContext)
 
-
     const [searchValue, setSearchValue] = useState("")
     const [page, setPage] = useState(1)
     const [loadingSearch, setLoadingsearch] = useState(false)
@@ -102,7 +101,7 @@ const getCategorizedFood = async ()=>{
 
   useEffect(()=>{
     let isTokenAvailable = localStorage.key(0)
-    let token = isTokenAvailable ? localStorage.getItem(isTokenAvailable) : ""
+    let token = isTokenAvailable==="usertoken" ? localStorage.getItem(isTokenAvailable) : ""
     if(token){
       getIndiCartItems()
     }

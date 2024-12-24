@@ -180,7 +180,6 @@ let removeCartItem = async (itemid) => {
    
 
     const getFoodItems = async (page, limit)=>{
-        console.log(page, limit)
       try{
         setLoading(true)
         let {data} = await axios.get(apiUrl+`/api/listfood?page=${page}&limit=${limit}`)

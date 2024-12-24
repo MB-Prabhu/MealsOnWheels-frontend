@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import { assets } from '../../assets/assets/frontend_assets/assets'
 import axios  from 'axios';
+import { toast } from 'react-toastify';
 
 const MyOrders = () => {
     const {apiUrl} = useContext(StoreContext)
@@ -11,21 +12,25 @@ const MyOrders = () => {
        try{
         const token = localStorage.getItem("usertoken");
         if (!token) {
-        throw new Error("No token found, please login.");
+        throw new Error("please login");
         }
         let {data} = await axios.get(`${apiUrl}/user/order/userorders`, {headers: {token}}) 
-        if(data.ok){
+        if(data?.ok){
             setOrderData(data.data)
         }
        }
        catch(err){
-        console.log(err)
-          if(err.response.data.msg.startsWith("connect") || err.response.data.msg.startsWith("read") || err.response.data.msg.startsWith("Operation") ){
-                    toast.warning("please refresh the page to get the cart items")
-                }
-            else{
-                toast.warning(err.response.data.msg)
+        if(err.message === "No token found, please login."){
+            toast.warning(err.message)
+        }
+        else{
+            if(err.response?.data?.msg.startsWith("connect") || err.response?.data?.msg.startsWith("read") || err.response?.data?.msg.startsWith("Operation") ){
+                toast.warning("please refresh the page to get the cart items")
             }
+        else{
+            toast.warning(err.response?.data?.msg)
+        }
+        }
        }
     }
 

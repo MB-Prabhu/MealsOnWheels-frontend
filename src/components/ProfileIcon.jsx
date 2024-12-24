@@ -12,6 +12,7 @@ let {setToken, setShowUserLogo} = useContext(StoreContext)
 let handlelogout = ()=>{
 
     localStorage.removeItem("usertoken")
+    localStorage.removeItem("admintoken")
     setToken("")
     navigate('/')
     setShowUserLogo(false)

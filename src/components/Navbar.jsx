@@ -64,7 +64,7 @@ const Navbar = () => {
                   </div>}
             </div>
 
-            {token && showUserLogo ? <ProfileIcon />: 
+            {(token && showUserLogo) ? <ProfileIcon />: 
             <button className='p-2 rounded-lg sm:text-sm lg:text-lg bg-[#eb6a32] active:bg-[#eba689]' onClick={()=> setShowLogin(true)}>signin</button>
             }
 
