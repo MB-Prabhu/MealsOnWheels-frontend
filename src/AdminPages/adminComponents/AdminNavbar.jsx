@@ -10,11 +10,9 @@ const AdminNavbar = () => {
 
   const {setToken, setshowAdminLogin}= useContext(StoreContext)
 
-  
   const handleLogout = ()=>{
     localStorage.removeItem("admintoken")
     setToken("")
-    // navigate("/")
     setshowAdminLogin(false)
   }
 
@@ -30,7 +28,6 @@ const AdminNavbar = () => {
 
         <div className='rounded-full'>
             <Link to="/" >
-            {/* <img src={assets.profile_image} alt="" className='size-6 lg:size-8 cursor-pointer rounded-full' /> */}
             <Button variant="contained" color="error" onClick={handleLogout}>
             <LogOut />
               Logout

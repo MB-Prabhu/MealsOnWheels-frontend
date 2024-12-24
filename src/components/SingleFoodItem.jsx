@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../assets/assets/frontend_assets/assets'
 import { StoreContext } from '../context/StoreContext'
 

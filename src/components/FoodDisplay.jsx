@@ -38,16 +38,13 @@ const FoodDisplay = ({selectedCategory}) => {
         try{
           setErrorMsgSearch("")
           setLoadingsearch(true)
-          console.log(limit)
             let {data} = await axios.get(`${apiUrl}/user/cart/searchFood?search=${searchValue}&page=${page}&limit=${limit}`)
-            console.log(data)
             if(data.ok){
               setFood_list(data.data)
               setHasNext(data?.data.length < limit ? true: false)
             }
         }
         catch(err){
-          console.log(err) 
           if(err.message.startsWith("Network")){
             toast.error(err.message)
           }
@@ -94,7 +91,6 @@ const FoodDisplay = ({selectedCategory}) => {
     }
   }, [])
 
-    // console.log(isSelectedAvailable())
   return (
     <div className='w-full flex flex-col items-center'>
 

@@ -15,7 +15,6 @@ const StoreContextProvider = ({children})=>{
     const [errorMsg, setErrorMsg] = useState("")
 
     const [showAdminLogin, setshowAdminLogin] = useState(false)
-    
 
     const page = 1
     const limit = 12
@@ -149,32 +148,6 @@ let removeCartItem = async (itemid) => {
         
        }
     }
-
-    //this  function for removing the qunatity from cart not from home 
-    let removeQuantityFromCart = async (itemid)=>{
-        if(cartItem[itemid]>1){
-         setCartItem(p=> {
-           return {...p, [itemid]:p[itemid]-1}
-         })
-         if(token){
-            await axios.patch(apiUrl+'/user/cart'+"/removecartitem", {itemid}, {headers: {token}})
-         }
-     }
-    }
-
-    //this  function for removing the entire item from the cart 
-    // const removeTotalQuantity = (itemid)=>{
-    //     setCartItem(p=>{
-    //             let modifyObject = {}
-    //             for(let key in p){
-    //                 if(key !== itemid){
-    //                     modifyObject[key] = p[key]
-    //                 }
-    //             }
-    //             return modifyObject
-    //         })
-    // }
-
     
     let getItemTotalAmount = (itemid)=>{
         let findItem = food_list.find(ele=> ele._id == itemid)
@@ -199,17 +172,6 @@ let removeCartItem = async (itemid) => {
                 return totalAmount
         }
     }
-
-    // let getTotalAmount = ()=>{
-    //     let totalAmount = 0;
-    //     for(const key in cartItem){
-    //         if(cartItem[key]>0){
-    //             let separateItem = food_list.find(ele=> ele._id === key)
-    //             totalAmount += separateItem.price * cartItem[key]
-    //         }
-    //     }
-    //     return totalAmount;
-    // }
 
     const getFoodItems = async ()=>{
       try{
@@ -267,8 +229,6 @@ let removeCartItem = async (itemid) => {
     useEffect(()=>{
         let isTokenAvailable = localStorage.key(0)
         setToken(isTokenAvailable ? localStorage.getItem(isTokenAvailable) : "")
-        // setToken(localStorage.getItem("usertoken"))
-        // {token && getCartItems(localStorage.getItem("usertoken"))}
         getFoodItems()
     },[])
 
@@ -283,7 +243,6 @@ let removeCartItem = async (itemid) => {
         showLogin, setShowLogin,
         getItemTotalAmount,
         getTotalAmount,
-         removeQuantityFromCart,
         apiUrl, token, setToken, getFoodItems, getIndiCartItems
     }
     return(

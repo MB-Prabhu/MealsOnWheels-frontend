@@ -22,7 +22,6 @@ const Footer = () => {
             <h2 className=' text-2xl lg:text-2xl font-bold'>Company</h2>
             <ul className='mt-2 list-none flex flex-col'>
                 <Link to='/' className="sm:text-sm text-lg list-none text-[#676767]">Home</Link>
-                {/* <Link className="sm:text-sm text-lg list-none text-[#676767]">Menu</Link> */}
                 <a href='#contact' className="sm:text-sm text-lg list-none text-[#676767]">Contact Us</a>
             </ul>
         </div>

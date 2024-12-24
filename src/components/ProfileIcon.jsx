@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-// import { assets } from '../assets/assets/admin_assets/assets'
 import { assets } from '../assets/assets/frontend_assets/assets'
 import { StoreContext } from '../context/StoreContext'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +7,7 @@ import { Link } from 'react-router-dom';
 const ProfileIcon = () => {
 
     const navigate = useNavigate()
-let {token, setToken} = useContext(StoreContext)
+let {setToken} = useContext(StoreContext)
 
 let handlelogout = ()=>{
 

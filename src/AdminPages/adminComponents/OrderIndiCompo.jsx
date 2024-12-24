@@ -22,7 +22,6 @@ const OrderIndiCompo = ({ele,}) => {
           }
         }
         catch(err){
-          console.log(err)
           if(err.response.data?.msg.startsWith("Operation") || err.response.data?.msg.startsWith("connect") || err.response.data?.msg.startsWith("read")){
             toast.warning("please try again")
           }

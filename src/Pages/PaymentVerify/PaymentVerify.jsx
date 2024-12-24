@@ -7,7 +7,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 const PaymentVerify = () => {
 
     const {apiUrl} = useContext(StoreContext)
-    const [searchparams, setSearchParams] = useSearchParams()
+    const [searchparams] = useSearchParams()
 
     let orderId = searchparams.get("orderId")
     let ok = searchparams.get("success")

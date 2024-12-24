@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import { StoreContext } from '../context/StoreContext'
 import ProfileIcon from './ProfileIcon'
-import { Button } from '@mui/material';
 
 const Navbar = () => {
 
-    const {showLogin, setShowLogin, showAdminLogin, cartItem, token, setToken, setshowAdminLogin} = useContext(StoreContext) 
-      //  const [menuActive, setmenuActive] = useState("")
+    const {setShowLogin, cartItem, token, setshowAdminLogin} = useContext(StoreContext) 
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showAdminLogo, setShowAdminLogo] = useState(false);

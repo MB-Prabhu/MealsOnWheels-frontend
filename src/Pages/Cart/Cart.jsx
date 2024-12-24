@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { StoreContext } from '../../context/StoreContext'
-import { assets } from '../../assets/assets/frontend_assets/assets'
 import CardTotal from './CardTotal'
 import { IconButton } from '@mui/material';
 import  DeleteIcon from '@mui/icons-material/Delete';
 
 const Cart = () => {
 
-  let {cartItem, food_list, apiUrl, getItemTotalAmount,removeCartItem, addCartItem, removeQuantityFromCart, getCartItems} = useContext(StoreContext)
+  let {cartItem, food_list, apiUrl, getItemTotalAmount,removeCartItem,  getCartItems} = useContext(StoreContext)
 
   useEffect(()=>{
     // {token && getCartItems(localStorage.getItem("usertoken"))}

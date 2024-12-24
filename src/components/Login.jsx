@@ -31,7 +31,6 @@ const Login = () => {
       let finalData = {}
       if(isLogin){
         let {Name, address, confirmPassword, mobile, ...payload} = userData
-        console.log(payload)
         finalData = payload
       }
       else{
@@ -41,8 +40,6 @@ const Login = () => {
       try{
         setLoading(true)
         let {data} = await axios.post(`${apiUrl}${endPoint}`, finalData)
-        console.log(data)
-
         if(data.ok){
           localStorage.setItem("usertoken", data?.token)
           setToken(localStorage.getItem("usertoken"))

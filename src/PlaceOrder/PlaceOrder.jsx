@@ -17,19 +17,16 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
         landmark: ""
       })
     
-      const [errorMsg, setErrorMsg] = useState("")
       const [loading, setLoading] = useState(false)
 
       let handleChange = ({target: {name, value}})=>{
           setdeliveryData((p)=> ({...p, [name]: value}))
       }
  
-  
       let placeOrder = async (e)=>{
         setLoading(true)
         e.preventDefault()
         let ordersToPlaced = []
-        setErrorMsg("")
         try{
           food_list.map(item=>{
             if(cartItem[item._id]>0){  
@@ -55,7 +52,6 @@ const {getTotalAmount, token, food_list, cartItem, apiUrl} = useContext(StoreCon
           }
         }
         catch(err){
-          setErrorMsg(err.response.data.msg)
           toast.error(err.response.data.msg)
         }
         finally{
