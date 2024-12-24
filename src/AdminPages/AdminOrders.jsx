@@ -15,8 +15,8 @@ const AdminOrders = () => {
   const [orderList, setOrderList] = useState([])
   const [loading, setLoading] = useState(false)
   
-      const [hasNext, setHasNext] = useState(false);
-        const [page, setPage] = useState(1)
+  const [hasNext, setHasNext] = useState(false);
+  const [page, setPage] = useState(1)
 
 const limit = 10
 

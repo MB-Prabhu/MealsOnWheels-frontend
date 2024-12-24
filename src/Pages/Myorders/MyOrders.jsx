@@ -36,12 +36,7 @@ const MyOrders = () => {
 
     
     useEffect(()=>{
-        // console.log(localStorage.getItem("usertoken"))
-        //  token ? token : setToken(localStorage.getItem("usertoken"))
-        // console.log(token)
-        // if(token){
             getOrders()
-        // }
     }, [])
   return (
     <div className='w-full flex justify-center items-center my-8'>

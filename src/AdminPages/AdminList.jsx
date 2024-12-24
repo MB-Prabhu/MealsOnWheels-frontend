@@ -10,14 +10,14 @@ import  ArrowBackIosIcon  from '@mui/icons-material/ArrowBackIos';
 import { StoreContext } from '../context/StoreContext';
 const AdminList = () => {
 
-    const {apiUrl} = useContext(StoreContext)
+  const {apiUrl} = useContext(StoreContext)
   
   const [listData, setListData] = useState([])
   const [loading, setLoading] = useState(false)
-    const [hasNext, setHasNext] = useState(false);
-      const [page, setPage] = useState(1)
+  const [hasNext, setHasNext] = useState(false);
+  const [page, setPage] = useState(1)
   
-      const limit = 10
+  const limit = 10
 
       let handlePageNo = (action)=>{
         if(action === "prev"){

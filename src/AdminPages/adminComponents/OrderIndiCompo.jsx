@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 const OrderIndiCompo = ({ele}) => {
   const {apiUrl} = useContext(StoreContext)
 
-      const [foodStatus, setFoodStatus] = useState("")
+  const [foodStatus, setFoodStatus] = useState("")
 
 
     let updateFoodStatus= async(_id)=>{

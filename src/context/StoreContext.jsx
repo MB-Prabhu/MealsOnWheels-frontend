@@ -19,10 +19,7 @@ const StoreContextProvider = ({children})=>{
     const [showAdminLogin, setshowAdminLogin] = useState(false)
     const [showUserLogo, setShowUserLogo] = useState(false)
 
-  const [category, setCategory] = useState("")
-
-
-    const limit = 12
+    const [category, setCategory] = useState("")
 
     const apiUrl = import.meta.env.VITE_API_URL
 
@@ -250,7 +247,6 @@ let removeCartItem = async (itemid) => {
             setIsAdminLoggedin(true)
         }
         setToken(isTokenAvailable ? localStorage.getItem(isTokenAvailable) : "")
-        // getFoodItems()
     },[])
 
     
