@@ -180,6 +180,7 @@ let removeCartItem = async (itemid) => {
       try{
         setLoading(true)
         let {data} = await axios.get(apiUrl+`/api/listfood?page=${page}&limit=${limit}`)
+        console.log(data)
         setErrorMsg("")
         if(data.ok){
             setFood_list(data.data)
@@ -187,18 +188,26 @@ let removeCartItem = async (itemid) => {
         }
       }
       catch(err){
-        if(err.response.data.msg.startsWith("connect ETIMEDOUT") || err.response.data.msg.startsWith("timed") || err.response.data.msg.startsWith("read")){
-            setErrorMsg("please refresh the page to get the available food menu's")
-        }
-        else if(err.response.data.msg.startsWith("Operation")){
-            setErrorMsg("please refresh and try again")
-        }
-        else if(err.response.data.msg.startsWith("read")){
-            setErrorMsg("please refresh the page to get the available food menu's")
+
+        if(err?.message.includes("Network Error")){
+            setErrorMsg(err.message + " " + "please try again later")
         }
         else{
-            setErrorMsg(err.response.data.msg)
+            if(err?.response?.data?.msg.startsWith("connect ETIMEDOUT") || err.response.data.msg.startsWith("timed") || err.response.data.msg.startsWith("read")){
+                setErrorMsg("please refresh the page to get the available food menu's")
+            }
+            else if(err.response.data.msg.startsWith("Operation")){
+                setErrorMsg("please refresh and try again")
+            }
+            else if(err.response.data.msg.startsWith("read")){
+                setErrorMsg("please refresh the page to get the available food menu's")
+            }
+            else{
+                setErrorMsg(err.response.data.msg)
+            }
         }
+        
+        
       }
       finally{
         setLoading(false)

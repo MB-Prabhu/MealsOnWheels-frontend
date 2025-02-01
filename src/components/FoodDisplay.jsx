@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 const FoodDisplay = () => {
     const {food_list, setFood_list, errorMsg,setErrorMsg, loading, hasNext,setHasNext ,setLoading, apiUrl, getFoodItems, getIndiCartItems, category} = useContext(StoreContext)
-
+    console.log(category)
     const [searchValue, setSearchValue] = useState("")
     const [page, setPage] = useState(1)
     const [loadingSearch, setLoadingsearch] = useState(false)
